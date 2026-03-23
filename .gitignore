@@ -1,0 +1,47 @@
+# ===========================
+# SEGREDOS E DADOS SENSÍVEIS
+# ===========================
+# NUNCA suba esses arquivos para o GitHub!
+.env
+.env.local
+.env.production
+
+# ===========================
+# NODE / NESTJS (Backend)
+# ===========================
+node_modules/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===========================
+# FLUTTER / DART (Frontend)
+# ===========================
+# Build outputs
+**/build/
+
+# Flutter/Dart cache
+.dart_tool/
+.packages
+pubspec.lock
+
+# IDE
+.idea/
+.vscode/
+
+# ===========================
+# SISTEMA OPERACIONAL
+# ===========================
+.DS_Store
+Thumbs.db
+
+# ===========================
+# DOCKER
+# ===========================
+# Volumes do banco de dados local (não precisam ir para o repo)
+# mysql-data/

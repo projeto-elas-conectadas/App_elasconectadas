@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
+  password   String
+  name       String
+  phone      String?
+  dob        String?
+  occupation String?
+  location   String?
+  bio        String?
+  pfp        Bytes?
+  role       UserType
+
+  accountStatus AccountStatus @default(UNVERIFIED) // Nova coluna
+
+  // Relacionamento com Advertising (M:N)
+  advertisings AdvertisingOnUsers[]
+  
+  // Relacionamento com Post (Apenas se for ADMIN)
+  posts         PostOnAdmins[]
+
+  // Relacionamento com OTP 1:N (um usuário tem vários OTPs)
+  otps OTP[]
+
+  @@map("users") // opcional: renomear a tabela se necessário
+}
+
+enum AccountStatus {
+  VERIFIED
+  UNVERIFIED
+}
+
+enum UserType {
+  USER
+  ADMIN
+}
+
+model Ads {
+  id        Int          @id @default(autoincrement())
+  title     String
+  cover     Bytes?
+  createdAt DateTime     @default(now())
+  content   String
+  type      AdType
+
+  // Relacionamento com User (M:N)
+  users AdvertisingOnUsers[]
+}
+
+enum AdType {
+  PRODUCT
+  SERVICE
+  COLLAB
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  cover     Bytes?
+  createdAt DateTime @default(now())
+  content   String
+  type      PostType
+
+  // Relacionamento com Admins (M:N)
+  admins PostOnAdmins[]
+}
+
+enum PostType {
+  EVENT
+  COURSE
+}
+
+// Tabela intermediária para Users <-> Advertising (M:N)
+model AdvertisingOnUsers {
+  userId        Int
+  advertisingId Int
+
+  user        User        @relation(fields: [userId], references: [id])
+  advertising Ads @relation(fields: [advertisingId], references: [id])
+
+  @@id([userId, advertisingId]) // Chave composta
+}
+
+// Tabela intermediária para Admins <-> Post (M:N)
+model PostOnAdmins {
+  adminId Int
+  postId  Int
+
+  admin User @relation(fields: [adminId], references: [id])
+  post  Post @relation(fields: [postId], references: [id])
+
+  @@id([adminId, postId]) // Chave composta
+}
+
+enum OTPType {
+  OTP
+  RESET_PASSWORD
+}
+
+model OTP {
+  id Int @id @default(autoincrement()) 
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  token String
+  type OTPType
+  expiresAt DateTime
+  createAt DateTime @default(now())
+}
