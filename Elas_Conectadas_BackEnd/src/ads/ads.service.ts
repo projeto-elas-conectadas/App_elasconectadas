@@ -19,14 +19,14 @@ export class AdsService {
   }
 
   //retorna um anuncio por id
-  getAdById(id: number) {
+  getAdById(id: string) {
     return this.prisma.ads.findUnique({
       where: { id },
     });
   }
 
   //atualiza parcialmente um anuncio por id
-  async patchAd(id: number, data: Prisma.AdsUpdateInput) {
+  async patchAd(id: string, data: Prisma.AdsUpdateInput) {
     const findAd = await this.getAdById(id);
     if (!findAd) throw new HttpException('Post Not Found', 404);
 
@@ -37,7 +37,7 @@ export class AdsService {
   }
 
   //deleta um anuncio por id
-  async deleteAd(id: number) {
+  async deleteAd(id: string) {
     const findAd = await this.getAdById(id);
     if (!findAd) throw new HttpException('Post Not Found', 404);
     return this.prisma.ads.delete({ where: { id } });

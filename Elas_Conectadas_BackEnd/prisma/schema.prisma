@@ -1,30 +1,28 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id            String    @id @default(uuid()) // Mudamos de Int para UUID
-  email         String    @unique
-  password      String
-  name          String
-  phone         String?
-  dob           String?
-  occupation    String?
-  location      String?
-  bio           String?
-  pfp           String?   // Mudamos de Bytes para String (URL da imagem)
-  role          UserType
+  id         String   @id @default(uuid())
+  email      String   @unique
+  password   String
+  name       String
+  phone      String?
+  dob        String?
+  occupation String?
+  location   String?
+  bio        String?
+  pfp        String?
+  role       UserType
 
   accountStatus AccountStatus @default(UNVERIFIED)
 
-  // Relacionamento: Uma empreendedora tem muitos produtos
-  produtos      Produto[]
-
-  // Ajuste nos relacionamentos existentes para aceitar String id
+  produtos     Produto[]
   advertisings AdvertisingOnUsers[]
   posts        PostOnAdmins[]
   otps         OTP[]
@@ -33,17 +31,16 @@ model User {
 }
 
 model Produto {
-  id          String   @id @default(uuid())
-  nome        String
-  descricao   String
-  preco       Float
-  categoria   String
-  imagemUrl   String?  // Adicionado para salvar o link da imagem em vez de Bytes
-  criado_em   DateTime @default(now())
+  id        String   @id @default(uuid())
+  nome      String
+  descricao String
+  preco     Float
+  categoria String
+  imagemUrl String?
+  criado_em DateTime @default(now())
 
-  // Relacionamento: Todo produto PRECISA de um dono
-  userId      String
-  usuario     User     @relation(fields: [userId], references: [id])
+  userId  String
+  usuario User   @relation(fields: [userId], references: [id])
 }
 
 enum AccountStatus {
@@ -57,14 +54,13 @@ enum UserType {
 }
 
 model Ads {
-  id        Int          @id @default(autoincrement())
+  id        String   @id @default(uuid()) // Padronizado para UUID
   title     String
   cover     Bytes?
-  createdAt DateTime     @default(now())
+  createdAt DateTime @default(now())
   content   String
   type      AdType
 
-  // Relacionamento com User (M:N)
   users AdvertisingOnUsers[]
 }
 
@@ -75,14 +71,13 @@ enum AdType {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid()) // Padronizado para UUID
   title     String
   cover     Bytes?
   createdAt DateTime @default(now())
   content   String
   type      PostType
 
-  // Relacionamento com Admins (M:N)
   admins PostOnAdmins[]
 }
 
@@ -91,26 +86,24 @@ enum PostType {
   COURSE
 }
 
-// Tabela intermediária para Users <-> Advertising (M:N)
 model AdvertisingOnUsers {
   userId        String
-  advertisingId Int
+  advertisingId String // Padronizado para String
 
-  user        User        @relation(fields: [userId], references: [id])
-  advertising Ads @relation(fields: [advertisingId], references: [id])
+  user        User @relation(fields: [userId], references: [id])
+  advertising Ads  @relation(fields: [advertisingId], references: [id])
 
-  @@id([userId, advertisingId]) // Chave composta
+  @@id([userId, advertisingId])
 }
 
-// Tabela intermediária para Admins <-> Post (M:N)
 model PostOnAdmins {
   adminId String
-  postId  Int
+  postId  String // Padronizado para String
 
   admin User @relation(fields: [adminId], references: [id])
   post  Post @relation(fields: [postId], references: [id])
 
-  @@id([adminId, postId]) // Chave composta
+  @@id([adminId, postId])
 }
 
 enum OTPType {
@@ -119,12 +112,11 @@ enum OTPType {
 }
 
 model OTP {
-  id Int @id @default(autoincrement()) 
-  userId String
-  user User @relation(fields: [userId], references: [id])
-  token String
-  type OTPType
+  id        String   @id @default(uuid()) // Padronizado para UUID
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  token     String
+  type      OTPType
   expiresAt DateTime
-  createAt DateTime @default(now())
+  createAt  DateTime @default(now())
 }
-

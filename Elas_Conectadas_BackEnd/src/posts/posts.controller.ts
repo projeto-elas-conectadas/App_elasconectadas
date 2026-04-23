@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
@@ -32,21 +31,22 @@ export class PostsController {
   }
 
   @Get(':id')
-  getPostById(@Param('id') id: string) {
-    return this.postsService.getPostById(Number(id));
+  getPostById(@Param('id') id: string) { // Removido o Pipe!
+    return this.postsService.getPostById(id); // Removido o Number()
   }
+
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   updatePostById(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string, // Removido o Pipe!
     @Body() updatePostDto: UpdatePostDto,
   ) {
-    return this.postsService.updatePost(Number(id), updatePostDto);
+    return this.postsService.updatePost(id, updatePostDto); // Removido o Number()
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  deletePostById(@Param('id', ParseIntPipe) id: string) {
-    return this.postsService.deletePost(Number(id));
+  deletePostById(@Param('id') id: string) { // Removido o Pipe!
+    return this.postsService.deletePost(id); // Removido o Number()
   }
 }

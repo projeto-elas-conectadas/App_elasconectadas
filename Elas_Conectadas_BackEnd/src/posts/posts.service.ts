@@ -19,14 +19,14 @@ export class PostsService {
   }
 
   //retorna um post por id
-  getPostById(id: number) {
+  getPostById(id: String) {
     return this.prisma.post.findUnique({
       where: { id },
     });
   }
 
   //atualiza parcialmente um post por id
-  async updatePost(id: number, data: Prisma.PostUpdateInput) {
+  async updatePost(id: String, data: Prisma.PostUpdateInput) {
     const findPost = await this.getPostById(id);
     if (!findPost) throw new HttpException('Post Not Found', 404);
     return this.prisma.post.update({
@@ -36,7 +36,7 @@ export class PostsService {
   }
 
   //deleta um post por id
-  async deletePost(id: number) {
+  async deletePost(id: String) {
     const findPost = await this.getPostById(id);
     if (!findPost) throw new HttpException('Post not found', 404);
     return this.prisma.post.delete({ where: { id } });

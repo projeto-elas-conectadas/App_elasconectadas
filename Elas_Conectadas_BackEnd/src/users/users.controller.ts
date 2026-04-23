@@ -5,7 +5,6 @@ import {
   Get,
   HttpException,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
@@ -28,8 +27,8 @@ export class UsersController {
     return this.usersService.createUser(createUserDto, 'USER');
   }
 
-  //cria um novo usuário com o papel de administrador
-  //é definido como 'ADMIN' por padrão e não pode ser acessado pela rota de registro
+  // Cria um novo usuário com o papel de administrador
+  // É definido como 'ADMIN' por padrão e não pode ser acessado pela rota de registro
   @UseGuards(JwtAuthGuard)
   @Post('admin')
   @UsePipes(ValidationPipe)
@@ -45,7 +44,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async getUserById(@Param('id', ParseIntPipe) id: string) {
+  async getUserById(@Param('id') id: string) { // Removido o Pipe falso!
     const user = await this.usersService.getUserById(id);
     if (!user) throw new HttpException('User Not Found', 404);
 
@@ -56,7 +55,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   updateUserById(
-    @Param('id') id: string,
+    @Param('id') id: string, // Removido o Pipe falso!
     @Body() updateUserDto: UpdateUserDto,
   ) {
     // Aqui nós "arrancamos" o pfp de dentro do DTO e guardamos o resto na variável "dadosParaSalvar"
@@ -69,7 +68,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  deleteUserById(@Param('id', ParseIntPipe) id: string) {
+  deleteUserById(@Param('id') id: string) { // Removido o Pipe falso!
     return this.usersService.deleteUser(id);
   }
 }

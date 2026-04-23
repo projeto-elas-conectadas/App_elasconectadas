@@ -4,7 +4,6 @@ import {
   Delete,
   Get,
   Param,
-  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
@@ -30,22 +29,22 @@ export class AdsController {
   }
 
   @Get(':id')
-  getAdById(@Param('id') id: string) {
-    return this.adsService.getAdById(Number(id));
+  getAdById(@Param('id') id: string) { // Removido o Pipe falso!
+  return this.adsService.getAdById(id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
   patchAd(
-    @Param('id', ParseIntPipe) id: string,
+    @Param('id') id: string, // Removido o Pipe falso!
     @Body() updateAdDto: UpdateAdDto,
   ) {
-    return this.adsService.patchAd(Number(id), updateAdDto);
+    return this.adsService.patchAd(id, updateAdDto);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  deleteAdById(@Param('id', ParseIntPipe) id: string) {
-    return this.adsService.deleteAd(Number(id));
+  deleteAdById(@Param('id') id: string) { // Removido o Pipe falso!
+    return this.adsService.deleteAd(id);
   }
 }
