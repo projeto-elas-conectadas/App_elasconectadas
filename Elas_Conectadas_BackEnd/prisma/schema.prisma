@@ -36,7 +36,7 @@ model Produto {
   descricao String
   preco     Float
   categoria String
-  imagemUrl String?
+  imagemUrl String? @db.Text
   criado_em DateTime @default(now())
 
   userId  String
