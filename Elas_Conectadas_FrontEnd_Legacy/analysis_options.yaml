@@ -1,4 +1,0 @@
-include: package:flutter_lints/flutter.yaml
-analyzer:
-  errors:
-    unnecessary_string_escapes: ignore
