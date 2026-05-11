@@ -1,0 +1,18 @@
+components:
+  schemas:
+    MetadadosPaginacao:
+      type: object
+      properties:
+        totalItens:
+          type: integer
+          example: 150
+          description: Total de registros no banco de dados
+        itensPorPagina:
+          type: integer
+          example: 10
+        paginaAtual:
+          type: integer
+          example: 1
+        totalPaginas:
+          type: integer
+          example: 15

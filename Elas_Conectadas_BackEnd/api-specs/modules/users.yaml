@@ -1,0 +1,100 @@
+paths:
+  /users/register:
+    post:
+      operationId: UsersController_createUser
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: Usuária registrada com sucesso
+
+  /users/admin:
+    post:
+      operationId: UsersController_createAdmin
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAdminDto'
+      responses:
+        '201':
+          description: Admin registrado com sucesso
+
+  /users:
+    get:
+      operationId: UsersController_getUsers
+      tags:
+        - Users
+      responses:
+        '200':
+          description: Lista de usuárias retornada
+
+  /users/{id}:
+    get:
+      operationId: UsersController_getUserById
+      tags:
+        - Users
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Dados da usuária
+    patch:
+      operationId: UsersController_updateUserById
+      tags:
+        - Users
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserDto'
+      responses:
+        '200':
+          description: Usuária atualizada
+    delete:
+      operationId: UsersController_deleteUserById
+      tags:
+        - Users
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuária removida
+
+components:
+  schemas:
+    CreateUserDto:
+      type: object
+      properties: {} # TODO: Preencher com os campos de registro (ex: nome, email, senha)
+      
+    CreateAdminDto:
+      type: object
+      properties: {} # TODO: Preencher com os campos do admin
+      
+    UpdateUserDto:
+      type: object
+      properties: {}

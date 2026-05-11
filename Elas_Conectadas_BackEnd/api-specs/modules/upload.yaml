@@ -1,0 +1,20 @@
+paths:
+  /upload/imagem:
+    post:
+      operationId: UploadController_uploadImagem
+      tags:
+        - Uploads
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Arquivo de imagem a ser enviado
+      responses:
+        '201':
+          description: Upload realizado com sucesso

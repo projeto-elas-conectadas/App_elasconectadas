@@ -1,0 +1,68 @@
+paths:
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      tags:
+        - Auth
+      responses:
+        '201':
+          description: Login efetuado com sucesso (Retorna Token)
+
+  /auth/send:
+    post:
+      operationId: AuthController_sendMail
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sendEmailDto'
+      responses:
+        '201':
+          description: E-mail enviado
+
+  /auth/request-otp:
+    post:
+      operationId: AuthController_requestOTP
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestTokenDto'
+      responses:
+        '201':
+          description: OTP solicitado
+
+  /auth/verify-otp:
+    post:
+      operationId: AuthController_verifyOTP
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyOtpDto'
+      responses:
+        '201':
+          description: OTP verificado
+
+components:
+  schemas:
+    sendEmailDto:
+      type: object
+      properties: {}
+      
+    requestTokenDto:
+      type: object
+      properties: {}
+      
+    VerifyOtpDto:
+      type: object
+      properties: {}

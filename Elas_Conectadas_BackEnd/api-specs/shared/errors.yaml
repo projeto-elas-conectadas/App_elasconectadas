@@ -1,0 +1,30 @@
+components:
+  schemas:
+    ErroPadrao:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 400
+          description: Código do status HTTP
+        message:
+          type: string
+          example: "Requisição inválida. Verifique os dados enviados."
+          description: Mensagem detalhada sobre o que deu errado
+        error:
+          type: string
+          example: "Bad Request"
+          description: Nome oficial do erro HTTP
+
+    ErroNaoEncontrado:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        message:
+          type: string
+          example: "O recurso solicitado não foi encontrado no sistema."
+        error:
+          type: string
+          example: "Not Found"

@@ -158,3 +158,20 @@ Documentação Viva: Ele não precisa abrir o código do back. Ele olha o Swagge
 Geração de Código: Existem ferramentas que leem esse seu Swagger e geram automaticamente as classes em Dart/Flutter para você. Você não precisa digitar campo por campo no celular; o Swagger faz isso por você.
 
 Independência: O Front-end pode testar se a lógica dele está certa comparando com o que o Swagger responde. Se o app der erro, mas o Swagger funcionar, ele sabe que o erro está no Flutter.
+
+# ADICIONANDO O CLOUDNARY
+
+primeiro adicione a dados da api depois de criar uma conta gratuito no site da empresa
+
+CLOUDINARY_CLOUD_NAME="seu_cloud_name_aqui"
+CLOUDINARY_API_KEY="sua_api_key_aqui"
+CLOUDINARY_API_SECRET="seu_api_secret_aqui"
+
+depois instalamos as dependecias
+
+```bash
+
+npm install cloudinary streamifier
+npm install -D @types/multer @types/streamifier
+
+```

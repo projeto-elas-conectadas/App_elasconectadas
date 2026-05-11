@@ -1,0 +1,55 @@
+openapi: 3.0.0
+info:
+  title: API Elas Conectadas
+  description: Arquitetura Orientada a Contratos (Modular)
+  version: "1.0"
+servers:
+  - url: http://localhost:8080
+    description: Servidor de Desenvolvimento Local
+
+paths:
+  # Módulo de uploads
+  /upload/imagem:
+    $ref: './modules/upload.yaml#/paths/~1upload~1imagem'
+
+  # Módulo de posts
+  /posts/create:    
+    $ref: './modules/posts.yaml#/paths/~1posts~1create' 
+  /posts/list:
+    $ref: './modules/posts.yaml#/paths/~1posts~1list'
+  /posts/{id}:
+    $ref: './modules/posts.yaml#/paths/~1posts~1{id}'
+
+  # Módulo de auth
+  /auth/login:
+    $ref: './modules/auth.yaml#/paths/~1auth~1login'
+  /auth/send:
+    $ref: './modules/auth.yaml#/paths/~1auth~1send'
+  /auth/request-otp:
+    $ref: './modules/auth.yaml#/paths/~1auth~1request-otp'
+  /auth/verify-otp:
+    $ref: './modules/auth.yaml#/paths/~1auth~1verify-otp' 
+
+  # Módulo de ads
+  /ads/create:
+    $ref: './modules/ads.yaml#/paths/~1ads~1create'
+  /ads/list:
+    $ref: './modules/ads.yaml#/paths/~1ads~1list'
+  /ads/{id}:
+    $ref: './modules/ads.yaml#/paths/~1ads~1{id}'  
+
+  # Módulo de Produtos
+  /produtos:
+    $ref: './modules/products.yaml#/paths/~1produtos'
+  /produtos/{id}:
+    $ref: './modules/products.yaml#/paths/~1produtos~1{id}'
+  
+  # Módulo de Usuários
+  /users/register:
+    $ref: './modules/users.yaml#/paths/~1users~1register' 
+  /users/admin:
+    $ref: './modules/users.yaml#/paths/~1users~1admin'
+  /users:
+    $ref: './modules/users.yaml#/paths/~1users'
+  /users/{id}:
+    $ref: './modules/users.yaml#/paths/~1users~1{id}'

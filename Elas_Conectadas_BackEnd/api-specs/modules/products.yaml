@@ -1,0 +1,64 @@
+paths:
+  /produtos:
+    get:
+      summary: Lista todos os produtos
+      operationId: Produtos_findAll
+      tags:
+        - Produtos
+      responses:
+        '200':
+          description: Sucesso
+    post:
+      summary: Cria um novo produto
+      operationId: Produtos_create
+      tags:
+        - Produtos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProdutoDto'
+      responses:
+        '201':
+          description: Produto criado
+
+  /produtos/{id}:
+    get:
+      summary: Busca um produto por ID
+      operationId: Produtos_findOne
+      tags:
+        - Produtos
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso
+
+components:
+  schemas:
+    CreateProdutoDto:
+      type: object
+      required:
+        - nome
+        - descricao
+        - preco
+        - categoria
+        - userId
+      properties:
+        nome:
+          type: string
+          example: "Consultoria de TI"
+        descricao:
+          type: string
+        preco:
+          type: number
+          example: 120.5
+        categoria:
+          type: string
+        userId:
+          type: string

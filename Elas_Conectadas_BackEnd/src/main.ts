@@ -3,33 +3,39 @@ dotenv.config();
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-// 1. Novo import do Swagger adicionado aqui:
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SwaggerModule } from '@nestjs/swagger';
+
+// --- NOVOS IMPORTS NECESSÁRIOS PARA O SPEC-DRIVEN ---
+import SwaggerParser from '@apidevtools/swagger-parser';
+import { join } from 'path';
+// ----------------------------------------------------
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // A sua configuração de CORS mantida intacta
   app.enableCors({
-    origin: '*', // Permite qualquer origem (ideal para desenvolvimento local)
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   });
 
-  // --- 2. NOVA CONFIGURAÇÃO DO SWAGGER (SPEC-DRIVEN) ---
-  const config = new DocumentBuilder()
-    .setTitle('API Elas Conectadas')
-    .setDescription('Documentação baseada em Spec-Driven Development')
-    .setVersion('1.0')
-    .build();
+  // --- ARQUITETURA SPEC-DRIVEN ---
+  try {
+    // 1. Aponta para o seu arquivo principal
+    const apiSpecPath = join(process.cwd(), 'api-specs', 'main-api.yaml');
     
-  const document = SwaggerModule.createDocument(app, config);
+    // 2. O Parser resolve todos os $ref e junta os módulos
+    const bundledSpec = await SwaggerParser.bundle(apiSpecPath);
+    
+    // 3. Entrega o contrato blindado para o Swagger UI renderizar
+    SwaggerModule.setup('api/docs', app, bundledSpec as any);
+    
+    console.log('✅ Documentação Spec-Driven carregada com sucesso!');
+  } catch (error) {
+    console.error('❌ Erro ao carregar a especificação YAML:', error);
+  }
+  // -------------------------------
   
-  // A documentação ficará disponível na rota /api/docs
-  SwaggerModule.setup('api/docs', app, document);
-  // -----------------------------------------------------
-
-  // A sua porta 8080 mantida intacta
   await app.listen(8080, '0.0.0.0');
 }
 bootstrap();

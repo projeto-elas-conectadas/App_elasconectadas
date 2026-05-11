@@ -1,0 +1,81 @@
+paths:
+  /ads/create:
+    post:
+      operationId: AdsController_createAd
+      tags:
+        - Ads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAdDto'
+      responses:
+        '201':
+          description: Anúncio criado
+
+  /ads/list:
+    get:
+      operationId: AdsController_getAllAds
+      tags:
+        - Ads
+      responses:
+        '200':
+          description: Lista de anúncios
+
+  /ads/{id}:
+    get:
+      operationId: AdsController_getAdById
+      tags:
+        - Ads
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detalhes do anúncio
+    patch:
+      operationId: AdsController_patchAd
+      tags:
+        - Ads
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAdDto'
+      responses:
+        '200':
+          description: Anúncio atualizado
+    delete:
+      operationId: AdsController_deleteAdById
+      tags:
+        - Ads
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Anúncio removido
+
+components:
+  schemas:
+    CreateAdDto:
+      type: object
+      properties: {} 
+      
+    UpdateAdDto:
+      type: object
+      properties: {}
