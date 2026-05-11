@@ -89,12 +89,79 @@ components:
   schemas:
     CreateUserDto:
       type: object
-      properties: {} # TODO: Preencher com os campos de registro (ex: nome, email, senha)
-      
+      required:
+        - email
+        - password
+        - name
+        - phone
+        - dob
+      properties:
+        email:
+          type: string
+          format: email
+          example: "empreendedora@teste.com"
+        password:
+          type: string
+          format: password
+          example: "SenhaSegura123!"
+        name:
+          type: string
+          example: "Maria da Silva"
+        phone:
+          type: string
+          example: "(43) 99999-8888"
+        dob:
+          type: string
+          example: "15/05/1995"
+          description: "Formato DD/MM/AAAA"
+
     CreateAdminDto:
       type: object
-      properties: {} # TODO: Preencher com os campos do admin
-      
+      required:
+        - email
+        - password
+        - name
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        name:
+          type: string
+
     UpdateUserDto:
       type: object
-      properties: {}
+      properties:
+        name:
+          type: string
+          example: "Maria Silva Santos"
+        phone:
+          type: string
+          example: "(43) 99999-0000"
+        occupation:
+          type: string
+          example: "Artesã"
+        bio:
+          type: string
+          example: "Trabalho com bordados personalizados há 10 anos."
+        pfp:
+          type: string
+          format: uri
+          description: "URL da foto no Cloudinary"
+        rua:
+          type: string
+          example: "Rua Principal"
+        numero:
+          type: string
+          example: "500"
+        bairro:
+          type: string
+          example: "Centro"
+        cidade:
+          type: string
+          example: "Itambaracá"
+        estado:
+          type: string
+          example: "PR"

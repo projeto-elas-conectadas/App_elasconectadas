@@ -9,15 +9,20 @@ export class ProdutosService {
 
   // POST: Cria um produto
   async create(createProdutoDto: CreateProdutoDto) {
-    // O Prisma agora espera o userId para criar a conexão entre tabelas
     return await this.prisma.produto.create({
       data: {
         nome: createProdutoDto.nome,
         descricao: createProdutoDto.descricao,
-        preco: createProdutoDto.preco,
+        preco: createProdutoDto.preco,             // Agora o Prisma vai aceitar como string
         categoria: createProdutoDto.categoria,
-        imagemUrl: createProdutoDto.imagemUrl,
-        userId: createProdutoDto.userId, // Vinculando ao usuário
+        regiaoAtendimento: createProdutoDto.regiaoAtendimento, // Campo novo adicionado!
+        imagemPrincipal: createProdutoDto.imagemPrincipal,     // Substituiu o antigo imagemUrl
+        
+        // Se a usuária não mandar fotos extras, salvamos uma lista vazia []
+        // O Prisma vai converter isso automaticamente para JSON no MySQL
+        imagensAdicionais: createProdutoDto.imagensAdicionais ?? [], 
+        
+        userId: createProdutoDto.userId,
       },
     });
   }
@@ -33,7 +38,6 @@ export class ProdutosService {
       where: { id },
     });
     
-    // Tratamento de erro: se não achar, avisa o frontend com erro 404
     if (!produto) {
       throw new NotFoundException(`Produto com ID ${id} não encontrado`);
     }
@@ -42,18 +46,25 @@ export class ProdutosService {
 
   // PATCH: Atualiza os dados de um produto
   async update(id: string, updateProdutoDto: UpdateProdutoDto) {
-    // Primeiro verifica se o produto existe
     await this.findOne(id); 
     
+    // Mapeamos manualmente para evitar conflitos de tipagem entre o DTO e o Prisma
     return await this.prisma.produto.update({
       where: { id },
-      data: updateProdutoDto,
+      data: {
+        nome: updateProdutoDto.nome,
+        descricao: updateProdutoDto.descricao,
+        preco: updateProdutoDto.preco,
+        categoria: updateProdutoDto.categoria,
+        regiaoAtendimento: updateProdutoDto.regiaoAtendimento,
+        imagemPrincipal: updateProdutoDto.imagemPrincipal,
+        imagensAdicionais: updateProdutoDto.imagensAdicionais,
+      },
     });
   }
 
   // DELETE: Remove um produto
   async remove(id: string) {
-    // Primeiro verifica se o produto existe
     await this.findOne(id);
 
     return await this.prisma.produto.delete({

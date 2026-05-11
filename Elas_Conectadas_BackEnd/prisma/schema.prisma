@@ -8,41 +8,86 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  email      String   @unique
-  password   String
-  name       String
-  phone      String?
-  dob        String?
-  occupation String?
-  location   String?
-  bio        String?
-  pfp        String?
-  role       UserType
+  id            String   @id @default(uuid())
+  email         String   @unique
+  password      String
+  name          String
+  phone         String?
+  dob           String?
+  occupation    String?
+  
+  // 💜 MUDANÇA: Tiramos o 'location' e colocamos o endereço estruturado
+  rua           String?
+  numero        String?
+  bairro        String?
+  cidade        String?
+  estado        String?
+  
+  bio           String?
+  pfp           String?  // 💜 Perfeito! Já está como String para o Cloudinary
+  role          UserType
 
+  // 💜 ACHADO DE OURO: Você já tinha esse accountStatus! 
+  // Não precisamos criar um 'emailVerificado Boolean', vamos usar a sua lógica 
+  // de UNVERIFIED (Falso) e VERIFIED (Verdadeiro). É muito mais profissional!
   accountStatus AccountStatus @default(UNVERIFIED)
 
-  produtos     Produto[]
-  advertisings AdvertisingOnUsers[]
-  posts        PostOnAdmins[]
-  otps         OTP[]
+  produtos      Produto[]
+  advertisings  AdvertisingOnUsers[]
+  posts         PostOnAdmins[]
+  otps          OTP[]
 
   @@map("users")
 }
 
 model Produto {
-  id        String   @id @default(uuid())
-  nome      String
-  descricao String
-  preco     Float
-  categoria String
-  imagemUrl String? @db.Text
-  criado_em DateTime @default(now())
+  id                String   @id @default(uuid())
+  nome              String
+  descricao         String
+  
+  // 💜 MUDANÇA: Mudamos de Float para String para permitir margens "R$ 100 - R$ 150"
+  preco             String   
+  categoria         String
+  
+  // 💜 NOVO CAMPO: Região obrigatória que definimos no YAML
+  regiaoAtendimento String   
+  
+  // 💜 FOTOS: Nova estrutura para múltiplas imagens no Cloudinary
+  imagemPrincipal   String   @db.Text
+  imagensAdicionais Json?    // 💜 DICA TÉCNICA: O MySQL não aceita Array de Strings nativo (String[]), então o Prisma pede para salvar listas como JSON!
+  
+  criado_em         DateTime @default(now())
 
-  userId  String
-  usuario User   @relation(fields: [userId], references: [id])
+  userId            String
+  usuario           User     @relation(fields: [userId], references: [id])
 }
 
+// 💜 MUDANÇA CLOUDINARY NOS OUTROS MÓDULOS:
+// Antes estava 'cover Bytes?'. Como a imagem agora vai ser link do Cloudinary, 
+// alterei para String em Ads e Post.
+model Ads {
+  id        String   @id @default(uuid()) 
+  title     String
+  cover     String?  // 💜 Alterado de Bytes para String
+  createdAt DateTime @default(now())
+  content   String
+  type      AdType
+
+  users AdvertisingOnUsers[]
+}
+
+model Post {
+  id        String   @id @default(uuid()) 
+  title     String
+  cover     String?  // 💜 Alterado de Bytes para String
+  createdAt DateTime @default(now())
+  content   String
+  type      PostType
+
+  admins PostOnAdmins[]
+}
+
+// ... (O resto das tabelas e Enums de Ads, PostOnAdmins e OTP continua EXATAMENTE igual)
 enum AccountStatus {
   VERIFIED
   UNVERIFIED
@@ -53,32 +98,10 @@ enum UserType {
   ADMIN
 }
 
-model Ads {
-  id        String   @id @default(uuid()) // Padronizado para UUID
-  title     String
-  cover     Bytes?
-  createdAt DateTime @default(now())
-  content   String
-  type      AdType
-
-  users AdvertisingOnUsers[]
-}
-
 enum AdType {
   PRODUCT
   SERVICE
   COLLAB
-}
-
-model Post {
-  id        String   @id @default(uuid()) // Padronizado para UUID
-  title     String
-  cover     Bytes?
-  createdAt DateTime @default(now())
-  content   String
-  type      PostType
-
-  admins PostOnAdmins[]
 }
 
 enum PostType {
@@ -88,7 +111,7 @@ enum PostType {
 
 model AdvertisingOnUsers {
   userId        String
-  advertisingId String // Padronizado para String
+  advertisingId String
 
   user        User @relation(fields: [userId], references: [id])
   advertising Ads  @relation(fields: [advertisingId], references: [id])
@@ -98,7 +121,7 @@ model AdvertisingOnUsers {
 
 model PostOnAdmins {
   adminId String
-  postId  String // Padronizado para String
+  postId  String
 
   admin User @relation(fields: [adminId], references: [id])
   post  Post @relation(fields: [postId], references: [id])
@@ -112,7 +135,7 @@ enum OTPType {
 }
 
 model OTP {
-  id        String   @id @default(uuid()) // Padronizado para UUID
+  id        String   @id @default(uuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   token     String

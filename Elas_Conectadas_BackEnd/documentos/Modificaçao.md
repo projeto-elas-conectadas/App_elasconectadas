@@ -175,3 +175,5 @@ npm install cloudinary streamifier
 npm install -D @types/multer @types/streamifier
 
 ```
+
+apliquei a classe validator para garantir a tipagem certa em cada propriedade do bancos de dados

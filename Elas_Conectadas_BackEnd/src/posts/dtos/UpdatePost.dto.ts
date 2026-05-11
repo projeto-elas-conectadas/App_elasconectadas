@@ -5,7 +5,7 @@ export class UpdatePostDto {
   @IsString()
   title?: string;
 
-  cover?: Buffer;
+  cover?: string;
 
   @IsString()
   content?: string;

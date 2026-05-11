@@ -6,7 +6,7 @@ export class CreateAdDto {
   @IsNotEmpty()
   title: string;
 
-  cover?: Buffer;
+  cover?: string;
 
   @IsString()
   @IsNotEmpty()

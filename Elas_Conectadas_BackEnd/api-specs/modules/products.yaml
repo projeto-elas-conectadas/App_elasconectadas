@@ -48,7 +48,10 @@ components:
         - descricao
         - preco
         - categoria
+        - imagemPrincipal
+        - imagensAdicionais
         - userId
+        - regiaoAtendimento # Novo campo obrigatório
       properties:
         nome:
           type: string
@@ -56,9 +59,27 @@ components:
         descricao:
           type: string
         preco:
-          type: number
-          example: 120.5
+          type: string # MUDANÇA: Era number, agora é string para permitir margens
+          example: "R$ 120,00 - R$ 200,00"
         categoria:
           type: string
+        imagemPrincipal:
+          type: string
+          format: uri
+          description: "URL da imagem de capa do produto"
+          example: "https://minhaimagem.com/principal.jpg"
+        imagensAdicionais:
+          type: array
+          description: "Lista com URLs de fotos extras do produto"
+          items:
+            type: string
+            format: uri
+          example: 
+            - "https://minhaimagem.com/foto2.jpg"
+            - "https://minhaimagem.com/foto3.jpg"  
         userId:
           type: string
+        regiaoAtendimento: # NOVO CAMPO
+          type: string
+          example: "Bandeirantes, Itambaracá ou a domicílio"
+          description: "Cidades atendidas ou tipo de atendimento"

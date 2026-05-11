@@ -6,7 +6,7 @@ export class UpdateAdDto {
   title?: string;
 
   @IsNotEmpty()
-  cover?: Buffer;
+  cover?: string;
 
   @IsNotEmpty()
   content?: string;
