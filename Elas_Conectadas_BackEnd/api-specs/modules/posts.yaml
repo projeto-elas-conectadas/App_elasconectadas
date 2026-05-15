@@ -74,8 +74,36 @@ components:
   schemas:
     CreatePostDto:
       type: object
-      properties: {} # TODO: Ex: titulo, conteudo, autorId
-      
+      required:
+        - title
+        - content
+        - type
+      properties:
+        title:
+          type: string
+          example: "Workshop: Finanças para Empreendedoras"
+        content:
+          type: string
+          example: "Aprenda a gerir o fluxo de caixa do seu negócio em 3 passos..."
+        type:
+          type: string
+          example: "COURSE"
+          description: "Valores aceitos: EVENT ou COURSE"
+        cover:
+          type: string
+          format: uri
+          example: "https://res.cloudinary.com/demo/image/upload/v1/posts/capa-curso.jpg"
+          description: "Link da imagem da capa no Cloudinary"
+
     UpdatePostDto:
       type: object
-      properties: {}
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        type:
+          type: string
+        cover:
+          type: string
+          format: uri

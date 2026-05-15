@@ -74,8 +74,36 @@ components:
   schemas:
     CreateAdDto:
       type: object
-      properties: {} 
-      
+      required:
+        - title
+        - content
+        - type
+      properties:
+        title:
+          type: string
+          example: "Desconto de 20% no Dia das Mães"
+        content:
+          type: string
+          example: "Aproveite nossa promoção especial para todos os serviços agendados nesta semana!"
+        type:
+          type: string
+          example: "PRODUCT"
+          description: "Valores aceitos: PRODUCT, SERVICE ou COLLAB"
+        cover:
+          type: string
+          format: uri
+          example: "https://res.cloudinary.com/demo/image/upload/v1/ads/capa-promo.jpg"
+          description: "Link da imagem da capa no Cloudinary"
+
     UpdateAdDto:
       type: object
-      properties: {}
+      properties:
+        title:
+          type: string
+        content:
+          type: string
+        type:
+          type: string
+        cover:
+          type: string
+          format: uri

@@ -14,5 +14,19 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
+  backend:
+    image: node:20
+    working_dir: /app
+    restart: always
+    volumes:
+      - ./Elas_Conectadas_BackEnd:/app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    command: sh -c "yarn install && npx prisma generate && yarn build && yarn start:prod"
+
 volumes:
   db_data:
