@@ -39,7 +39,10 @@ class AuthService {
     final url = Uri.parse('${AppConfig.apiUrl}${AppConfig.loginEndpoint}');
     final response = await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // <--- CRACHÁ DO NGROK AQUI
+      },
       body: jsonEncode({'email': email, 'password': password}),
     ).timeout(const Duration(seconds: 10));
 
@@ -78,7 +81,10 @@ class AuthService {
     final url = Uri.parse('${AppConfig.apiUrl}${AppConfig.registerEndpoint}');
     final response = await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // <--- CRACHÁ DO NGROK AQUI
+      },
       body: jsonEncode({
         'email': email,
         'password': password,
@@ -106,7 +112,10 @@ class AuthService {
     final url = Uri.parse('${AppConfig.apiUrl}${AppConfig.requestOtpEndpoint}');
     await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // <--- CRACHÁ DO NGROK AQUI
+      },
       body: jsonEncode({'email': email}),
     ).timeout(const Duration(seconds: 10));
   }
@@ -115,7 +124,10 @@ class AuthService {
     final url = Uri.parse('${AppConfig.apiUrl}${AppConfig.verifyOtpEndpoint}');
     final response = await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' // <--- CRACHÁ DO NGROK AQUI
+      },
       body: jsonEncode({'email': email, 'otp': otp}),
     ).timeout(const Duration(seconds: 10));
 
@@ -136,6 +148,7 @@ class AuthService {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
+        'ngrok-skip-browser-warning': 'true' // <--- CRACHÁ DO NGROK AQUI
       },
     ).timeout(const Duration(seconds: 10));
 

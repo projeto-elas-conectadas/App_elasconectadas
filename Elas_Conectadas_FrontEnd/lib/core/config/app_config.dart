@@ -5,10 +5,10 @@ class AppConfig {
 
   static String get apiUrl {
     if (kIsWeb) {
-      return 'http://localhost:8080';
+      return 'https://orion-nonpsychologic-cara.ngrok-free.dev';
     }
     // Substitua pelo IP da sua máquina na rede para testar em dispositivo físico
-    return 'http://192.168.0.41:8080';
+    return 'https://orion-nonpsychologic-cara.ngrok-free.dev';
   }
 
   // Endpoints de autenticação
