@@ -1,68 +1,58 @@
+# auth.yaml CORRIGIDO — sugestão para enviar ao colega
 paths:
   /auth/login:
     post:
       operationId: AuthController_login
       tags:
         - Auth
-      responses:
-        '201':
-          description: Login efetuado com sucesso (Retorna Token)
-
-  /auth/send:
-    post:
-      operationId: AuthController_sendMail
-      tags:
-        - Auth
-      requestBody:
+      requestBody:           # 👈 ADICIONADO
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/sendEmailDto'
+              $ref: '#/components/schemas/LoginDto'
       responses:
         '201':
-          description: E-mail enviado
-
-  /auth/request-otp:
-    post:
-      operationId: AuthController_requestOTP
-      tags:
-        - Auth
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/requestTokenDto'
-      responses:
-        '201':
-          description: OTP solicitado
-
-  /auth/verify-otp:
-    post:
-      operationId: AuthController_verifyOTP
-      tags:
-        - Auth
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VerifyOtpDto'
-      responses:
-        '201':
-          description: OTP verificado
+          description: Login efetuado com sucesso
+          content:           # 👈 ADICIONADO
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDto'
 
 components:
   schemas:
-    sendEmailDto:
+    LoginDto:               # 👈 NOVO
       type: object
-      properties: {}
-      
-    requestTokenDto:
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+
+    LoginResponseDto:       # 👈 NOVO
       type: object
-      properties: {}
-      
-    VerifyOtpDto:
+      properties:
+        access_token:
+          type: string
+        user:
+          type: object
+
+    requestTokenDto:        # 👈 CORRIGIDO (tinha properties vazio)
       type: object
-      properties: {}
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+
+    VerifyOtpDto:           # 👈 CORRIGIDO (tinha properties vazio)
+      type: object
+      required: [email, otp]
+      properties:
+        email:
+          type: string
+        otp:
+          type: string
