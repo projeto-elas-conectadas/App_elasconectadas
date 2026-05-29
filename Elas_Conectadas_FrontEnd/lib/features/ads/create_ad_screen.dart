@@ -82,17 +82,14 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
 
     setState(() => _isLoading = true);
     try {
-      final preco = double.parse(
-        _precoController.text.trim().replaceAll(',', '.'),
-      );
-
       await ProdutoService.criar(
         nome: _nomeController.text.trim(),
         descricao: _descricaoController.text.trim(),
-        preco: preco,
+        preco: _precoController.text.trim().replaceAll(',', '.'),
         categoria: _categoria,
         userId: userId,
-        imagemBytes: _imagemBytes,
+        imagemPrincipal: '', // TODO: implementar upload de imagem via UploadsApi
+        regiaoAtendimento: 'A definir', // TODO: adicionar campo na tela
       );
 
       if (mounted) {
