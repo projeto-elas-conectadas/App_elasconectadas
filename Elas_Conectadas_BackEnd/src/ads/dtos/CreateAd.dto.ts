@@ -1,22 +1,20 @@
-import { AdType } from '@prisma/client';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsIn, IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreateAdDto {
   @IsString()
   @IsNotEmpty()
-  title: string;
-
-  cover?: string;
+  title!: string;
 
   @IsString()
   @IsNotEmpty()
-  content: string;
+  content!: string;
 
-  @IsEnum(AdType)
+  @IsString()
   @IsNotEmpty()
-  type: AdType;
+  @IsIn(['PRODUCT', 'SERVICE', 'COLLAB'])
+  type!: string;
 
-  constructor(data: Partial<CreateAdDto>) {
-    Object.assign(this, data);
-  }
+  @IsOptional()
+  @IsUrl()
+  cover?: string;
 }

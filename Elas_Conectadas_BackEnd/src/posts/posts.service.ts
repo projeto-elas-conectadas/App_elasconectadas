@@ -1,41 +1,49 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { PostType } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { CreatePostDto } from './dtos/CreatePost.dto';
+import { UpdatePostDto } from './dtos/UpdatePost.dto';
 
 @Injectable()
 export class PostsService {
   constructor(private prisma: PrismaService) {}
 
-  //cria um post
-  createPost(data: Prisma.PostCreateInput) {
+  createPost(data: CreatePostDto) {
     return this.prisma.post.create({
-      data: { ...data },
+      data: {
+        title: data.title,
+        content: data.content,
+        type: data.type as PostType,
+        cover: data.cover,
+      },
     });
   }
 
-  //retorna todos os posts
   getPosts() {
     return this.prisma.post.findMany();
   }
 
-  //retorna um post por id
   getPostById(id: string) {
     return this.prisma.post.findUnique({
       where: { id },
     });
   }
 
-  //atualiza parcialmente um post por id
-  async updatePost(id: string, data: Prisma.PostUpdateInput) {
+  async updatePost(id: string, data: UpdatePostDto) {
     const findPost = await this.getPostById(id);
     if (!findPost) throw new HttpException('Post Not Found', 404);
+
     return this.prisma.post.update({
       where: { id },
-      data: { ...data },
+      data: {
+        title: data.title,
+        content: data.content,
+        type: data.type as PostType | undefined,
+        cover: data.cover,
+      },
     });
   }
 
-  //deleta um post por id
   async deletePost(id: string) {
     const findPost = await this.getPostById(id);
     if (!findPost) throw new HttpException('Post not found', 404);

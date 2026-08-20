@@ -16,10 +16,20 @@ export class UploadService {
   uploadImage(file: Express.Multer.File): Promise<string> {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
-        { folder: 'elas-conectadas' }, // Cria uma pasta lá no Cloudinary
+        { folder: 'elas-conectadas' },
         (error, result) => {
-          if (error) return reject(error);
-          resolve(result.secure_url); // Devolve apenas o Link Seguro!
+          if (error) {
+            return reject(error);
+          }
+          
+          // AQUI ESTÁ A CORREÇÃO:
+          // Verificamos se 'result' existe e se tem 'secure_url'
+          if (result && result.secure_url) {
+            resolve(result.secure_url);
+          } else {
+            // Se o Cloudinary não retornar erro mas o result for vazio, rejeitamos
+            reject(new Error('Falha no upload: Cloudinary não retornou a URL'));
+          }
         },
       );
       

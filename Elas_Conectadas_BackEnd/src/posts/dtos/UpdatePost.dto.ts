@@ -1,19 +1,20 @@
-import { PostType } from '@prisma/client';
-import { IsEnum, IsString } from 'class-validator';
+import { IsIn, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class UpdatePostDto {
+  @IsOptional()
   @IsString()
   title?: string;
 
-  cover?: string;
-
+  @IsOptional()
   @IsString()
   content?: string;
 
-  @IsEnum(PostType)
-  type?: PostType;
+  @IsOptional()
+  @IsString()
+  @IsIn(['EVENT', 'COURSE'])
+  type?: string;
 
-  constructor(data: Partial<UpdatePostDto>) {
-    Object.assign(this, data);
-  }
+  @IsOptional()
+  @IsUrl()
+  cover?: string;
 }

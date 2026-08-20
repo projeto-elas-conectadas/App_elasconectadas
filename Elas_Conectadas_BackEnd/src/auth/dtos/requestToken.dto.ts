@@ -1,7 +1,7 @@
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class requestTokenDto {
-  @IsString()
   @IsEmail()
-  email: string;
+  @IsNotEmpty()
+  email!: string;
 }

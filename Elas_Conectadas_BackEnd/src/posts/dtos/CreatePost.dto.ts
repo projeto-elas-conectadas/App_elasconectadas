@@ -1,22 +1,20 @@
-import { PostType } from '@prisma/client';
-import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { IsIn, IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
-  title: string;
-
-  cover?: string;
+  title!: string;
 
   @IsString()
   @IsNotEmpty()
-  content: string;
+  content!: string;
 
-  @IsEnum(PostType)
+  @IsString()
   @IsNotEmpty()
-  type: PostType;
+  @IsIn(['EVENT', 'COURSE'])
+  type!: string;
 
-  constructor(data: Partial<CreatePostDto>) {
-    Object.assign(this, data);
-  }
+  @IsOptional()
+  @IsUrl()
+  cover?: string;
 }

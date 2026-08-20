@@ -1,11 +1,11 @@
 # auth.yaml CORRIGIDO — sugestão para enviar ao colega
 paths:
-  /auth/login:
+  /login:
     post:
       operationId: AuthController_login
       tags:
         - Auth
-      requestBody:           # 👈 ADICIONADO
+      requestBody:
         required: true
         content:
           application/json:
@@ -13,46 +13,99 @@ paths:
               $ref: '#/components/schemas/LoginDto'
       responses:
         '201':
-          description: Login efetuado com sucesso
-          content:           # 👈 ADICIONADO
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LoginResponseDto'
+          description: Login efetuado com sucesso (Retorna Token)
+
+  /send:
+    post:
+      operationId: AuthController_sendMail
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sendEmailDto'
+      responses:
+        '201':
+          description: E-mail enviado
+
+  /request-otp:
+    post:
+      operationId: AuthController_requestOTP
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestTokenDto'
+      responses:
+        '201':
+          description: OTP solicitado
+
+  /verify-otp:
+    post:
+      operationId: AuthController_verifyOTP
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyOtpDto'
+      responses:
+        '201':
+          description: OTP verificado
 
 components:
   schemas:
-    LoginDto:               # 👈 NOVO
+    LoginDto:
       type: object
-      required: [email, password]
+      required:
+        - email
+        - password
       properties:
         email:
           type: string
           format: email
+          example: "admin@elasconectadas.com"
         password:
           type: string
           format: password
+          example: "Senha123!"
 
-    LoginResponseDto:       # 👈 NOVO
+    sendEmailDto:
       type: object
+      required:
+        - email
       properties:
-        access_token:
+        email:
           type: string
-        user:
-          type: object
+          format: email
+          example: "usuario@teste.com"
 
-    requestTokenDto:        # 👈 CORRIGIDO (tinha properties vazio)
+    requestTokenDto:
       type: object
-      required: [email]
+      required:
+        - email
       properties:
         email:
           type: string
           format: email
 
-    VerifyOtpDto:           # 👈 CORRIGIDO (tinha properties vazio)
+    VerifyOtpDto:
       type: object
-      required: [email, otp]
+      required:
+        - email
+        - otp
       properties:
         email:
           type: string
+          format: email
         otp:
           type: string
+          example: "123456"
+          description: "Código de 6 dígitos recebido por e-mail"

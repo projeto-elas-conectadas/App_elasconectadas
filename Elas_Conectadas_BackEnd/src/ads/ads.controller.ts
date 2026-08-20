@@ -3,22 +3,21 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
 import { AdsService } from './ads.service';
 import { CreateAdDto } from './dtos/CreateAd.dto';
 import { UpdateAdDto } from './dtos/UpdateAd.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('ads')
 export class AdsController {
   constructor(private readonly adsService: AdsService) {}
 
   @Post('create')
-  //@UsePipes(ValidationPipe)
+  @HttpCode(201)
   createAd(@Body() createAdDto: CreateAdDto) {
     return this.adsService.createAd(createAdDto);
   }
@@ -29,22 +28,17 @@ export class AdsController {
   }
 
   @Get(':id')
-  getAdById(@Param('id') id: string) { // Removido o Pipe falso!
-  return this.adsService.getAdById(id);
+  getAdById(@Param('id') id: string) {
+    return this.adsService.getAdById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  patchAd(
-    @Param('id') id: string, // Removido o Pipe falso!
-    @Body() updateAdDto: UpdateAdDto,
-  ) {
+  patchAd(@Param('id') id: string, @Body() updateAdDto: UpdateAdDto) {
     return this.adsService.patchAd(id, updateAdDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  deleteAdById(@Param('id') id: string) { // Removido o Pipe falso!
+  deleteAdById(@Param('id') id: string) {
     return this.adsService.deleteAd(id);
   }
 }

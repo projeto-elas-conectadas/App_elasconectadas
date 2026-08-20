@@ -1,40 +1,54 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule } from '@nestjs/swagger';
-
-// --- NOVOS IMPORTS NECESSÁRIOS PARA O SPEC-DRIVEN ---
+import * as OpenApiValidator from 'express-openapi-validator';
 import SwaggerParser from '@apidevtools/swagger-parser';
 import { join } from 'path';
-// ----------------------------------------------------
+import * as fs from 'fs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+
   app.enableCors({
     origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   });
 
-  // --- ARQUITETURA SPEC-DRIVEN ---
-  try {
-    // 1. Aponta para o seu arquivo principal
+ try {
     const apiSpecPath = join(process.cwd(), 'api-specs', 'main-api.yaml');
     
-    // 2. O Parser resolve todos os $ref e junta os módulos
-    const bundledSpec = await SwaggerParser.bundle(apiSpecPath);
+    // 1. Apenas LÊ a spec para o Swagger UI, não tenta unir (bundle)
+    const fileContents = fs.readFileSync(apiSpecPath, 'utf8');
+    const spec = require('yamljs').parse(fileContents);
     
-    // 3. Entrega o contrato blindado para o Swagger UI renderizar
-    SwaggerModule.setup('api/docs', app, bundledSpec as any);
+    // 2. Configura o Swagger UI
+    SwaggerModule.setup('api/docs', app, spec);
     
-    console.log('✅ Documentação Spec-Driven carregada com sucesso!');
+    // 3. Validador OpenAPI (Ele resolve os $ref internamente com segurança)
+    app.use(
+      OpenApiValidator.middleware({
+        apiSpec: spec,
+        validateRequests: true,
+        validateResponses: true, 
+      }),
+    );
+    console.log('✅ Documentação e Validação Spec-Driven ativas!');
   } catch (error) {
-    console.error('❌ Erro ao carregar a especificação YAML:', error);
+    console.error('❌ Erro crítico ao carregar especificação:', error);
   }
-  // -------------------------------
   
   await app.listen(8080, '0.0.0.0');
 }

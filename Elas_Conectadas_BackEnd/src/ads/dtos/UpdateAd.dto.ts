@@ -1,17 +1,20 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsIn, IsOptional, IsString, IsUrl } from 'class-validator';
 
 export class UpdateAdDto {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   title?: string;
 
-  @IsNotEmpty()
-  cover?: string;
-
-  @IsNotEmpty()
+  @IsOptional()
+  @IsString()
   content?: string;
 
-  constructor(data: Partial<UpdateAdDto>) {
-    Object.assign(this, data);
-  }
+  @IsOptional()
+  @IsString()
+  @IsIn(['PRODUCT', 'SERVICE', 'COLLAB'])
+  type?: string;
+
+  @IsOptional()
+  @IsUrl()
+  cover?: string;
 }

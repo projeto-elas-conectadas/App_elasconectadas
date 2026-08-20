@@ -3,24 +3,21 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
-  UseGuards,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CreatePostDto } from './dtos/CreatePost.dto';
 import { UpdatePostDto } from './dtos/UpdatePost.dto';
 import { PostsService } from './posts.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('posts')
 export class PostsController {
-  constructor(private postsService: PostsService) {}
+  constructor(private readonly postsService: PostsService) {}
 
   @Post('create')
-  @UsePipes(ValidationPipe)
+  @HttpCode(201)
   createPost(@Body() createPostDto: CreatePostDto) {
     return this.postsService.createPost(createPostDto);
   }
@@ -31,22 +28,20 @@ export class PostsController {
   }
 
   @Get(':id')
-  getPostById(@Param('id') id: string) { // Removido o Pipe!
-    return this.postsService.getPostById(id); // Removido o Number()
+  getPostById(@Param('id') id: string) {
+    return this.postsService.getPostById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   updatePostById(
-    @Param('id') id: string, // Removido o Pipe!
+    @Param('id') id: string,
     @Body() updatePostDto: UpdatePostDto,
   ) {
-    return this.postsService.updatePost(id, updatePostDto); // Removido o Number()
+    return this.postsService.updatePost(id, updatePostDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  deletePostById(@Param('id') id: string) { // Removido o Pipe!
-    return this.postsService.deletePost(id); // Removido o Number()
+  deletePostById(@Param('id') id: string) {
+    return this.postsService.deletePost(id);
   }
 }

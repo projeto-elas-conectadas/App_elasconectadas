@@ -12,10 +12,14 @@
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    
+    // MELHORIAS PARA SPEC-DRIVEN:
+    "strict": true,               // Ativa todas as opções de verificação rigorosa
+    "strictNullChecks": true,     // Essencial para garantir que os campos do YAML mapeiam para valores reais
+    "noImplicitAny": true,        // Evita que variáveis não tipadas passem despercebidas
+    "esModuleInterop": true,      // Necessário para importar bibliotecas como o swagger-parser
+    
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true
   }
 }

@@ -1,0 +1,8 @@
+{
+  "default": {
+    "requireModule": ["tsconfig-paths/register", "ts-node/register"],
+    "require": ["features/step_definitions/**/*.ts"],
+    "paths": ["features/**/*.feature"],
+    "format": ["progress", "json:cucumber-report.json"]
+  }
+}

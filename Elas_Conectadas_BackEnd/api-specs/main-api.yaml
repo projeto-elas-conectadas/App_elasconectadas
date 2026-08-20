@@ -21,14 +21,14 @@ paths:
     $ref: './modules/posts.yaml#/paths/~1posts~1{id}'
 
   # Módulo de auth
-  /auth/login:
-    $ref: './modules/auth.yaml#/paths/~1auth~1login'
-  /auth/send:
-    $ref: './modules/auth.yaml#/paths/~1auth~1send'
-  /auth/request-otp:
-    $ref: './modules/auth.yaml#/paths/~1auth~1request-otp'
-  /auth/verify-otp:
-    $ref: './modules/auth.yaml#/paths/~1auth~1verify-otp' 
+  /login:
+    $ref: './modules/auth.yaml#/paths/~1login'
+  /send:
+    $ref: './modules/auth.yaml#/paths/~1send'
+  /request-otp:
+    $ref: './modules/auth.yaml#/paths/~1request-otp'
+  /verify-otp:
+    $ref: './modules/auth.yaml#/paths/~1verify-otp'
 
   # Módulo de ads
   /ads/create:
