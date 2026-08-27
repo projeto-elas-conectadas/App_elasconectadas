@@ -14,15 +14,20 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> _controllers =
+      List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   bool _isLoading = false;
   bool _isResending = false;
 
   @override
   void dispose() {
-    for (final c in _controllers) c.dispose();
-    for (final f in _focusNodes) f.dispose();
+    for (final c in _controllers) {
+      c.dispose();
+    }
+    for (final f in _focusNodes) {
+      f.dispose();
+    }
     super.dispose();
   }
 
@@ -31,8 +36,9 @@ class _OtpScreenState extends State<OtpScreen> {
   Future<void> _verify() async {
     if (_otpCode.length < 6) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Insira o código completo de 6 dígitos'),
-          backgroundColor: AppColors.error),
+        const SnackBar(
+            content: Text('Insira o código completo de 6 dígitos'),
+            backgroundColor: AppColors.error),
       );
       return;
     }
@@ -41,17 +47,19 @@ class _OtpScreenState extends State<OtpScreen> {
       await AuthService.verifyOtp(widget.email, _otpCode);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('✓ Conta verificada com sucesso!'),
-            backgroundColor: AppColors.success),
+          const SnackBar(
+              content: Text('✓ Conta verificada com sucesso!'),
+              backgroundColor: AppColors.success),
         );
         await Future.delayed(const Duration(milliseconds: 800));
-        if (mounted) context.go('/home');
+        if (mounted) context.go('/login');
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString().replaceAll('Exception: ', '')),
-            backgroundColor: AppColors.error),
+          SnackBar(
+              content: Text(e.toString().replaceAll('Exception: ', '')),
+              backgroundColor: AppColors.error),
         );
       }
     } finally {
@@ -65,11 +73,21 @@ class _OtpScreenState extends State<OtpScreen> {
       await AuthService.requestOtp(widget.email);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Novo código enviado para seu e-mail!'),
-            backgroundColor: AppColors.success),
+          const SnackBar(
+              content: Text('Novo código enviado para seu e-mail!'),
+              backgroundColor: AppColors.success),
         );
       }
-    } catch (_) {} finally {
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.toString()),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    } finally {
       if (mounted) setState(() => _isResending = false);
     }
   }
@@ -96,12 +114,14 @@ class _OtpScreenState extends State<OtpScreen> {
 
               // Ícone envelope
               Container(
-                width: 80, height: 80,
+                width: 80,
+                height: 80,
                 decoration: BoxDecoration(
                   color: AppColors.primaryLight,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Icon(Icons.email_outlined, color: AppColors.primary, size: 42),
+                child: const Icon(Icons.email_outlined,
+                    color: AppColors.primary, size: 42),
               ),
 
               const SizedBox(height: 24),
@@ -119,18 +139,20 @@ class _OtpScreenState extends State<OtpScreen> {
               // ── Campos OTP ─────────────────────────────────────────────
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(6, (i) => _OtpBox(
-                  controller: _controllers[i],
-                  focusNode: _focusNodes[i],
-                  onChanged: (v) {
-                    if (v.isNotEmpty && i < 5) {
-                      _focusNodes[i + 1].requestFocus();
-                    } else if (v.isEmpty && i > 0) {
-                      _focusNodes[i - 1].requestFocus();
-                    }
-                    if (_otpCode.length == 6) _verify();
-                  },
-                )),
+                children: List.generate(
+                    6,
+                    (i) => _OtpBox(
+                          controller: _controllers[i],
+                          focusNode: _focusNodes[i],
+                          onChanged: (v) {
+                            if (v.isNotEmpty && i < 5) {
+                              _focusNodes[i + 1].requestFocus();
+                            } else if (v.isEmpty && i > 0) {
+                              _focusNodes[i - 1].requestFocus();
+                            }
+                            if (_otpCode.length == 6) _verify();
+                          },
+                        )),
               ),
 
               const SizedBox(height: 36),
@@ -149,16 +171,19 @@ class _OtpScreenState extends State<OtpScreen> {
                 children: [
                   Text('Não recebeu? ', style: AppTextStyles.bodyMedium),
                   _isResending
-                      ? const SizedBox(width: 18, height: 18,
+                      ? const SizedBox(
+                          width: 18,
+                          height: 18,
                           child: CircularProgressIndicator(strokeWidth: 2))
                       : GestureDetector(
                           onTap: _resend,
-                          child: Text('Reenviar', style: AppTextStyles.bodyMedium.copyWith(
-                            color: AppColors.primary,
-                            fontWeight: FontWeight.w600,
-                            decoration: TextDecoration.underline,
-                            decorationColor: AppColors.primary,
-                          )),
+                          child: Text('Reenviar',
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.w600,
+                                decoration: TextDecoration.underline,
+                                decorationColor: AppColors.primary,
+                              )),
                         ),
                 ],
               ),

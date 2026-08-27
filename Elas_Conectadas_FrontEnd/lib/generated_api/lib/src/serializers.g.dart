@@ -12,9 +12,22 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(CreatePostDto.serializer)
       ..add(CreateProdutoDto.serializer)
       ..add(CreateUserDto.serializer)
+      ..add(LoginDto.serializer)
+      ..add(LoginResponseDto.serializer)
+      ..add(ProdutoResponseDto.serializer)
+      ..add(RequestTokenDto.serializer)
+      ..add(SendEmailDto.serializer)
       ..add(UpdateAdDto.serializer)
       ..add(UpdatePostDto.serializer)
       ..add(UpdateUserDto.serializer)
+      ..add(UploadResponseDto.serializer)
+      ..add(UserResponseDto.serializer)
+      ..add(UserResponseDtoAccountStatusEnum.serializer)
+      ..add(UserResponseDtoRoleEnum.serializer)
+      ..add(VerifyOtpDto.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => ListBuilder<String>()))

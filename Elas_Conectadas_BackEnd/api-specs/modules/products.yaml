@@ -8,6 +8,12 @@ paths:
       responses:
         '200':
           description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProdutoResponseDto'
     post:
       summary: Cria um novo produto
       operationId: Produtos_create
@@ -22,6 +28,10 @@ paths:
       responses:
         '201':
           description: Produto criado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponseDto'
 
   /produtos/{id}:
     get:
@@ -38,9 +48,56 @@ paths:
       responses:
         '200':
           description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProdutoResponseDto'
 
 components:
   schemas:
+    ProdutoResponseDto:
+      type: object
+      required:
+        - id
+        - nome
+        - descricao
+        - preco
+        - categoria
+        - imagemPrincipal
+        - userId
+        - regiaoAtendimento
+        - criado_em
+      properties:
+        id:
+          type: string
+          format: uuid
+        nome:
+          type: string
+        descricao:
+          type: string
+        preco:
+          type: string
+          description: "Preço ou faixa de preço, conforme informado pela usuária"
+        categoria:
+          type: string
+        imagemPrincipal:
+          type: string
+          format: uri
+        imagensAdicionais:
+          type: array
+          nullable: true
+          items:
+            type: string
+            format: uri
+        userId:
+          type: string
+          format: uuid
+        regiaoAtendimento:
+          type: string
+        criado_em:
+          type: string
+          format: date-time
+
     CreateProdutoDto:
       type: object
       required:
@@ -78,6 +135,7 @@ components:
             - "https://minhaimagem.com/foto3.jpg"  
         userId:
           type: string
+          format: uuid
         regiaoAtendimento: # NOVO CAMPO
           type: string
           example: "Bandeirantes, Itambaracá ou a domicílio"

@@ -22,7 +22,15 @@ export 'package:openapi/src/model/create_admin_dto.dart';
 export 'package:openapi/src/model/create_post_dto.dart';
 export 'package:openapi/src/model/create_produto_dto.dart';
 export 'package:openapi/src/model/create_user_dto.dart';
+export 'package:openapi/src/model/login_dto.dart';
+export 'package:openapi/src/model/login_response_dto.dart';
+export 'package:openapi/src/model/produto_response_dto.dart';
+export 'package:openapi/src/model/request_token_dto.dart';
+export 'package:openapi/src/model/send_email_dto.dart';
 export 'package:openapi/src/model/update_ad_dto.dart';
 export 'package:openapi/src/model/update_post_dto.dart';
 export 'package:openapi/src/model/update_user_dto.dart';
+export 'package:openapi/src/model/upload_response_dto.dart';
+export 'package:openapi/src/model/user_response_dto.dart';
+export 'package:openapi/src/model/verify_otp_dto.dart';
 

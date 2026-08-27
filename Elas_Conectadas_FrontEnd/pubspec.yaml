@@ -14,6 +14,7 @@ dependencies:
   openapi:
     path: lib/generated_api
 
+
   # Dependências que o código gerado precisa
   dio: ^5.4.0
   built_value: ^8.4.0
@@ -48,6 +49,7 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   built_value_generator: ^8.4.0
   build_runner: ^2.4.0
+
 
 flutter:
   uses-material-design: true

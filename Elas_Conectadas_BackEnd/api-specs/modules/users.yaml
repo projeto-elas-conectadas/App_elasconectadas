@@ -13,6 +13,10 @@ paths:
       responses:
         '201':
           description: Usuária registrada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponseDto'
 
   /users/admin:
     post:
@@ -87,6 +91,66 @@ paths:
 
 components:
   schemas:
+    UserResponseDto:
+      type: object
+      required:
+        - id
+        - email
+        - name
+        - role
+        - accountStatus
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        phone:
+          type: string
+          nullable: true
+        dob:
+          type: string
+          nullable: true
+          description: "Data de nascimento no formato DD/MM/AAAA"
+        occupation:
+          type: string
+          nullable: true
+        rua:
+          type: string
+          nullable: true
+        numero:
+          type: string
+          nullable: true
+        bairro:
+          type: string
+          nullable: true
+        cidade:
+          type: string
+          nullable: true
+        estado:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        pfp:
+          type: string
+          format: uri
+          nullable: true
+        role:
+          type: string
+          enum:
+            - USER
+            - ADMIN
+        accountStatus:
+          type: string
+          enum:
+            - VERIFIED
+            - UNVERIFIED
+
     CreateUserDto:
       type: object
       required:

@@ -1,4 +1,10 @@
-import { Controller, Post, UseInterceptors, UploadedFile } from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadService } from './upload.service';
 import { ApiConsumes, ApiBody, ApiTags } from '@nestjs/swagger';
@@ -14,6 +20,7 @@ export class UploadController {
   @ApiBody({
     schema: {
       type: 'object',
+      required: ['file'],
       properties: {
         file: {
           type: 'string',
@@ -23,9 +30,13 @@ export class UploadController {
     },
   })
   async uploadImagem(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new BadRequestException('Selecione uma imagem para enviar');
+    }
+
     // Manda para o serviço e pega a URL de volta
     const url = await this.uploadService.uploadImage(file);
-    
+
     // Responde pro Flutter com a URL
     return { imageUrl: url };
   }

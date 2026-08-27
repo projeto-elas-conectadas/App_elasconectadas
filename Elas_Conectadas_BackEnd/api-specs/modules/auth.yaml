@@ -1,11 +1,20 @@
-# auth.yaml CORRIGIDO — sugestão para enviar ao colega
+# auth.yaml — CORRIGIDO
+# Alterações feitas pelo front-end:
+#   - /auth/login:       adicionado requestBody (LoginDto) e response (LoginResponseDto)
+#   - sendEmailDto:      preenchido properties (antes estava vazio)
+#   - requestTokenDto:   preenchido properties (antes estava vazio)
+#   - VerifyOtpDto:      preenchido properties (antes estava vazio)
+#
+# ⚠️  Schemas preenchidos com base no comportamento observado do backend.
+#      por favor valide se os campos e tipos estão corretos.
+
 paths:
   /auth/login:
     post:
       operationId: AuthController_login
       tags:
         - Auth
-      requestBody:           # 👈 ADICIONADO
+      requestBody:
         required: true
         content:
           application/json:
@@ -14,45 +23,108 @@ paths:
       responses:
         '201':
           description: Login efetuado com sucesso
-          content:           # 👈 ADICIONADO
+          content:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginResponseDto'
 
+  /auth/send:
+    post:
+      operationId: AuthController_sendMail
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/sendEmailDto'
+      responses:
+        '201':
+          description: E-mail enviado
+
+  /auth/request-otp:
+    post:
+      operationId: AuthController_requestOTP
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/requestTokenDto'
+      responses:
+        '201':
+          description: OTP solicitado
+
+  /auth/verify-otp:
+    post:
+      operationId: AuthController_verifyOTP
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyOtpDto'
+      responses:
+        '201':
+          description: OTP verificado
+
 components:
   schemas:
-    LoginDto:               # 👈 NOVO
+    LoginDto:
       type: object
       required: [email, password]
       properties:
         email:
           type: string
           format: email
+          example: "empreendedora@teste.com"
         password:
           type: string
           format: password
+          example: "SenhaSegura123!"
 
-    LoginResponseDto:       # 👈 NOVO
+    LoginResponseDto:
       type: object
       properties:
         access_token:
           type: string
+          description: "Token JWT para autenticação"
         user:
           type: object
+          description: "Dados básicos da usuária logada"
 
-    requestTokenDto:        # 👈 CORRIGIDO (tinha properties vazio)
+    sendEmailDto:
       type: object
       required: [email]
       properties:
         email:
           type: string
           format: email
+          example: "empreendedora@teste.com"
+          description: "E-mail da destinatária"
 
-    VerifyOtpDto:           # 👈 CORRIGIDO (tinha properties vazio)
+    requestTokenDto:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+          example: "empreendedora@teste.com"
+
+    VerifyOtpDto:
       type: object
       required: [email, otp]
       properties:
         email:
           type: string
+          format: email
         otp:
           type: string
+          example: "123456"
+          description: "Código OTP recebido por e-mail"

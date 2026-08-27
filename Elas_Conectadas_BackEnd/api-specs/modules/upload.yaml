@@ -10,6 +10,8 @@ paths:
           multipart/form-data:
             schema:
               type: object
+              required:
+                - file
               properties:
                 file:
                   type: string
@@ -18,3 +20,19 @@ paths:
       responses:
         '201':
           description: Upload realizado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponseDto'
+
+components:
+  schemas:
+    UploadResponseDto:
+      type: object
+      required:
+        - imageUrl
+      properties:
+        imageUrl:
+          type: string
+          format: uri
+          description: URL segura da imagem armazenada no Cloudinary

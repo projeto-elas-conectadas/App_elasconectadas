@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 
 # **authControllerLogin**
-> authControllerLogin()
+> LoginResponseDto authControllerLogin(loginDto)
 
 
 
@@ -25,20 +25,25 @@ Method | HTTP request | Description
 import 'package:openapi/api.dart';
 
 final api = Openapi().getAuthApi();
+final LoginDto loginDto = ; // LoginDto | 
 
 try {
-    api.authControllerLogin();
+    final response = api.authControllerLogin(loginDto);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AuthApi->authControllerLogin: $e\n');
 }
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **loginDto** | [**LoginDto**](LoginDto.md)|  | 
 
 ### Return type
 
-void (empty response body)
+[**LoginResponseDto**](LoginResponseDto.md)
 
 ### Authorization
 
@@ -46,13 +51,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authControllerRequestOTP**
-> authControllerRequestOTP(body)
+> authControllerRequestOTP(requestTokenDto)
 
 
 
@@ -61,10 +66,10 @@ No authorization required
 import 'package:openapi/api.dart';
 
 final api = Openapi().getAuthApi();
-final JsonObject body = Object; // JsonObject | 
+final RequestTokenDto requestTokenDto = ; // RequestTokenDto | 
 
 try {
-    api.authControllerRequestOTP(body);
+    api.authControllerRequestOTP(requestTokenDto);
 } on DioException catch (e) {
     print('Exception when calling AuthApi->authControllerRequestOTP: $e\n');
 }
@@ -74,7 +79,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | **JsonObject**|  | 
+ **requestTokenDto** | [**RequestTokenDto**](RequestTokenDto.md)|  | 
 
 ### Return type
 
@@ -92,7 +97,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authControllerSendMail**
-> authControllerSendMail(body)
+> authControllerSendMail(sendEmailDto)
 
 
 
@@ -101,10 +106,10 @@ No authorization required
 import 'package:openapi/api.dart';
 
 final api = Openapi().getAuthApi();
-final JsonObject body = Object; // JsonObject | 
+final SendEmailDto sendEmailDto = ; // SendEmailDto | 
 
 try {
-    api.authControllerSendMail(body);
+    api.authControllerSendMail(sendEmailDto);
 } on DioException catch (e) {
     print('Exception when calling AuthApi->authControllerSendMail: $e\n');
 }
@@ -114,7 +119,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | **JsonObject**|  | 
+ **sendEmailDto** | [**SendEmailDto**](SendEmailDto.md)|  | 
 
 ### Return type
 
@@ -132,7 +137,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authControllerVerifyOTP**
-> authControllerVerifyOTP(body)
+> authControllerVerifyOTP(verifyOtpDto)
 
 
 
@@ -141,10 +146,10 @@ No authorization required
 import 'package:openapi/api.dart';
 
 final api = Openapi().getAuthApi();
-final JsonObject body = Object; // JsonObject | 
+final VerifyOtpDto verifyOtpDto = ; // VerifyOtpDto | 
 
 try {
-    api.authControllerVerifyOTP(body);
+    api.authControllerVerifyOTP(verifyOtpDto);
 } on DioException catch (e) {
     print('Exception when calling AuthApi->authControllerVerifyOTP: $e\n');
 }
@@ -154,7 +159,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | **JsonObject**|  | 
+ **verifyOtpDto** | [**VerifyOtpDto**](VerifyOtpDto.md)|  | 
 
 ### Return type
 

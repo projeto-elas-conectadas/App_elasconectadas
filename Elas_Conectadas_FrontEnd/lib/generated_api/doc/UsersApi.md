@@ -58,7 +58,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **usersControllerCreateUser**
-> usersControllerCreateUser(createUserDto)
+> UserResponseDto usersControllerCreateUser(createUserDto)
 
 
 
@@ -70,7 +70,8 @@ final api = Openapi().getUsersApi();
 final CreateUserDto createUserDto = ; // CreateUserDto | 
 
 try {
-    api.usersControllerCreateUser(createUserDto);
+    final response = api.usersControllerCreateUser(createUserDto);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling UsersApi->usersControllerCreateUser: $e\n');
 }
@@ -84,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**UserResponseDto**](UserResponseDto.md)
 
 ### Authorization
 
@@ -93,7 +94,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

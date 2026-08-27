@@ -8,8 +8,10 @@ import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:openapi/src/api_util.dart';
 import 'package:openapi/src/model/create_produto_dto.dart';
+import 'package:openapi/src/model/produto_response_dto.dart';
 
 class ProdutosApi {
 
@@ -31,9 +33,9 @@ class ProdutosApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [ProdutoResponseDto] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> produtosCreate({ 
+  Future<Response<ProdutoResponseDto>> produtosCreate({ 
     required CreateProdutoDto createProdutoDto,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -83,7 +85,35 @@ class ProdutosApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    ProdutoResponseDto? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(ProdutoResponseDto),
+      ) as ProdutoResponseDto;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ProdutoResponseDto>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// Lista todos os produtos
@@ -97,9 +127,9 @@ class ProdutosApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [BuiltList<ProdutoResponseDto>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> produtosFindAll({ 
+  Future<Response<BuiltList<ProdutoResponseDto>>> produtosFindAll({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -128,7 +158,35 @@ class ProdutosApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    BuiltList<ProdutoResponseDto>? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(BuiltList, [FullType(ProdutoResponseDto)]),
+      ) as BuiltList<ProdutoResponseDto>;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<BuiltList<ProdutoResponseDto>>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
   /// Busca um produto por ID
@@ -143,9 +201,9 @@ class ProdutosApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [ProdutoResponseDto] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> produtosFindOne({ 
+  Future<Response<ProdutoResponseDto>> produtosFindOne({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -175,7 +233,35 @@ class ProdutosApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    ProdutoResponseDto? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(ProdutoResponseDto),
+      ) as ProdutoResponseDto;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ProdutoResponseDto>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
 }
