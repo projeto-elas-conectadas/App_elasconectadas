@@ -1,4 +1,13 @@
-# auth.yaml CORRIGIDO — sugestão para enviar ao colega
+# auth.yaml — CORRIGIDO
+# Alterações feitas pelo front-end:
+#   - /auth/login:       adicionado requestBody (LoginDto) e response (LoginResponseDto)
+#   - sendEmailDto:      preenchido properties (antes estava vazio)
+#   - requestTokenDto:   preenchido properties (antes estava vazio)
+#   - VerifyOtpDto:      preenchido properties (antes estava vazio)
+#
+# ⚠️  Schemas preenchidos com base no comportamento observado do backend.
+#      por favor valide se os campos e tipos estão corretos.
+
 paths:
   /login:
     post:
@@ -13,9 +22,13 @@ paths:
               $ref: '#/components/schemas/LoginDto'
       responses:
         '201':
-          description: Login efetuado com sucesso (Retorna Token)
+          description: Login efetuado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDto'
 
-  /send:
+  /auth/send:
     post:
       operationId: AuthController_sendMail
       tags:
@@ -30,7 +43,7 @@ paths:
         '201':
           description: E-mail enviado
 
-  /request-otp:
+  /auth/request-otp:
     post:
       operationId: AuthController_requestOTP
       tags:
@@ -45,7 +58,7 @@ paths:
         '201':
           description: OTP solicitado
 
-  /verify-otp:
+  /auth/verify-otp:
     post:
       operationId: AuthController_verifyOTP
       tags:
@@ -71,21 +84,33 @@ components:
         email:
           type: string
           format: email
-          example: "admin@elasconectadas.com"
+          example: "empreendedora@teste.com"
         password:
           type: string
           format: password
-          example: "Senha123!"
+          example: "SenhaSegura123!"
 
-    sendEmailDto:
+    LoginResponseDto:
       type: object
       required:
         - email
       properties:
         email:
           type: string
+          description: "Token JWT para autenticação"
+        user:
+          type: object
+          description: "Dados básicos da usuária logada"
+
+    sendEmailDto:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
           format: email
-          example: "usuario@teste.com"
+          example: "empreendedora@teste.com"
+          description: "E-mail da destinatária"
 
     requestTokenDto:
       type: object
@@ -95,6 +120,7 @@ components:
         email:
           type: string
           format: email
+          example: "empreendedora@teste.com"
 
     VerifyOtpDto:
       type: object
@@ -108,4 +134,4 @@ components:
         otp:
           type: string
           example: "123456"
-          description: "Código de 6 dígitos recebido por e-mail"
+          description: "Código OTP recebido por e-mail"

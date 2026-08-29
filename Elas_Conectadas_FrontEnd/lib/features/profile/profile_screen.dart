@@ -9,7 +9,8 @@ class ProfileScreen extends StatelessWidget {
   // Dados de exemplo — serão substituídos pela API
   static const _name = 'Ana Maria';
   static const _occupation = 'Empreendedora · Artesã em Crochê';
-  static const _bio = 'Empreendedora apaixonada por crochê, compartilho criações e dicas. Sempre aberta a parcerias e colaborações criativas.';
+  static const _bio =
+      'Empreendedora apaixonada por crochê, compartilho criações e dicas. Sempre aberta a parcerias e colaborações criativas.';
   static const _verified = true;
 
   @override
@@ -18,8 +19,13 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(_name),
         actions: [
-          IconButton(icon: const Icon(Icons.menu, color: AppColors.textWhite), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.settings_outlined, color: AppColors.textWhite), onPressed: () {}),
+          IconButton(
+              icon: const Icon(Icons.menu, color: AppColors.textWhite),
+              onPressed: () {}),
+          IconButton(
+              icon: const Icon(Icons.settings_outlined,
+                  color: AppColors.textWhite),
+              onPressed: () {}),
         ],
       ),
       body: SingleChildScrollView(
@@ -50,19 +56,24 @@ class ProfileScreen extends StatelessWidget {
                       CircleAvatar(
                         radius: 44,
                         backgroundColor: AppColors.primaryLight,
-                        child: Text('AM', style: AppTextStyles.displayLarge.copyWith(fontSize: 28)),
+                        child: Text('AM',
+                            style: AppTextStyles.displayLarge
+                                .copyWith(fontSize: 28)),
                       ),
                       if (_verified)
                         Positioned(
-                          bottom: 2, right: 2,
+                          bottom: 2,
+                          right: 2,
                           child: Container(
-                            width: 22, height: 22,
+                            width: 22,
+                            height: 22,
                             decoration: BoxDecoration(
                               color: AppColors.primary,
                               shape: BoxShape.circle,
                               border: Border.all(color: Colors.white, width: 2),
                             ),
-                            child: const Icon(Icons.check, color: Colors.white, size: 13),
+                            child: const Icon(Icons.check,
+                                color: Colors.white, size: 13),
                           ),
                         ),
                     ],
@@ -80,7 +91,9 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Text(_name, style: AppTextStyles.headlineMedium),
                   const SizedBox(height: 4),
-                  Text(_occupation, style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
+                  Text(_occupation,
+                      style: AppTextStyles.bodyMedium,
+                      textAlign: TextAlign.center),
                   const SizedBox(height: 16),
 
                   // Botão Conectar (visível em perfis alheios)
@@ -89,11 +102,11 @@ class ProfileScreen extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // ── Stats ──────────────────────────────────────────────
-                  Row(
+                  const Row(
                     children: [
-                      _StatCard(value: '12', label: 'Anúncios'),
-                      const SizedBox(width: 10),
-                      _StatCard(value: '48', label: 'Conexões'),
+                      const _StatCard(value: '12', label: 'Anúncios'),
+                      SizedBox(width: 10),
+                      const _StatCard(value: '48', label: 'Conexões'),
                     ],
                   ),
 
@@ -129,7 +142,8 @@ class _StatCard extends StatelessWidget {
   final String value;
   final String label;
   final Color? valueColor;
-  const _StatCard({required this.value, required this.label, this.valueColor});
+  const _StatCard({required this.value, required this.label})
+      : valueColor = null;
 
   @override
   Widget build(BuildContext context) {
@@ -139,8 +153,9 @@ class _StatCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 14),
           child: Column(
             children: [
-              Text(value, style: AppTextStyles.titleLarge.copyWith(
-                color: valueColor ?? AppColors.textDark)),
+              Text(value,
+                  style: AppTextStyles.titleLarge
+                      .copyWith(color: valueColor ?? AppColors.textDark)),
               const SizedBox(height: 2),
               Text(label, style: AppTextStyles.labelMedium),
             ],

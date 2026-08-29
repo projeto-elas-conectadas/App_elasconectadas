@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 
 # **produtosCreate**
-> produtosCreate(createProdutoDto)
+> ProdutoResponseDto produtosCreate(createProdutoDto)
 
 Cria um novo produto
 
@@ -27,7 +27,8 @@ final api = Openapi().getProdutosApi();
 final CreateProdutoDto createProdutoDto = ; // CreateProdutoDto | 
 
 try {
-    api.produtosCreate(createProdutoDto);
+    final response = api.produtosCreate(createProdutoDto);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling ProdutosApi->produtosCreate: $e\n');
 }
@@ -41,7 +42,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**ProdutoResponseDto**](ProdutoResponseDto.md)
 
 ### Authorization
 
@@ -50,12 +51,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **produtosFindAll**
-> produtosFindAll()
+> BuiltList<ProdutoResponseDto> produtosFindAll()
 
 Lista todos os produtos
 
@@ -66,7 +67,8 @@ import 'package:openapi/api.dart';
 final api = Openapi().getProdutosApi();
 
 try {
-    api.produtosFindAll();
+    final response = api.produtosFindAll();
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling ProdutosApi->produtosFindAll: $e\n');
 }
@@ -77,7 +79,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**BuiltList&lt;ProdutoResponseDto&gt;**](ProdutoResponseDto.md)
 
 ### Authorization
 
@@ -86,12 +88,12 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **produtosFindOne**
-> produtosFindOne(id)
+> ProdutoResponseDto produtosFindOne(id)
 
 Busca um produto por ID
 
@@ -103,7 +105,8 @@ final api = Openapi().getProdutosApi();
 final String id = id_example; // String | 
 
 try {
-    api.produtosFindOne(id);
+    final response = api.produtosFindOne(id);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling ProdutosApi->produtosFindOne: $e\n');
 }
@@ -117,7 +120,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**ProdutoResponseDto**](ProdutoResponseDto.md)
 
 ### Authorization
 
@@ -126,7 +129,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

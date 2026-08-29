@@ -22,9 +22,11 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
   final _nomeController = TextEditingController();
   final _descricaoController = TextEditingController();
   final _precoController = TextEditingController();
+  final _regiaoController = TextEditingController();
 
   String _categoria = 'PRODUCT'; // PRODUCT ou SERVICE
   Uint8List? _imagemBytes;
+  String _imagemNome = 'upload.jpg';
   bool _isLoading = false;
 
   @override
@@ -32,6 +34,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
     _nomeController.dispose();
     _descricaoController.dispose();
     _precoController.dispose();
+    _regiaoController.dispose();
     super.dispose();
   }
 
@@ -45,13 +48,26 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
     );
     if (picked != null) {
       final bytes = await picked.readAsBytes();
-      setState(() => _imagemBytes = bytes);
+      setState(() {
+        _imagemBytes = bytes;
+        _imagemNome = picked.name;
+      });
     }
   }
 
   // ── Envio do formulário ────────────────────────────────────────────────────
   Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
+
+    if (_imagemBytes == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Adicione uma foto para publicar o anúncio.'),
+          backgroundColor: AppColors.error,
+        ),
+      );
+      return;
+    }
 
     // Pega o userId salvo no login
     final prefs = await SharedPreferences.getInstance();
@@ -61,9 +77,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
       // Extrai o id do JSON salvo
       final map = Map<String, dynamic>.from(
         // parse simples sem importar dart:convert extra
-        (userData.isNotEmpty)
-            ? _parseSimpleJson(userData)
-            : {},
+        (userData.isNotEmpty) ? _parseSimpleJson(userData) : {},
       );
       userId = map['id']?.toString() ?? '';
     }
@@ -85,11 +99,12 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
       await ProdutoService.criar(
         nome: _nomeController.text.trim(),
         descricao: _descricaoController.text.trim(),
-        preco: _precoController.text.trim().replaceAll(',', '.'),
+        preco: _precoController.text.trim(),
         categoria: _categoria,
         userId: userId,
-        imagemPrincipal: '', // TODO: implementar upload de imagem via UploadsApi
-        regiaoAtendimento: 'A definir', // TODO: adicionar campo na tela
+        imagemBytes: _imagemBytes!,
+        imagemNome: _imagemNome,
+        regiaoAtendimento: _regiaoController.text.trim(),
       );
 
       if (mounted) {
@@ -146,7 +161,6 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 // ── Seletor de tipo (Produto / Serviço) ──────────────────────
                 Text('Tipo de anúncio', style: AppTextStyles.titleMedium),
                 const SizedBox(height: 10),
@@ -241,7 +255,8 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                 CustomInput(
                   controller: _descricaoController,
                   label: 'Descrição',
-                  hint: 'Descreva seu ${_categoria == 'PRODUCT' ? 'produto' : 'serviço'}...',
+                  hint:
+                      'Descreva seu ${_categoria == 'PRODUCT' ? 'produto' : 'serviço'}...',
                   prefixIcon: Icons.description_outlined,
                   maxLines: 4,
                   validator: (v) => (v == null || v.trim().isEmpty)
@@ -254,20 +269,26 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
                 // ── Preço ───────────────────────────────────────────────────
                 CustomInput(
                   controller: _precoController,
-                  label: 'Preço (R\$)',
-                  hint: 'Ex: 99,90',
+                  label: 'Preço ou faixa de preço',
+                  hint: 'Ex: R\$ 99,90 ou R\$ 100 - R\$ 150',
                   prefixIcon: Icons.attach_money,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  validator: (v) {
-                    if (v == null || v.trim().isEmpty) return 'Informe o preço';
-                    final parsed =
-                        double.tryParse(v.trim().replaceAll(',', '.'));
-                    if (parsed == null || parsed < 0) {
-                      return 'Preço inválido';
-                    }
-                    return null;
-                  },
+                  keyboardType: TextInputType.text,
+                  validator: (v) => (v == null || v.trim().isEmpty)
+                      ? 'Informe o preço ou a faixa de preço'
+                      : null,
+                ),
+
+                const SizedBox(height: 16),
+
+                // ── Região de atendimento ─────────────────────────────────
+                CustomInput(
+                  controller: _regiaoController,
+                  label: 'Região de atendimento',
+                  hint: 'Ex: Itambaracá e região ou a domicílio',
+                  prefixIcon: Icons.location_on_outlined,
+                  validator: (v) => (v == null || v.trim().isEmpty)
+                      ? 'Informe a região de atendimento'
+                      : null,
                 ),
 
                 const SizedBox(height: 32),
@@ -329,7 +350,7 @@ class _TipoChip extends StatelessWidget {
           boxShadow: selected
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.3),
+                    color: AppColors.primary.withValues(alpha: 0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 3),
                   )

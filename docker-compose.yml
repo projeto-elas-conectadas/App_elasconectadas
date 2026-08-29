@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   db:
     image: mysql:8.0
@@ -15,11 +14,17 @@ services:
       - db_data:/var/lib/mysql
 
   backend:
+    # Opcional: no desenvolvimento padrão, apenas o MySQL roda no Docker.
+    # Para executar também o backend no container, use o perfil full-stack.
+    profiles:
+      - full-stack
     image: node:20
     working_dir: /app
     restart: always
     volumes:
       - ./Elas_Conectadas_BackEnd:/app
+      # Mantém dependências Linux do container fora do node_modules do Windows.
+      - backend_node_modules:/app/node_modules
     ports:
       - "8080:8080"
     env_file:
@@ -30,3 +35,4 @@ services:
 
 volumes:
   db_data:
+  backend_node_modules:

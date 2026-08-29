@@ -7,22 +7,22 @@ void main() {
   final instance = Openapi().getAuthApi();
 
   group(AuthApi, () {
-    //Future authControllerLogin() async
+    //Future<LoginResponseDto> authControllerLogin(LoginDto loginDto) async
     test('test authControllerLogin', () async {
       // TODO
     });
 
-    //Future authControllerRequestOTP(JsonObject body) async
+    //Future authControllerRequestOTP(RequestTokenDto requestTokenDto) async
     test('test authControllerRequestOTP', () async {
       // TODO
     });
 
-    //Future authControllerSendMail(JsonObject body) async
+    //Future authControllerSendMail(SendEmailDto sendEmailDto) async
     test('test authControllerSendMail', () async {
       // TODO
     });
 
-    //Future authControllerVerifyOTP(JsonObject body) async
+    //Future authControllerVerifyOTP(VerifyOtpDto verifyOtpDto) async
     test('test authControllerVerifyOTP', () async {
       // TODO
     });

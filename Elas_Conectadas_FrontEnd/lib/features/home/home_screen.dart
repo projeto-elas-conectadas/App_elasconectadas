@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/models/produto_model.dart';
@@ -47,7 +46,8 @@ class _HomeScreenState extends State<HomeScreen>
       if (mounted) setState(() => _produtos = lista);
     } catch (e) {
       if (mounted) {
-        setState(() => _errorMessage = e.toString().replaceAll('Exception: ', ''));
+        setState(
+            () => _errorMessage = e.toString().replaceAll('Exception: ', ''));
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -64,11 +64,13 @@ class _HomeScreenState extends State<HomeScreen>
         title: const Text('Elas Conectadas'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: AppColors.textWhite),
+            icon: const Icon(Icons.notifications_outlined,
+                color: AppColors.textWhite),
             onPressed: () {},
           ),
           IconButton(
-            icon: const Icon(Icons.settings_outlined, color: AppColors.textWhite),
+            icon:
+                const Icon(Icons.settings_outlined, color: AppColors.textWhite),
             onPressed: () {},
           ),
         ],
@@ -87,7 +89,8 @@ class _HomeScreenState extends State<HomeScreen>
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _errorMessage != null
-                    ? _ErrorView(message: _errorMessage!, onRetry: _loadProdutos)
+                    ? _ErrorView(
+                        message: _errorMessage!, onRetry: _loadProdutos)
                     : TabBarView(
                         controller: _tabController,
                         children: [
@@ -125,9 +128,11 @@ class _HomeScreenState extends State<HomeScreen>
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('O que você quer publicar?', style: AppTextStyles.headlineMedium),
+            Text('O que você quer publicar?',
+                style: AppTextStyles.headlineMedium),
             const SizedBox(height: 8),
-            Text('Parcerias serão adicionadas em breve', style: AppTextStyles.bodyMedium),
+            Text('Parcerias serão adicionadas em breve',
+                style: AppTextStyles.bodyMedium),
             const SizedBox(height: 16),
             _SheetOption(
               icon: Icons.shopping_bag_outlined,
@@ -173,9 +178,11 @@ class _ProdutoFeed extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.inbox_outlined, size: 48, color: AppColors.border),
+                  const Icon(Icons.inbox_outlined,
+                      size: 48, color: AppColors.border),
                   const SizedBox(height: 8),
-                  Text('Nenhum anúncio aqui ainda', style: AppTextStyles.bodyMedium),
+                  Text('Nenhum anúncio aqui ainda',
+                      style: AppTextStyles.bodyMedium),
                   const SizedBox(height: 4),
                   Text('Puxe para atualizar', style: AppTextStyles.labelMedium),
                 ],
@@ -204,7 +211,7 @@ class _ProdutoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isService = produto.categoria == 'SERVICE';
-    final imagemWidget = _buildImagem(produto.imagemUrl);
+    final imagemWidget = _buildImagem(produto.imagemPrincipal);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -227,7 +234,8 @@ class _ProdutoCard extends StatelessWidget {
                 children: [
                   // Chip de categoria
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: AppColors.chip,
                       borderRadius: BorderRadius.circular(6),
@@ -258,7 +266,8 @@ class _ProdutoCard extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
                         minimumSize: Size.zero,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
@@ -289,19 +298,23 @@ class _ProdutoCard extends StatelessWidget {
       try {
         final base64Str = imagemUrl.split(',').last;
         final bytes = base64Decode(base64Str);
-        return Image.memory(bytes, fit: BoxFit.cover, errorBuilder: (_, __, ___) => _iconePlaceholder());
+        return Image.memory(bytes,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) => _iconePlaceholder());
       } catch (_) {
         return _iconePlaceholder();
       }
     }
     // URL remota
-    return Image.network(imagemUrl, fit: BoxFit.cover, errorBuilder: (_, __, ___) => _iconePlaceholder());
+    return Image.network(imagemUrl,
+        fit: BoxFit.cover, errorBuilder: (_, __, ___) => _iconePlaceholder());
   }
 
   Widget _iconePlaceholder() {
     return Container(
       color: AppColors.primaryLight,
-      child: const Icon(Icons.image_outlined, color: AppColors.primary, size: 32),
+      child:
+          const Icon(Icons.image_outlined, color: AppColors.primary, size: 32),
     );
   }
 }
@@ -320,13 +333,16 @@ class _ErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.wifi_off_outlined, size: 48, color: AppColors.border),
+            const Icon(Icons.wifi_off_outlined,
+                size: 48, color: AppColors.border),
             const SizedBox(height: 12),
             Text('Não foi possível carregar', style: AppTextStyles.titleMedium),
             const SizedBox(height: 4),
-            Text(message, style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
+            Text(message,
+                style: AppTextStyles.bodyMedium, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            ElevatedButton(onPressed: onRetry, child: const Text('Tentar novamente')),
+            ElevatedButton(
+                onPressed: onRetry, child: const Text('Tentar novamente')),
           ],
         ),
       ),
@@ -347,7 +363,8 @@ class _UnverifiedBanner extends StatelessWidget {
           Expanded(
             child: Text(
               'Conta não verificada · Verifique para aparecer nas buscas',
-              style: AppTextStyles.labelMedium.copyWith(color: AppColors.textMedium),
+              style: AppTextStyles.labelMedium
+                  .copyWith(color: AppColors.textMedium),
             ),
           ),
           GestureDetector(
@@ -387,7 +404,8 @@ class _SheetOption extends StatelessWidget {
       subtitle: subtitle != null
           ? Text(subtitle!, style: AppTextStyles.labelMedium)
           : null,
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.textLight),
+      trailing: const Icon(Icons.arrow_forward_ios,
+          size: 16, color: AppColors.textLight),
       onTap: onTap,
     );
   }

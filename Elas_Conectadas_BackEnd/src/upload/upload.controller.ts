@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   HttpCode,
   Post,
@@ -16,6 +17,10 @@ export class UploadController {
   @HttpCode(201)
   @UseInterceptors(FileInterceptor('file'))
   async uploadImagem(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new BadRequestException('Selecione uma imagem para enviar');
+    }
+
     const url = await this.uploadService.uploadImage(file);
     return { imageUrl: url };
   }

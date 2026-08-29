@@ -97,9 +97,17 @@ Class | Method | HTTP request | Description
  - [CreatePostDto](doc/CreatePostDto.md)
  - [CreateProdutoDto](doc/CreateProdutoDto.md)
  - [CreateUserDto](doc/CreateUserDto.md)
+ - [LoginDto](doc/LoginDto.md)
+ - [LoginResponseDto](doc/LoginResponseDto.md)
+ - [ProdutoResponseDto](doc/ProdutoResponseDto.md)
+ - [RequestTokenDto](doc/RequestTokenDto.md)
+ - [SendEmailDto](doc/SendEmailDto.md)
  - [UpdateAdDto](doc/UpdateAdDto.md)
  - [UpdatePostDto](doc/UpdatePostDto.md)
  - [UpdateUserDto](doc/UpdateUserDto.md)
+ - [UploadResponseDto](doc/UploadResponseDto.md)
+ - [UserResponseDto](doc/UserResponseDto.md)
+ - [VerifyOtpDto](doc/VerifyOtpDto.md)
 
 
 ## Documentation For Authorization

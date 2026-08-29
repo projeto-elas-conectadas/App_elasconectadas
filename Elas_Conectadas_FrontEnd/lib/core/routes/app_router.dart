@@ -69,18 +69,20 @@ class MainShell extends StatefulWidget {
 }
 
 class _MainShellState extends State<MainShell> {
-  int _selectedIndex = 0;
-
   static const _routes = ['/home', '/mural', '/profile'];
 
   @override
   Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).matchedLocation;
+    final selectedIndex = _routes.indexWhere(
+      (route) => location == route || location.startsWith('$route/'),
+    );
+
     return Scaffold(
       body: widget.child,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedIndex,
+        selectedIndex: selectedIndex < 0 ? 0 : selectedIndex,
         onDestinationSelected: (index) {
-          setState(() => _selectedIndex = index);
           context.go(_routes[index]);
         },
         destinations: const [

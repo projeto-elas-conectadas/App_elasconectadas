@@ -57,6 +57,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
       }
     } catch (e) {
       if (mounted) {
+        if (e is AuthException &&
+            e.statusCode == 400 &&
+            e.message.toLowerCase().contains('já está cadastrado')) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Conta já cadastrada. Informe o código enviado.'),
+              backgroundColor: AppColors.success,
+            ),
+          );
+          context.go('/otp', extra: _emailController.text.trim());
+          return;
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(e.toString().replaceAll('Exception: ', '')),
@@ -80,7 +93,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           icon: const Icon(Icons.arrow_back, color: AppColors.primary),
           onPressed: () => context.go('/login'),
         ),
-        title: Text('Criar conta', style: AppTextStyles.titleLarge.copyWith(color: AppColors.primary)),
+        title: Text('Criar conta',
+            style: AppTextStyles.titleLarge.copyWith(color: AppColors.primary)),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -94,7 +108,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: 'Nome completo',
                   hint: 'Seu nome',
                   prefixIcon: Icons.person_outline,
-                  validator: (v) => (v == null || v.isEmpty) ? 'Informe seu nome' : null,
+                  validator: (v) =>
+                      (v == null || v.isEmpty) ? 'Informe seu nome' : null,
                 ),
                 const SizedBox(height: 14),
                 CustomInput(
@@ -118,10 +133,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   obscureText: _obscurePassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                      color: AppColors.primary, size: 20,
+                      _obscurePassword
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                      color: AppColors.primary,
+                      size: 20,
                     ),
-                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                    onPressed: () =>
+                        setState(() => _obscurePassword = !_obscurePassword),
                   ),
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Informe sua senha';
@@ -136,8 +155,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hint: '(11) 99999-9999',
                   prefixIcon: Icons.phone_outlined,
                   keyboardType: TextInputType.phone,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, _PhoneFormatter()],
-                  validator: (v) => (v == null || v.isEmpty) ? 'Informe seu celular' : null,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    _PhoneFormatter()
+                  ],
+                  validator: (v) =>
+                      (v == null || v.isEmpty) ? 'Informe seu celular' : null,
                 ),
                 const SizedBox(height: 14),
                 CustomInput(
@@ -146,9 +169,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   hint: 'DD/MM/AAAA',
                   prefixIcon: Icons.cake_outlined,
                   keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly, _DateFormatter()],
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    _DateFormatter()
+                  ],
                   validator: (v) {
-                    if (v == null || v.isEmpty) return 'Informe sua data de nascimento';
+                    if (v == null || v.isEmpty)
+                      return 'Informe sua data de nascimento';
                     if (v.length < 10) return 'Data incompleta (DD/MM/AAAA)';
                     return null;
                   },
@@ -166,12 +193,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Text('Já tem conta? ', style: AppTextStyles.bodyMedium),
                     GestureDetector(
                       onTap: () => context.go('/login'),
-                      child: Text('Faça o login!', style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.primary,
-                      )),
+                      child: Text('Faça o login!',
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.primary,
+                          )),
                     ),
                   ],
                 ),
@@ -189,7 +217,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
 class _PhoneFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     final digits = newValue.text.replaceAll(RegExp(r'\D'), '');
     final buffer = StringBuffer();
     for (int i = 0; i < digits.length && i < 11; i++) {
@@ -208,7 +237,8 @@ class _PhoneFormatter extends TextInputFormatter {
 
 class _DateFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     final digits = newValue.text.replaceAll(RegExp(r'\D'), '');
     final buffer = StringBuffer();
     for (int i = 0; i < digits.length && i < 8; i++) {

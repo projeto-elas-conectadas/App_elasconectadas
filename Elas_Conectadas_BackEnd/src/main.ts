@@ -40,7 +40,9 @@ async function bootstrap() {
         validateResponses: true,
       }),
     );
-    console.log('✅ Documentação e Validação Spec-Driven ativas (openapi-spec.json)!');
+    console.log(
+      '✅ Documentação e Validação Spec-Driven ativas (openapi-spec.json)!',
+    );
   } catch (error) {
     console.error(
       '❌ Erro ao carregar openapi-spec.json. Execute: npm run build:spec',
