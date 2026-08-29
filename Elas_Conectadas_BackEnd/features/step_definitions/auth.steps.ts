@@ -5,7 +5,7 @@ import * as assert from 'assert';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
-const API_URL = 'http://localhost:3006'; 
+const API_URL = 'http://127.0.0.1:8080';
 let response: any;
 
 // Hook para limpar os dados de teste antes de tudo

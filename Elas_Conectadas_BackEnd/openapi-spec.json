@@ -1,0 +1,870 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Elas Conectadas",
+    "description": "Arquitetura Orientada a Contratos (Modular)",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Servidor de Desenvolvimento Local"
+    }
+  ],
+  "paths": {
+    "/upload/imagem": {
+      "post": {
+        "operationId": "UploadController_uploadImagem",
+        "tags": [
+          "Uploads"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Arquivo de imagem a ser enviado"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Upload realizado com sucesso"
+          }
+        }
+      }
+    },
+    "/posts/create": {
+      "post": {
+        "operationId": "PostsController_createPost",
+        "tags": [
+          "Posts"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Post criado"
+          }
+        }
+      }
+    },
+    "/posts/list": {
+      "get": {
+        "operationId": "PostsController_getPosts",
+        "tags": [
+          "Posts"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de posts"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "operationId": "PostsController_getPostById",
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post retornado"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "PostsController_updatePostById",
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePostDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Post atualizado"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "PostsController_deletePostById",
+        "tags": [
+          "Posts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post apagado"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Login efetuado com sucesso (Retorna Token)"
+          }
+        }
+      }
+    },
+    "/auth/send": {
+      "post": {
+        "operationId": "AuthController_sendMail",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/sendEmailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "E-mail enviado"
+          }
+        }
+      }
+    },
+    "/auth/request-otp": {
+      "post": {
+        "operationId": "AuthController_requestOTP",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/requestTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OTP solicitado"
+          }
+        }
+      }
+    },
+    "/auth/verify-otp": {
+      "post": {
+        "operationId": "AuthController_verifyOTP",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OTP verificado"
+          }
+        }
+      }
+    },
+    "/ads/create": {
+      "post": {
+        "operationId": "AdsController_createAd",
+        "tags": [
+          "Ads"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Anúncio criado"
+          }
+        }
+      }
+    },
+    "/ads/list": {
+      "get": {
+        "operationId": "AdsController_getAllAds",
+        "tags": [
+          "Ads"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de anúncios"
+          }
+        }
+      }
+    },
+    "/ads/{id}": {
+      "get": {
+        "operationId": "AdsController_getAdById",
+        "tags": [
+          "Ads"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do anúncio"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "AdsController_patchAd",
+        "tags": [
+          "Ads"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAdDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Anúncio atualizado"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "AdsController_deleteAdById",
+        "tags": [
+          "Ads"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Anúncio removido"
+          }
+        }
+      }
+    },
+    "/produtos": {
+      "get": {
+        "summary": "Lista todos os produtos",
+        "operationId": "Produtos_findAll",
+        "tags": [
+          "Produtos"
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo produto",
+        "operationId": "Produtos_create",
+        "tags": [
+          "Produtos"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProdutoDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Produto criado"
+          }
+        }
+      }
+    },
+    "/produtos/{id}": {
+      "get": {
+        "summary": "Busca um produto por ID",
+        "operationId": "Produtos_findOne",
+        "tags": [
+          "Produtos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sucesso"
+          }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "operationId": "UsersController_createUser",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuária registrada com sucesso"
+          }
+        }
+      }
+    },
+    "/users/admin": {
+      "post": {
+        "operationId": "UsersController_createAdmin",
+        "tags": [
+          "Users"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAdminDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Admin registrado com sucesso"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "operationId": "UsersController_getUsers",
+        "tags": [
+          "Users"
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de usuárias retornada"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "operationId": "UsersController_getUserById",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados da usuária"
+          }
+        }
+      },
+      "patch": {
+        "operationId": "UsersController_updateUserById",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuária atualizada"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "UsersController_deleteUserById",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuária removida"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreatePostDto": {
+        "type": "object",
+        "required": [
+          "title",
+          "content",
+          "type"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Workshop: Finanças para Empreendedoras"
+          },
+          "content": {
+            "type": "string",
+            "example": "Aprenda a gerir o fluxo de caixa do seu negócio em 3 passos..."
+          },
+          "type": {
+            "type": "string",
+            "example": "COURSE",
+            "description": "Valores aceitos: EVENT ou COURSE"
+          },
+          "cover": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://res.cloudinary.com/demo/image/upload/v1/posts/capa-curso.jpg",
+            "description": "Link da imagem da capa no Cloudinary"
+          }
+        }
+      },
+      "UpdatePostDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "cover": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "LoginDto": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "admin@elasconectadas.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "Senha123!"
+          }
+        }
+      },
+      "sendEmailDto": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "usuario@teste.com"
+          }
+        }
+      },
+      "requestTokenDto": {
+        "type": "object",
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          }
+        }
+      },
+      "VerifyOtpDto": {
+        "type": "object",
+        "required": [
+          "email",
+          "otp"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "otp": {
+            "type": "string",
+            "example": "123456",
+            "description": "Código de 6 dígitos recebido por e-mail"
+          }
+        }
+      },
+      "CreateAdDto": {
+        "type": "object",
+        "required": [
+          "title",
+          "content",
+          "type"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Desconto de 20% no Dia das Mães"
+          },
+          "content": {
+            "type": "string",
+            "example": "Aproveite nossa promoção especial para todos os serviços agendados nesta semana!"
+          },
+          "type": {
+            "type": "string",
+            "example": "PRODUCT",
+            "description": "Valores aceitos: PRODUCT, SERVICE ou COLLAB"
+          },
+          "cover": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://res.cloudinary.com/demo/image/upload/v1/ads/capa-promo.jpg",
+            "description": "Link da imagem da capa no Cloudinary"
+          }
+        }
+      },
+      "UpdateAdDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "cover": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "CreateProdutoDto": {
+        "type": "object",
+        "required": [
+          "nome",
+          "descricao",
+          "preco",
+          "categoria",
+          "imagemPrincipal",
+          "userId",
+          "regiaoAtendimento"
+        ],
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Consultoria de TI"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "preco": {
+            "type": "string",
+            "example": "R$ 120,00 - R$ 200,00"
+          },
+          "categoria": {
+            "type": "string"
+          },
+          "imagemPrincipal": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL da imagem de capa do produto",
+            "example": "https://minhaimagem.com/principal.jpg"
+          },
+          "imagensAdicionais": {
+            "type": "array",
+            "description": "Lista com URLs de fotos extras do produto",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "example": [
+              "https://minhaimagem.com/foto2.jpg",
+              "https://minhaimagem.com/foto3.jpg"
+            ]
+          },
+          "userId": {
+            "type": "string"
+          },
+          "regiaoAtendimento": {
+            "type": "string",
+            "example": "Bandeirantes, Itambaracá ou a domicílio",
+            "description": "Cidades atendidas ou tipo de atendimento"
+          }
+        }
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "required": [
+          "email",
+          "password",
+          "name",
+          "phone",
+          "dob"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "empreendedora@teste.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "SenhaSegura123!"
+          },
+          "name": {
+            "type": "string",
+            "example": "Maria da Silva"
+          },
+          "phone": {
+            "type": "string",
+            "example": "(43) 99999-8888"
+          },
+          "dob": {
+            "type": "string",
+            "example": "15/05/1995",
+            "description": "Formato DD/MM/AAAA"
+          }
+        }
+      },
+      "CreateAdminDto": {
+        "type": "object",
+        "required": [
+          "email",
+          "password",
+          "name"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateUserDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Maria Silva Santos"
+          },
+          "phone": {
+            "type": "string",
+            "example": "(43) 99999-0000"
+          },
+          "occupation": {
+            "type": "string",
+            "example": "Artesã"
+          },
+          "bio": {
+            "type": "string",
+            "example": "Trabalho com bordados personalizados há 10 anos."
+          },
+          "pfp": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL da foto no Cloudinary"
+          },
+          "rua": {
+            "type": "string",
+            "example": "Rua Principal"
+          },
+          "numero": {
+            "type": "string",
+            "example": "500"
+          },
+          "bairro": {
+            "type": "string",
+            "example": "Centro"
+          },
+          "cidade": {
+            "type": "string",
+            "example": "Itambaracá"
+          },
+          "estado": {
+            "type": "string",
+            "example": "PR"
+          }
+        }
+      }
+    }
+  }
+}

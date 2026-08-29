@@ -13,21 +13,21 @@ paths:
     $ref: './modules/upload.yaml#/paths/~1upload~1imagem'
 
   # Módulo de posts
-  /posts/create:    
-    $ref: './modules/posts.yaml#/paths/~1posts~1create' 
+  /posts/create:
+    $ref: './modules/posts.yaml#/paths/~1posts~1create'
   /posts/list:
     $ref: './modules/posts.yaml#/paths/~1posts~1list'
   /posts/{id}:
     $ref: './modules/posts.yaml#/paths/~1posts~1{id}'
 
   # Módulo de auth
-  /login:
+  /auth/login:
     $ref: './modules/auth.yaml#/paths/~1login'
-  /send:
+  /auth/send:
     $ref: './modules/auth.yaml#/paths/~1send'
-  /request-otp:
+  /auth/request-otp:
     $ref: './modules/auth.yaml#/paths/~1request-otp'
-  /verify-otp:
+  /auth/verify-otp:
     $ref: './modules/auth.yaml#/paths/~1verify-otp'
 
   # Módulo de ads
@@ -36,17 +36,17 @@ paths:
   /ads/list:
     $ref: './modules/ads.yaml#/paths/~1ads~1list'
   /ads/{id}:
-    $ref: './modules/ads.yaml#/paths/~1ads~1{id}'  
+    $ref: './modules/ads.yaml#/paths/~1ads~1{id}'
 
   # Módulo de Produtos
   /produtos:
     $ref: './modules/products.yaml#/paths/~1produtos'
   /produtos/{id}:
     $ref: './modules/products.yaml#/paths/~1produtos~1{id}'
-  
+
   # Módulo de Usuários
   /users/register:
-    $ref: './modules/users.yaml#/paths/~1users~1register' 
+    $ref: './modules/users.yaml#/paths/~1users~1register'
   /users/admin:
     $ref: './modules/users.yaml#/paths/~1users~1admin'
   /users:

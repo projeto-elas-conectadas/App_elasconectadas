@@ -18,7 +18,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "test:cucumber": "cucumber-js --config cucumber.json"
+    "test:cucumber": "cucumber-js --config cucumber.json",
+    "build:spec": "npx @apidevtools/swagger-cli bundle api-specs/main-api.yaml -o openapi-spec.json -t json"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^12.1.0",

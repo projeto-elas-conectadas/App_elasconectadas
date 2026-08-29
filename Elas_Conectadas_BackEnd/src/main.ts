@@ -6,7 +6,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule } from '@nestjs/swagger';
 import * as OpenApiValidator from 'express-openapi-validator';
-import SwaggerParser from '@apidevtools/swagger-parser';
 import { join } from 'path';
 import * as fs from 'fs';
 
@@ -27,29 +26,28 @@ async function bootstrap() {
     allowedHeaders: 'Content-Type,Authorization',
   });
 
- try {
-    const apiSpecPath = join(process.cwd(), 'api-specs', 'main-api.yaml');
-    
-    // 1. Apenas LÊ a spec para o Swagger UI, não tenta unir (bundle)
-    const fileContents = fs.readFileSync(apiSpecPath, 'utf8');
-    const spec = require('yamljs').parse(fileContents);
-    
-    // 2. Configura o Swagger UI
+  try {
+    // Spec unificada (gerar com: npm run build:spec)
+    const apiSpecPath = join(process.cwd(), 'openapi-spec.json');
+    const spec = JSON.parse(fs.readFileSync(apiSpecPath, 'utf8'));
+
     SwaggerModule.setup('api/docs', app, spec);
-    
-    // 3. Validador OpenAPI (Ele resolve os $ref internamente com segurança)
+
     app.use(
       OpenApiValidator.middleware({
-        apiSpec: spec,
+        apiSpec: apiSpecPath,
         validateRequests: true,
-        validateResponses: true, 
+        validateResponses: true,
       }),
     );
-    console.log('✅ Documentação e Validação Spec-Driven ativas!');
+    console.log('✅ Documentação e Validação Spec-Driven ativas (openapi-spec.json)!');
   } catch (error) {
-    console.error('❌ Erro crítico ao carregar especificação:', error);
+    console.error(
+      '❌ Erro ao carregar openapi-spec.json. Execute: npm run build:spec',
+      error,
+    );
   }
-  
+
   await app.listen(8080, '0.0.0.0');
 }
 bootstrap();
