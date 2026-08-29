@@ -105,11 +105,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: _obscurePassword,
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                      _obscurePassword
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
                       color: AppColors.primary,
                       size: 20,
                     ),
-                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                    onPressed: () =>
+                        setState(() => _obscurePassword = !_obscurePassword),
                   ),
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Informe sua senha';
@@ -127,45 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   isLoading: _isLoading,
                 ),
 
-                const SizedBox(height: 24),
-
-                // ── Divisor ─────────────────────────────────────────────────
-                Row(
-                  children: [
-                    const Expanded(child: Divider(color: AppColors.border)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
-                      child: Text('ou continue com', style: AppTextStyles.bodyMedium),
-                    ),
-                    const Expanded(child: Divider(color: AppColors.border)),
-                  ],
-                ),
-
-                const SizedBox(height: 16),
-
-                // ── Google (placeholder visual) ──────────────────────────────
-                OutlinedButton.icon(
-                  onPressed: () {},
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    side: const BorderSide(color: AppColors.border),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  ),
-                  icon: const Text('G', style: TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF4285F4))),
-                  label: Text('Entrar com Google',
-                    style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w500)),
-                ),
-
                 const SizedBox(height: 28),
-
-                // ── Esqueceu a senha ──────────────────────────────────────
-                Text('Esqueceu a senha?!', style: AppTextStyles.bodyLarge.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
-                )),
-
-                const SizedBox(height: 12),
 
                 // ── Link para cadastro ────────────────────────────────────
                 Row(
@@ -174,12 +139,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text('Não possui conta? ', style: AppTextStyles.bodyMedium),
                     GestureDetector(
                       onTap: () => context.go('/register'),
-                      child: Text('Cadastre-se', style: AppTextStyles.bodyMedium.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.primary,
-                      )),
+                      child: Text('Cadastre-se',
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w600,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.primary,
+                          )),
                     ),
                   ],
                 ),

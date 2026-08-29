@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/models/produto_model.dart';
+import '../../core/models/user_model.dart';
+import '../../core/services/auth_service.dart';
 import '../../core/services/produto_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
@@ -19,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen>
   static const _tabs = ['Produtos', 'Serviços'];
 
   List<ProdutoModel> _produtos = [];
+  UserModel? _currentUser;
   bool _isLoading = true;
   String? _errorMessage;
 
@@ -26,7 +29,13 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: _tabs.length, vsync: this);
+    _loadSessionUser();
     _loadProdutos();
+  }
+
+  Future<void> _loadSessionUser() async {
+    final user = await AuthService.currentUser();
+    if (mounted) setState(() => _currentUser = user);
   }
 
   @override
@@ -62,18 +71,6 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       appBar: AppBar(
         title: const Text('Elas Conectadas'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined,
-                color: AppColors.textWhite),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon:
-                const Icon(Icons.settings_outlined, color: AppColors.textWhite),
-            onPressed: () {},
-          ),
-        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: _tabs.map((t) => Tab(text: t)).toList(),
@@ -82,7 +79,8 @@ class _HomeScreenState extends State<HomeScreen>
       body: Column(
         children: [
           // ── Banner de verificação ───────────────────────────────────────────
-          _UnverifiedBanner(),
+          if (_currentUser != null && !_currentUser!.isVerified)
+            _UnverifiedBanner(email: _currentUser!.email),
 
           // ── Feed ─────────────────────────────────────────────────────────────
           Expanded(
@@ -130,33 +128,32 @@ class _HomeScreenState extends State<HomeScreen>
           children: [
             Text('O que você quer publicar?',
                 style: AppTextStyles.headlineMedium),
-            const SizedBox(height: 8),
-            Text('Parcerias serão adicionadas em breve',
-                style: AppTextStyles.bodyMedium),
             const SizedBox(height: 16),
             _SheetOption(
               icon: Icons.shopping_bag_outlined,
               label: 'Produto',
               subtitle: 'Venda algo que você produz',
-              onTap: () {
-                Navigator.pop(context);
-                context.go('/criar-anuncio');
-              },
+              onTap: () => _openCreateAd('PRODUCT'),
             ),
             _SheetOption(
               icon: Icons.design_services_outlined,
               label: 'Serviço',
               subtitle: 'Ofereça uma habilidade ou serviço',
-              onTap: () {
-                Navigator.pop(context);
-                context.go('/criar-anuncio');
-              },
+              onTap: () => _openCreateAd('SERVICE'),
             ),
             const SizedBox(height: 8),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _openCreateAd(String category) async {
+    Navigator.pop(context);
+    final created = await context.push<bool>(
+      '/criar-anuncio?categoria=$category',
+    );
+    if (created == true && mounted) await _loadProdutos();
   }
 }
 
@@ -215,75 +212,90 @@ class _ProdutoCard extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      child: Padding(
-        padding: const EdgeInsets.all(14),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // ── Imagem / Ícone ─────────────────────────────────────────────
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: SizedBox(width: 64, height: 64, child: imagemWidget),
-            ),
-            const SizedBox(width: 12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: produto.id == null
+            ? null
+            : () => context.push(
+                  '/produto/${produto.id}',
+                  extra: produto,
+                ),
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // ── Imagem / Ícone ─────────────────────────────────────────────
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: SizedBox(width: 64, height: 64, child: imagemWidget),
+              ),
+              const SizedBox(width: 12),
 
-            // ── Conteúdo ───────────────────────────────────────────────────
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Chip de categoria
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    decoration: BoxDecoration(
-                      color: AppColors.chip,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text(
-                      isService ? 'SERVIÇO' : 'PRODUTO',
-                      style: AppTextStyles.labelMedium.copyWith(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(produto.nome, style: AppTextStyles.titleMedium),
-                  const SizedBox(height: 2),
-                  Text(
-                    produto.descricao,
-                    style: AppTextStyles.bodyMedium,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 4),
-                  Text(produto.precoFormatado, style: AppTextStyles.priceStyle),
-                  const SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              // ── Conteúdo ───────────────────────────────────────────────────
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Chip de categoria
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: AppColors.chip,
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
-                        'Conectar →',
+                        isService ? 'SERVIÇO' : 'PRODUTO',
                         style: AppTextStyles.labelMedium.copyWith(
-                          color: AppColors.textWhite,
-                          fontWeight: FontWeight.w600,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 4),
+                    Text(produto.nome, style: AppTextStyles.titleMedium),
+                    const SizedBox(height: 2),
+                    Text(
+                      produto.descricao,
+                      style: AppTextStyles.bodyMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(produto.precoFormatado,
+                        style: AppTextStyles.priceStyle),
+                    const SizedBox(height: 8),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: ElevatedButton(
+                        onPressed: produto.id == null
+                            ? null
+                            : () => context.push(
+                                  '/produto/${produto.id}',
+                                  extra: produto,
+                                ),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: Text(
+                          'Ver detalhes →',
+                          style: AppTextStyles.labelMedium.copyWith(
+                            color: AppColors.textWhite,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -352,6 +364,10 @@ class _ErrorView extends StatelessWidget {
 
 // ── Banner de conta não verificada ──────────────────────────────────────────
 class _UnverifiedBanner extends StatelessWidget {
+  final String email;
+
+  const _UnverifiedBanner({required this.email});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -368,7 +384,8 @@ class _UnverifiedBanner extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () => context.go('/otp', extra: ''),
+            onTap:
+                email.isEmpty ? null : () => context.push('/otp', extra: email),
             child: Text(
               'Verificar →',
               style: AppTextStyles.labelMedium.copyWith(

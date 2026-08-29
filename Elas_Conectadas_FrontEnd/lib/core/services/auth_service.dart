@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:openapi/openapi.dart';
@@ -108,10 +109,11 @@ class AuthService {
     if (token != null && token.isNotEmpty) {
       await saveToken(token);
 
-      // Salva dados básicos do usuário localmente
+      // Mantém localmente os dados tipados descritos no contrato.
       if (data?.user != null) {
+        final user = UserModel.fromDto(data!.user!);
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString(_userKey, jsonEncode(data!.user!.value));
+        await prefs.setString(_userKey, jsonEncode(user.toJson()));
       }
       return token;
     }
@@ -128,7 +130,28 @@ class AuthService {
     required String name,
     required String phone,
     required String dob,
+    Uint8List? profileImageBytes,
+    String profileImageName = 'perfil.jpg',
   }) async {
+    String? profileImageUrl;
+    if (profileImageBytes != null) {
+      final uploadResponse = await _execute(
+        () => ApiClient.uploads.uploadControllerUploadImagem(
+          file: MultipartFile.fromBytes(
+            profileImageBytes,
+            filename: profileImageName,
+          ),
+        ),
+        fallbackMessage: 'Não foi possível enviar a foto do cadastro.',
+      );
+      profileImageUrl = uploadResponse.data?.imageUrl;
+      if (profileImageUrl == null || profileImageUrl.isEmpty) {
+        throw const AuthException(
+          'O servidor não retornou a URL da foto enviada.',
+        );
+      }
+    }
+
     await _execute(
       () => ApiClient.users.usersControllerCreateUser(
         createUserDto: CreateUserDto((b) => b
@@ -136,7 +159,8 @@ class AuthService {
           ..password = password
           ..name = name
           ..phone = phone
-          ..dob = dob),
+          ..dob = dob
+          ..pfp = profileImageUrl),
       ),
       fallbackMessage: 'Não foi possível realizar o cadastro.',
     );
@@ -166,28 +190,22 @@ class AuthService {
     );
   }
 
-  // ─── Perfil (via cliente gerado) ───────────────────────────────────────────
+  // ─── Usuária da sessão ─────────────────────────────────────────────────────
 
-  /// Busca o perfil da usuária logada.
-  /// Nota: usa o Dio do ApiClient diretamente pois o endpoint /users/me
-  /// não está na spec OpenAPI (o backend pode expô-lo futuramente).
-  static Future<UserModel> getProfile() async {
-    final token = await getToken();
-    // Usa o Dio interno do ApiClient para manter o mesmo base URL
-    final response = await ApiClient.dio.get(
-      '/users/me',
-      options: Options(
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      ),
-    );
+  /// Retorna os dados recebidos no login e persistidos no dispositivo.
+  /// O backend atual ainda não expõe uma rota `/users/me` no contrato.
+  static Future<UserModel?> currentUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedUser = prefs.getString(_userKey);
+    if (savedUser == null || savedUser.isEmpty) return null;
 
-    if (response.statusCode == 200) {
-      return UserModel.fromJson(response.data as Map<String, dynamic>);
+    try {
+      return UserModel.fromJson(
+        jsonDecode(savedUser) as Map<String, dynamic>,
+      );
+    } catch (_) {
+      return null;
     }
-    throw Exception('Falha ao buscar perfil');
   }
 }
 

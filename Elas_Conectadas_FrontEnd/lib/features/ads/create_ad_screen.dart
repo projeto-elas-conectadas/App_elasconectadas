@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,7 +10,12 @@ import '../../core/widgets/custom_button.dart';
 import '../../core/widgets/custom_input.dart';
 
 class CreateAdScreen extends StatefulWidget {
-  const CreateAdScreen({super.key});
+  final String initialCategory;
+
+  const CreateAdScreen({
+    super.key,
+    this.initialCategory = 'PRODUCT',
+  });
 
   @override
   State<CreateAdScreen> createState() => _CreateAdScreenState();
@@ -24,10 +28,15 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
   final _precoController = TextEditingController();
   final _regiaoController = TextEditingController();
 
-  String _categoria = 'PRODUCT'; // PRODUCT ou SERVICE
-  Uint8List? _imagemBytes;
-  String _imagemNome = 'upload.jpg';
+  late String _categoria;
+  final List<ImagemUpload> _imagens = [];
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _categoria = widget.initialCategory == 'SERVICE' ? 'SERVICE' : 'PRODUCT';
+  }
 
   @override
   void dispose() {
@@ -38,20 +47,32 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
     super.dispose();
   }
 
-  // ── Seletor de imagem ──────────────────────────────────────────────────────
-  Future<void> _pickImage() async {
-    final picker = ImagePicker();
-    final picked = await picker.pickImage(
-      source: ImageSource.gallery,
+  // ── Seletor de imagens ─────────────────────────────────────────────────────
+  Future<void> _pickImages() async {
+    final availableSlots = 5 - _imagens.length;
+    if (availableSlots <= 0) return;
+
+    final picked = await ImagePicker().pickMultiImage(
       maxWidth: 800,
       imageQuality: 80,
     );
-    if (picked != null) {
-      final bytes = await picked.readAsBytes();
-      setState(() {
-        _imagemBytes = bytes;
-        _imagemNome = picked.name;
-      });
+    if (picked.isEmpty) return;
+
+    final selected = picked.take(availableSlots).toList(growable: false);
+    final images = <ImagemUpload>[];
+    for (final image in selected) {
+      images.add(
+        ImagemUpload(bytes: await image.readAsBytes(), nome: image.name),
+      );
+    }
+
+    if (!mounted) return;
+    setState(() => _imagens.addAll(images));
+
+    if (picked.length > availableSlots) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Você pode anexar no máximo 5 fotos.')),
+      );
     }
   }
 
@@ -59,7 +80,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
   Future<void> _handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
-    if (_imagemBytes == null) {
+    if (_imagens.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Adicione uma foto para publicar o anúncio.'),
@@ -102,8 +123,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
         preco: _precoController.text.trim(),
         categoria: _categoria,
         userId: userId,
-        imagemBytes: _imagemBytes!,
-        imagemNome: _imagemNome,
+        imagens: List.unmodifiable(_imagens),
         regiaoAtendimento: _regiaoController.text.trim(),
       );
 
@@ -116,7 +136,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
             backgroundColor: AppColors.success,
           ),
         );
-        context.go('/home');
+        _leave(created: true);
       }
     } catch (e) {
       if (mounted) {
@@ -140,6 +160,14 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
     }
   }
 
+  void _leave({bool created = false}) {
+    if (context.canPop()) {
+      context.pop(created);
+    } else {
+      context.go('/home');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,7 +178,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColors.textWhite),
-          onPressed: () => context.go('/home'),
+          onPressed: _leave,
         ),
       ),
       body: SafeArea(
@@ -184,54 +212,105 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
 
                 const SizedBox(height: 24),
 
-                // ── Foto ────────────────────────────────────────────────────
-                Text('Foto', style: AppTextStyles.titleMedium),
+                // ── Galeria de fotos ────────────────────────────────────────
+                Text('Fotos', style: AppTextStyles.titleMedium),
+                const SizedBox(height: 4),
+                Text(
+                  'Adicione até 5 fotos. A primeira será usada como capa.',
+                  style: AppTextStyles.labelMedium,
+                ),
                 const SizedBox(height: 10),
-                GestureDetector(
-                  onTap: _pickImage,
-                  child: Container(
-                    height: 180,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryLight,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppColors.border, width: 1.5),
-                      image: _imagemBytes != null
-                          ? DecorationImage(
-                              image: MemoryImage(_imagemBytes!),
+                SizedBox(
+                  height: 116,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _imagens.length + (_imagens.length < 5 ? 1 : 0),
+                    separatorBuilder: (_, __) => const SizedBox(width: 10),
+                    itemBuilder: (context, index) {
+                      if (index == _imagens.length) {
+                        return InkWell(
+                          onTap: _isLoading ? null : _pickImages,
+                          borderRadius: BorderRadius.circular(14),
+                          child: Container(
+                            width: 112,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryLight,
+                              borderRadius: BorderRadius.circular(14),
+                              border: Border.all(color: AppColors.border),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.add_photo_alternate_outlined,
+                                  color: AppColors.primary,
+                                  size: 32,
+                                ),
+                                const SizedBox(height: 6),
+                                Text(
+                                  _imagens.isEmpty
+                                      ? 'Adicionar fotos'
+                                      : 'Adicionar',
+                                  style: AppTextStyles.labelMedium.copyWith(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
+                      final image = _imagens[index];
+                      return Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(14),
+                            child: Image.memory(
+                              image.bytes,
+                              width: 112,
+                              height: 116,
                               fit: BoxFit.cover,
-                            )
-                          : null,
-                    ),
-                    child: _imagemBytes == null
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.add_a_photo_outlined,
-                                  color: AppColors.primary, size: 40),
-                              const SizedBox(height: 8),
-                              Text('Toque para adicionar foto',
-                                  style: AppTextStyles.bodyMedium
-                                      .copyWith(color: AppColors.primary)),
-                            ],
-                          )
-                        : Align(
-                            alignment: Alignment.topRight,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: CircleAvatar(
-                                backgroundColor: AppColors.primary,
-                                radius: 16,
-                                child: IconButton(
-                                  icon: const Icon(Icons.close,
-                                      color: Colors.white, size: 16),
-                                  onPressed: () =>
-                                      setState(() => _imagemBytes = null),
-                                  padding: EdgeInsets.zero,
+                            ),
+                          ),
+                          Positioned(
+                            left: 6,
+                            bottom: 6,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 7,
+                                vertical: 3,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.black54,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Text(
+                                index == 0 ? 'Capa' : '${index + 1}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
                                 ),
                               ),
                             ),
                           ),
+                          Positioned(
+                            right: 4,
+                            top: 4,
+                            child: IconButton.filled(
+                              tooltip: 'Remover foto',
+                              visualDensity: VisualDensity.compact,
+                              onPressed: _isLoading
+                                  ? null
+                                  : () =>
+                                      setState(() => _imagens.removeAt(index)),
+                              icon: const Icon(Icons.close, size: 16),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
 
@@ -305,7 +384,7 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
 
                 CustomButton(
                   text: 'Cancelar',
-                  onPressed: () => context.go('/home'),
+                  onPressed: _leave,
                   isOutlined: true,
                 ),
 

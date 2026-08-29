@@ -18,7 +18,7 @@ class _MuralScreenState extends State<MuralScreen> {
         emoji: '🎤',
         title: 'Summit Mulheres em Tech',
         type: 'EVENT',
-        date: '15 Abr 2026',
+        date: '15 Set 2026',
         interested: 38,
         isHero: true,
         description:
@@ -27,7 +27,7 @@ class _MuralScreenState extends State<MuralScreen> {
         emoji: '📊',
         title: 'Curso: Finanças para Empreendedoras',
         type: 'COURSE',
-        date: '22 Abr 2026',
+        date: '22 Set 2026',
         interested: 21,
         isHero: false,
         description:
@@ -36,7 +36,7 @@ class _MuralScreenState extends State<MuralScreen> {
         emoji: '🌿',
         title: 'Encontro de Negócios Sustentáveis',
         type: 'EVENT',
-        date: '29 Abr 2026',
+        date: '29 Set 2026',
         interested: 14,
         isHero: false,
         description:
@@ -45,7 +45,7 @@ class _MuralScreenState extends State<MuralScreen> {
         emoji: '🎨',
         title: 'Curso: Branding para MEI',
         type: 'COURSE',
-        date: '05 Mai 2026',
+        date: '05 Out 2026',
         interested: 9,
         isHero: false,
         description: 'Como criar uma marca forte com poucos recursos.'),
@@ -53,8 +53,9 @@ class _MuralScreenState extends State<MuralScreen> {
 
   List<_PostItem> get _filtered {
     if (_filter == 'Todos') return _mockPosts;
-    if (_filter == 'Eventos')
+    if (_filter == 'Eventos') {
       return _mockPosts.where((p) => p.type == 'EVENT').toList();
+    }
     return _mockPosts.where((p) => p.type == 'COURSE').toList();
   }
 
@@ -91,12 +92,31 @@ class _MuralScreenState extends State<MuralScreen> {
           ),
         ),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: posts.length,
-        itemBuilder: (_, i) => posts[i].isHero
-            ? _HeroPostCard(post: posts[i])
-            : _SmallPostCard(post: posts[i]),
+      body: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+            color: AppColors.primaryLight,
+            child: Text(
+              'Conteúdo demonstrativo do mural',
+              style: AppTextStyles.labelMedium.copyWith(
+                color: AppColors.primary,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: posts.length,
+              itemBuilder: (_, i) => posts[i].isHero
+                  ? _HeroPostCard(post: posts[i])
+                  : _SmallPostCard(post: posts[i]),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -10,7 +10,7 @@ class _$LoginResponseDto extends LoginResponseDto {
   @override
   final String? accessToken;
   @override
-  final JsonObject? user;
+  final UserResponseDto? user;
 
   factory _$LoginResponseDto(
           [void Function(LoginResponseDtoBuilder)? updates]) =>
@@ -59,9 +59,9 @@ class LoginResponseDtoBuilder
   String? get accessToken => _$this._accessToken;
   set accessToken(String? accessToken) => _$this._accessToken = accessToken;
 
-  JsonObject? _user;
-  JsonObject? get user => _$this._user;
-  set user(JsonObject? user) => _$this._user = user;
+  UserResponseDtoBuilder? _user;
+  UserResponseDtoBuilder get user => _$this._user ??= UserResponseDtoBuilder();
+  set user(UserResponseDtoBuilder? user) => _$this._user = user;
 
   LoginResponseDtoBuilder() {
     LoginResponseDto._defaults(this);
@@ -71,7 +71,7 @@ class LoginResponseDtoBuilder
     final $v = _$v;
     if ($v != null) {
       _accessToken = $v.accessToken;
-      _user = $v.user;
+      _user = $v.user?.toBuilder();
       _$v = null;
     }
     return this;
@@ -91,11 +91,24 @@ class LoginResponseDtoBuilder
   LoginResponseDto build() => _build();
 
   _$LoginResponseDto _build() {
-    final _$result = _$v ??
-        _$LoginResponseDto._(
-          accessToken: accessToken,
-          user: user,
-        );
+    _$LoginResponseDto _$result;
+    try {
+      _$result = _$v ??
+          _$LoginResponseDto._(
+            accessToken: accessToken,
+            user: _user?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'user';
+        _user?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+            r'LoginResponseDto', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

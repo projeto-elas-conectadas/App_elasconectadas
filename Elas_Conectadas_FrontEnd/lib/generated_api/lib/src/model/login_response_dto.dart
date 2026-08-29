@@ -3,7 +3,7 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:built_value/json_object.dart';
+import 'package:openapi/src/model/user_response_dto.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -13,16 +13,15 @@ part 'login_response_dto.g.dart';
 ///
 /// Properties:
 /// * [accessToken] - Token JWT para autenticação
-/// * [user] - Dados básicos da usuária logada
+/// * [user]
 @BuiltValue()
 abstract class LoginResponseDto implements Built<LoginResponseDto, LoginResponseDtoBuilder> {
   /// Token JWT para autenticação
   @BuiltValueField(wireName: r'access_token')
   String? get accessToken;
 
-  /// Dados básicos da usuária logada
   @BuiltValueField(wireName: r'user')
-  JsonObject? get user;
+  UserResponseDto? get user;
 
   LoginResponseDto._();
 
@@ -58,7 +57,7 @@ class _$LoginResponseDtoSerializer implements PrimitiveSerializer<LoginResponseD
       yield r'user';
       yield serializers.serialize(
         object.user,
-        specifiedType: const FullType(JsonObject),
+        specifiedType: const FullType(UserResponseDto),
       );
     }
   }
@@ -94,9 +93,9 @@ class _$LoginResponseDtoSerializer implements PrimitiveSerializer<LoginResponseD
         case r'user':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(JsonObject),
-          ) as JsonObject;
-          result.user = valueDes;
+            specifiedType: const FullType(UserResponseDto),
+          ) as UserResponseDto;
+          result.user.replace(valueDes);
           break;
         default:
           unhandled.add(key);
@@ -126,4 +125,3 @@ class _$LoginResponseDtoSerializer implements PrimitiveSerializer<LoginResponseD
     return result.build();
   }
 }
-

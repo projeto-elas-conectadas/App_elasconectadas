@@ -32,26 +32,38 @@ class ProdutoService {
     required String preco,
     required String categoria,
     required String userId,
-    required Uint8List imagemBytes,
+    required List<ImagemUpload> imagens,
     required String regiaoAtendimento,
-    String imagemNome = 'upload.jpg',
-    List<String>? imagensAdicionais,
   }) async {
     return _execute(
       () async {
-        // 1. Envia os bytes ao endpoint tipado de upload.
-        final uploadResponse =
-            await ApiClient.uploads.uploadControllerUploadImagem(
-          file: MultipartFile.fromBytes(imagemBytes, filename: imagemNome),
-        );
-        final imagemPrincipal = uploadResponse.data?.imageUrl;
-        if (imagemPrincipal == null || imagemPrincipal.isEmpty) {
+        if (imagens.isEmpty) {
           throw const ProdutoException(
-            'O servidor não retornou a URL da imagem enviada.',
+            'Adicione ao menos uma foto para publicar o anúncio.',
           );
         }
 
-        // 2. Usa a URL retornada para montar o DTO definido no contrato.
+        // 1. Envia cada arquivo pelo endpoint de upload descrito no contrato.
+        // A primeira foto é a capa e as demais formam a galeria.
+        final imageUrls = <String>[];
+        for (final imagem in imagens) {
+          final uploadResponse =
+              await ApiClient.uploads.uploadControllerUploadImagem(
+            file: MultipartFile.fromBytes(
+              imagem.bytes,
+              filename: imagem.nome,
+            ),
+          );
+          final imageUrl = uploadResponse.data?.imageUrl;
+          if (imageUrl == null || imageUrl.isEmpty) {
+            throw const ProdutoException(
+              'O servidor não retornou a URL de uma das fotos enviadas.',
+            );
+          }
+          imageUrls.add(imageUrl);
+        }
+
+        // 2. Usa as URLs retornadas para montar o DTO definido no contrato.
         final response = await ApiClient.produtos.produtosCreate(
           createProdutoDto: CreateProdutoDto((b) => b
             ..nome = nome
@@ -59,10 +71,10 @@ class ProdutoService {
             ..preco = preco
             ..categoria = categoria
             ..userId = userId
-            ..imagemPrincipal = imagemPrincipal
+            ..imagemPrincipal = imageUrls.first
             ..regiaoAtendimento = regiaoAtendimento
-            ..imagensAdicionais = imagensAdicionais != null
-                ? ListBuilder<String>(imagensAdicionais)
+            ..imagensAdicionais = imageUrls.length > 1
+                ? ListBuilder<String>(imageUrls.skip(1))
                 : null),
         );
         final produto = response.data;
@@ -136,6 +148,13 @@ class ProdutoService {
     }
     return message?.toString();
   }
+}
+
+class ImagemUpload {
+  final Uint8List bytes;
+  final String nome;
+
+  const ImagemUpload({required this.bytes, required this.nome});
 }
 
 class ProdutoException implements Exception {

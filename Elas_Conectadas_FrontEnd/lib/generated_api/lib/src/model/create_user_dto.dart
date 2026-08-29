@@ -16,6 +16,7 @@ part 'create_user_dto.g.dart';
 /// * [name] 
 /// * [phone] 
 /// * [dob] - Formato DD/MM/AAAA
+/// * [pfp] - URL da foto de perfil enviada previamente ao Cloudinary
 @BuiltValue()
 abstract class CreateUserDto implements Built<CreateUserDto, CreateUserDtoBuilder> {
   @BuiltValueField(wireName: r'email')
@@ -33,6 +34,10 @@ abstract class CreateUserDto implements Built<CreateUserDto, CreateUserDtoBuilde
   /// Formato DD/MM/AAAA
   @BuiltValueField(wireName: r'dob')
   String get dob;
+
+  /// URL da foto de perfil enviada previamente ao Cloudinary
+  @BuiltValueField(wireName: r'pfp')
+  String? get pfp;
 
   CreateUserDto._();
 
@@ -82,6 +87,13 @@ class _$CreateUserDtoSerializer implements PrimitiveSerializer<CreateUserDto> {
       object.dob,
       specifiedType: const FullType(String),
     );
+    if (object.pfp != null) {
+      yield r'pfp';
+      yield serializers.serialize(
+        object.pfp,
+        specifiedType: const FullType(String),
+      );
+    }
   }
 
   @override
@@ -139,6 +151,13 @@ class _$CreateUserDtoSerializer implements PrimitiveSerializer<CreateUserDto> {
             specifiedType: const FullType(String),
           ) as String;
           result.dob = valueDes;
+          break;
+        case r'pfp':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.pfp = valueDes;
           break;
         default:
           unhandled.add(key);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../core/services/auth_service.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
@@ -21,6 +22,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _phoneController = TextEditingController();
   final _dobController = TextEditingController();
+  Uint8List? _profileImageBytes;
+  String _profileImageName = 'perfil.jpg';
   bool _obscurePassword = true;
   bool _isLoading = false;
 
@@ -34,6 +37,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
+  Future<void> _pickProfileImage() async {
+    final picked = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 800,
+      imageQuality: 85,
+    );
+    if (picked == null) return;
+
+    final bytes = await picked.readAsBytes();
+    if (!mounted) return;
+    setState(() {
+      _profileImageBytes = bytes;
+      _profileImageName = picked.name;
+    });
+  }
+
   Future<void> _handleRegister() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _isLoading = true);
@@ -44,6 +63,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
         name: _nameController.text.trim(),
         phone: _phoneController.text.trim(),
         dob: _dobController.text.trim(),
+        profileImageBytes: _profileImageBytes,
+        profileImageName: _profileImageName,
       );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -103,6 +124,54 @@ class _RegisterScreenState extends State<RegisterScreen> {
             key: _formKey,
             child: Column(
               children: [
+                Text('Foto de perfil', style: AppTextStyles.titleMedium),
+                const SizedBox(height: 10),
+                Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    InkWell(
+                      onTap: _isLoading ? null : _pickProfileImage,
+                      borderRadius: BorderRadius.circular(56),
+                      child: CircleAvatar(
+                        radius: 52,
+                        backgroundColor: AppColors.primaryLight,
+                        backgroundImage: _profileImageBytes == null
+                            ? null
+                            : MemoryImage(_profileImageBytes!),
+                        child: _profileImageBytes == null
+                            ? const Icon(
+                                Icons.add_a_photo_outlined,
+                                color: AppColors.primary,
+                                size: 34,
+                              )
+                            : null,
+                      ),
+                    ),
+                    if (_profileImageBytes != null)
+                      Positioned(
+                        right: -8,
+                        top: -8,
+                        child: IconButton.filled(
+                          tooltip: 'Remover foto',
+                          onPressed: _isLoading
+                              ? null
+                              : () => setState(() {
+                                    _profileImageBytes = null;
+                                    _profileImageName = 'perfil.jpg';
+                                  }),
+                          icon: const Icon(Icons.close, size: 18),
+                        ),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  _profileImageBytes == null
+                      ? 'Toque para escolher uma foto (opcional)'
+                      : 'Toque na foto para trocar',
+                  style: AppTextStyles.labelMedium,
+                ),
+                const SizedBox(height: 22),
                 CustomInput(
                   controller: _nameController,
                   label: 'Nome completo',
@@ -174,8 +243,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     _DateFormatter()
                   ],
                   validator: (v) {
-                    if (v == null || v.isEmpty)
+                    if (v == null || v.isEmpty) {
                       return 'Informe sua data de nascimento';
+                    }
                     if (v.length < 10) return 'Data incompleta (DD/MM/AAAA)';
                     return null;
                   },

@@ -7,6 +7,8 @@ import '../../features/home/home_screen.dart';
 import '../../features/profile/profile_screen.dart';
 import '../../features/mural/mural_screen.dart';
 import '../../features/ads/create_ad_screen.dart';
+import '../../features/ads/product_detail_screen.dart';
+import '../models/produto_model.dart';
 import '../services/auth_service.dart';
 
 final appRouter = GoRouter(
@@ -37,7 +39,17 @@ final appRouter = GoRouter(
     ),
     GoRoute(
       path: '/criar-anuncio',
-      builder: (context, state) => const CreateAdScreen(),
+      builder: (context, state) => CreateAdScreen(
+        initialCategory: state.uri.queryParameters['categoria'] ?? 'PRODUCT',
+      ),
+    ),
+    GoRoute(
+      path: '/produto/:id',
+      builder: (context, state) => ProductDetailScreen(
+        productId: state.pathParameters['id']!,
+        initialProduct:
+            state.extra is ProdutoModel ? state.extra as ProdutoModel : null,
+      ),
     ),
     ShellRoute(
       builder: (context, state, child) => MainShell(child: child),

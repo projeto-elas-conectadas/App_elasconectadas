@@ -1,4 +1,5 @@
 import 'package:elasconectadas_app/core/models/produto_model.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:openapi/openapi.dart';
 
@@ -40,6 +41,10 @@ void main() {
       ..preco = 'A partir de R\$ 120'
       ..categoria = 'SERVICE'
       ..imagemPrincipal = 'https://res.cloudinary.com/teste/consultoria.jpg'
+      ..imagensAdicionais = ListBuilder<String>([
+        'https://res.cloudinary.com/teste/consultoria-2.jpg',
+        'https://res.cloudinary.com/teste/consultoria-3.jpg',
+      ])
       ..userId = '42ddab2c-6d0b-4cf6-8075-8dc038c5096e'
       ..regiaoAtendimento = 'Atendimento on-line');
 
@@ -50,6 +55,7 @@ void main() {
 
     expect(json['preco'], 'A partir de R\$ 120');
     expect(json['imagemPrincipal'], contains('cloudinary.com'));
+    expect(json['imagensAdicionais'], hasLength(2));
     expect(json['regiaoAtendimento'], 'Atendimento on-line');
     expect(json, isNot(contains('imagemUrl')));
   });

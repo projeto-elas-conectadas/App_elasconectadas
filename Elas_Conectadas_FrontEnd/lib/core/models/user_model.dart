@@ -1,54 +1,4 @@
-/// Modelo de requisição de login
-class LoginRequest {
-  final String email;
-  final String password;
-
-  const LoginRequest({required this.email, required this.password});
-
-  Map<String, dynamic> toJson() => {'email': email, 'password': password};
-}
-
-/// Modelo de resposta do login (token JWT)
-class LoginResponse {
-  final String? token;
-  final String? message;
-
-  const LoginResponse({this.token, this.message});
-
-  factory LoginResponse.fromJson(Map<String, dynamic> json) {
-    return LoginResponse(
-      token: json['token'] as String?,
-      message: json['message'] is List
-          ? (json['message'] as List).join(', ')
-          : json['message'] as String?,
-    );
-  }
-}
-
-/// Modelo de requisição de registro
-class RegisterRequest {
-  final String email;
-  final String password;
-  final String name;
-  final String phone;
-  final String dob; // DD/MM/AAAA
-
-  const RegisterRequest({
-    required this.email,
-    required this.password,
-    required this.name,
-    required this.phone,
-    required this.dob,
-  });
-
-  Map<String, dynamic> toJson() => {
-    'email': email,
-    'password': password,
-    'name': name,
-    'phone': phone,
-    'dob': dob,
-  };
-}
+import 'package:openapi/openapi.dart';
 
 /// Modelo de usuário
 class UserModel {
@@ -56,8 +6,13 @@ class UserModel {
   final String email;
   final String name;
   final String? phone;
+  final String? dob;
   final String? occupation;
-  final String? location;
+  final String? rua;
+  final String? numero;
+  final String? bairro;
+  final String? cidade;
+  final String? estado;
   final String? bio;
   final String? pfp; // URL da foto de perfil
   final String? accountStatus; // VERIFIED | UNVERIFIED
@@ -68,8 +23,13 @@ class UserModel {
     required this.email,
     required this.name,
     this.phone,
+    this.dob,
     this.occupation,
-    this.location,
+    this.rua,
+    this.numero,
+    this.bairro,
+    this.cidade,
+    this.estado,
     this.bio,
     this.pfp,
     this.accountStatus,
@@ -82,8 +42,13 @@ class UserModel {
       email: json['email'] as String? ?? '',
       name: json['name'] as String? ?? '',
       phone: json['phone'] as String?,
+      dob: json['dob'] as String?,
       occupation: json['occupation'] as String?,
-      location: json['location'] as String?,
+      rua: json['rua'] as String?,
+      numero: json['numero'] as String?,
+      bairro: json['bairro'] as String?,
+      cidade: json['cidade'] as String?,
+      estado: json['estado'] as String?,
       bio: json['bio'] as String?,
       pfp: json['pfp'] as String?,
       accountStatus: json['accountStatus'] as String?,
@@ -91,14 +56,62 @@ class UserModel {
     );
   }
 
+  factory UserModel.fromDto(UserResponseDto dto) {
+    return UserModel(
+      id: dto.id,
+      email: dto.email,
+      name: dto.name,
+      phone: dto.phone,
+      dob: dto.dob,
+      occupation: dto.occupation,
+      rua: dto.rua,
+      numero: dto.numero,
+      bairro: dto.bairro,
+      cidade: dto.cidade,
+      estado: dto.estado,
+      bio: dto.bio,
+      pfp: dto.pfp,
+      accountStatus: dto.accountStatus.name,
+      role: dto.role.name,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'email': email,
+        'name': name,
+        'phone': phone,
+        'dob': dob,
+        'occupation': occupation,
+        'rua': rua,
+        'numero': numero,
+        'bairro': bairro,
+        'cidade': cidade,
+        'estado': estado,
+        'bio': bio,
+        'pfp': pfp,
+        'accountStatus': accountStatus,
+        'role': role,
+      };
+
   bool get isVerified => accountStatus == 'VERIFIED';
   bool get isAdmin => role == 'ADMIN';
+
+  String get localizacao {
+    return [cidade, estado]
+        .whereType<String>()
+        .where((value) => value.trim().isNotEmpty)
+        .map((value) => value.trim())
+        .join(' - ');
+  }
 
   /// Initials para o avatar (ex: "Ana Maria" -> "AM")
   String get initials {
     final parts = name.trim().split(' ');
     if (parts.length >= 2) return '${parts[0][0]}${parts[1][0]}'.toUpperCase();
-    if (parts.isNotEmpty && parts[0].isNotEmpty) return parts[0][0].toUpperCase();
+    if (parts.isNotEmpty && parts[0].isNotEmpty) {
+      return parts[0][0].toUpperCase();
+    }
     return '?';
   }
 }

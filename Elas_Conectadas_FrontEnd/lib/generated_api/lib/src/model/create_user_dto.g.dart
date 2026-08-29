@@ -17,6 +17,8 @@ class _$CreateUserDto extends CreateUserDto {
   final String phone;
   @override
   final String dob;
+  @override
+  final String? pfp;
 
   factory _$CreateUserDto([void Function(CreateUserDtoBuilder)? updates]) =>
       (CreateUserDtoBuilder()..update(updates))._build();
@@ -26,7 +28,8 @@ class _$CreateUserDto extends CreateUserDto {
       required this.password,
       required this.name,
       required this.phone,
-      required this.dob})
+      required this.dob,
+      this.pfp})
       : super._();
   @override
   CreateUserDto rebuild(void Function(CreateUserDtoBuilder) updates) =>
@@ -43,7 +46,8 @@ class _$CreateUserDto extends CreateUserDto {
         password == other.password &&
         name == other.name &&
         phone == other.phone &&
-        dob == other.dob;
+        dob == other.dob &&
+        pfp == other.pfp;
   }
 
   @override
@@ -54,6 +58,7 @@ class _$CreateUserDto extends CreateUserDto {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, phone.hashCode);
     _$hash = $jc(_$hash, dob.hashCode);
+    _$hash = $jc(_$hash, pfp.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -65,7 +70,8 @@ class _$CreateUserDto extends CreateUserDto {
           ..add('password', password)
           ..add('name', name)
           ..add('phone', phone)
-          ..add('dob', dob))
+          ..add('dob', dob)
+          ..add('pfp', pfp))
         .toString();
   }
 }
@@ -94,6 +100,10 @@ class CreateUserDtoBuilder
   String? get dob => _$this._dob;
   set dob(String? dob) => _$this._dob = dob;
 
+  String? _pfp;
+  String? get pfp => _$this._pfp;
+  set pfp(String? pfp) => _$this._pfp = pfp;
+
   CreateUserDtoBuilder() {
     CreateUserDto._defaults(this);
   }
@@ -106,6 +116,7 @@ class CreateUserDtoBuilder
       _name = $v.name;
       _phone = $v.phone;
       _dob = $v.dob;
+      _pfp = $v.pfp;
       _$v = null;
     }
     return this;
@@ -137,6 +148,7 @@ class CreateUserDtoBuilder
               phone, r'CreateUserDto', 'phone'),
           dob: BuiltValueNullFieldError.checkNotNull(
               dob, r'CreateUserDto', 'dob'),
+          pfp: pfp,
         );
     replace(_$result);
     return _$result;
