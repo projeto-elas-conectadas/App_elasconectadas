@@ -93,5 +93,5 @@ flutter run
 
 ## Documentação
 
-- [README do Backend](Elas_Conectadas_BackEnd/README.md)
+- [README do Backend](Elas_Conectadas_BackEnd/documentos/README.md)
 - [README do Frontend](Elas_Conectadas_FrontEnd/README.md)
