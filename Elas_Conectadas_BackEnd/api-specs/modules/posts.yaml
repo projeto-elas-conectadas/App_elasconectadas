@@ -16,6 +16,10 @@ paths:
       responses:
         '201':
           description: Post criado
+          content:
+            application/json:
+              schema:
+                type: object
 
   /posts/list:
     get:

@@ -5,17 +5,17 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *https://api.elasconectadas.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**uploadControllerUploadImagem**](UploadsApi.md#uploadcontrolleruploadimagem) | **POST** /upload/imagem | 
+[**uploadControllerUploadImagem**](UploadsApi.md#uploadcontrolleruploadimagem) | **POST** /upload/imagem | Envia uma imagem para armazenamento
 
 
 # **uploadControllerUploadImagem**
 > UploadResponseDto uploadControllerUploadImagem(file)
 
-
+Envia uma imagem para armazenamento
 
 ### Example
 ```dart
@@ -44,7 +44,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

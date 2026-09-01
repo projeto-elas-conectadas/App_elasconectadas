@@ -3,11 +3,15 @@ import {
   Controller,
   HttpCode,
   Post,
-  UploadedFile,
-  UseInterceptors,
+  Req,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { Request } from 'express';
 import { UploadService } from './upload.service';
+
+type RequestComUpload = Request & {
+  file?: Express.Multer.File;
+  files?: Express.Multer.File[] | Record<string, Express.Multer.File[]>;
+};
 
 @Controller('upload')
 export class UploadController {
@@ -15,13 +19,30 @@ export class UploadController {
 
   @Post('imagem')
   @HttpCode(201)
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadImagem(@UploadedFile() file: Express.Multer.File) {
+  async uploadImagem(@Req() req: Request) {
+    const file = this.arquivoDoRequest(req);
     if (!file) {
       throw new BadRequestException('Selecione uma imagem para enviar');
     }
 
     const url = await this.uploadService.uploadImage(file);
     return { imageUrl: url };
+  }
+
+  private arquivoDoRequest(req: Request): Express.Multer.File | undefined {
+    const comUpload = req as RequestComUpload;
+
+    if (comUpload.file?.buffer) {
+      return comUpload.file;
+    }
+
+    const files = comUpload.files;
+    if (Array.isArray(files)) {
+      return files.find((item) => item.fieldname === 'file') ?? files[0];
+    }
+    if (files?.file?.[0]) {
+      return files.file[0];
+    }
+    return undefined;
   }
 }

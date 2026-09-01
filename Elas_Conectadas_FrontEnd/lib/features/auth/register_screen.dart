@@ -59,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     try {
       await AuthService.register(
         email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
+        password: _passwordController.text,
         name: _nameController.text.trim(),
         phone: _phoneController.text.trim(),
         dob: _dobController.text.trim(),
@@ -177,8 +177,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   label: 'Nome completo',
                   hint: 'Seu nome',
                   prefixIcon: Icons.person_outline,
-                  validator: (v) =>
-                      (v == null || v.isEmpty) ? 'Informe seu nome' : null,
+                  validator: (v) => (v == null || v.trim().isEmpty)
+                      ? 'Informe seu nome'
+                      : null,
                 ),
                 const SizedBox(height: 14),
                 CustomInput(
@@ -188,8 +189,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   prefixIcon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
                   validator: (v) {
-                    if (v == null || v.isEmpty) return 'Informe seu e-mail';
-                    if (!v.contains('@')) return 'E-mail inválido';
+                    final email = v?.trim() ?? '';
+                    if (email.isEmpty) return 'Informe seu e-mail';
+                    if (!RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email)) {
+                      return 'E-mail inválido';
+                    }
                     return null;
                   },
                 ),
@@ -228,8 +232,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     FilteringTextInputFormatter.digitsOnly,
                     _PhoneFormatter()
                   ],
-                  validator: (v) =>
-                      (v == null || v.isEmpty) ? 'Informe seu celular' : null,
+                  validator: (v) {
+                    final digits = (v ?? '').replaceAll(RegExp(r'\D'), '');
+                    if (digits.length < 10 || digits.length > 11) {
+                      return 'Informe um celular válido';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 14),
                 CustomInput(
@@ -243,10 +252,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     _DateFormatter()
                   ],
                   validator: (v) {
-                    if (v == null || v.isEmpty) {
-                      return 'Informe sua data de nascimento';
+                    final dob = v?.trim() ?? '';
+                    if (!RegExp(r'^\d{2}/\d{2}/\d{4}$').hasMatch(dob)) {
+                      return 'Use o formato DD/MM/AAAA';
                     }
-                    if (v.length < 10) return 'Data incompleta (DD/MM/AAAA)';
                     return null;
                   },
                 ),

@@ -39,6 +39,10 @@ paths:
       responses:
         '201':
           description: Admin registrado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
 
   /users:
     get:

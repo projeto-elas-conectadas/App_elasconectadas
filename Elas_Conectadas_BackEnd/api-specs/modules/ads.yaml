@@ -16,6 +16,10 @@ paths:
       responses:
         '201':
           description: Anúncio criado
+          content:
+            application/json:
+              schema:
+                type: object
 
   /ads/list:
     get:
@@ -28,6 +32,10 @@ paths:
       responses:
         '200':
           description: Lista de anúncios
+          content:
+            application/json:
+              schema:
+                type: object
 
   /ads/{id}:
     get:
@@ -46,6 +54,10 @@ paths:
       responses:
         '200':
           description: Detalhes do anúncio
+          content:
+            application/json:
+              schema:
+                type: object
     patch:
       summary: Atualiza um anúncio existente
       operationId: AdsController_patchAd
@@ -68,6 +80,10 @@ paths:
       responses:
         '200':
           description: Anúncio atualizado
+          content:
+            application/json:
+              schema:
+                type: object
     delete:
       summary: Remove um anúncio
       operationId: AdsController_deleteAdById
@@ -84,6 +100,10 @@ paths:
       responses:
         '200':
           description: Anúncio removido
+          content:
+            application/json:
+              schema:
+                type: object
 
 components:
   schemas:

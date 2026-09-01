@@ -7,17 +7,23 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
+      "url": "https://api.elasconectadas.com",
+      "description": "Servidor de Produção"
+    },
+    {
+      "url": "http://127.0.0.1:8080",
       "description": "Servidor de Desenvolvimento Local"
     }
   ],
   "paths": {
     "/upload/imagem": {
       "post": {
+        "summary": "Envia uma imagem para armazenamento",
         "operationId": "UploadController_uploadImagem",
         "tags": [
           "Uploads"
         ],
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -50,16 +56,49 @@
             }
           },
           "400": {
-            "description": "Erro de validação (ex: arquivo não enviado)"
+            "description": "Erro de validação (arquivo ausente ou inválido)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroPadrao"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token JWT ausente ou inválido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroPadrao"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Falha ao armazenar a imagem",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroPadrao"
+                }
+              }
+            }
           }
         }
       }
     },
     "/posts/create": {
       "post": {
+        "summary": "Cria um novo post",
         "operationId": "PostsController_createPost",
         "tags": [
           "Posts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
@@ -73,16 +112,29 @@
         },
         "responses": {
           "201": {
-            "description": "Post criado"
+            "description": "Post criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/posts/list": {
       "get": {
+        "summary": "Lista todos os posts",
         "operationId": "PostsController_getPosts",
         "tags": [
           "Posts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -93,9 +145,15 @@
     },
     "/posts/{id}": {
       "get": {
+        "summary": "Busca um post por ID",
         "operationId": "PostsController_getPostById",
         "tags": [
           "Posts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -114,9 +172,15 @@
         }
       },
       "patch": {
+        "summary": "Atualiza um post existente",
         "operationId": "PostsController_updatePostById",
         "tags": [
           "Posts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -145,9 +209,15 @@
         }
       },
       "delete": {
+        "summary": "Remove um post",
         "operationId": "PostsController_deletePostById",
         "tags": [
           "Posts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -168,10 +238,12 @@
     },
     "/auth/login": {
       "post": {
+        "summary": "Autentica a usuária e retorna o token JWT",
         "operationId": "AuthController_login",
         "tags": [
           "Auth"
         ],
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -192,15 +264,31 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Credenciais inválidas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroPadrao"
+                }
+              }
+            }
           }
         }
       }
     },
     "/auth/send": {
       "post": {
+        "summary": "Envia um e-mail transacional",
         "operationId": "AuthController_sendMail",
         "tags": [
           "Auth"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
@@ -214,17 +302,26 @@
         },
         "responses": {
           "201": {
-            "description": "E-mail enviado"
+            "description": "E-mail enviado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/auth/request-otp": {
       "post": {
+        "summary": "Solicita um código OTP por e-mail",
         "operationId": "AuthController_requestOTP",
         "tags": [
           "Auth"
         ],
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -237,17 +334,26 @@
         },
         "responses": {
           "201": {
-            "description": "OTP solicitado"
+            "description": "OTP solicitado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/auth/verify-otp": {
       "post": {
+        "summary": "Verifica o código OTP informado",
         "operationId": "AuthController_verifyOTP",
         "tags": [
           "Auth"
         ],
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -260,16 +366,29 @@
         },
         "responses": {
           "201": {
-            "description": "OTP verificado"
+            "description": "OTP verificado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/ads/create": {
       "post": {
+        "summary": "Cria um novo anúncio",
         "operationId": "AdsController_createAd",
         "tags": [
           "Ads"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
@@ -283,29 +402,55 @@
         },
         "responses": {
           "201": {
-            "description": "Anúncio criado"
+            "description": "Anúncio criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/ads/list": {
       "get": {
+        "summary": "Lista todos os anúncios",
         "operationId": "AdsController_getAllAds",
         "tags": [
           "Ads"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Lista de anúncios"
+            "description": "Lista de anúncios",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/ads/{id}": {
       "get": {
+        "summary": "Busca um anúncio por ID",
         "operationId": "AdsController_getAdById",
         "tags": [
           "Ads"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -319,14 +464,27 @@
         ],
         "responses": {
           "200": {
-            "description": "Detalhes do anúncio"
+            "description": "Detalhes do anúncio",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       },
       "patch": {
+        "summary": "Atualiza um anúncio existente",
         "operationId": "AdsController_patchAd",
         "tags": [
           "Ads"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -350,14 +508,27 @@
         },
         "responses": {
           "200": {
-            "description": "Anúncio atualizado"
+            "description": "Anúncio atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
+        "summary": "Remove um anúncio",
         "operationId": "AdsController_deleteAdById",
         "tags": [
           "Ads"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -371,7 +542,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Anúncio removido"
+            "description": "Anúncio removido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
@@ -383,6 +561,11 @@
         "tags": [
           "Produtos"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Sucesso",
@@ -391,7 +574,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProdutoResponseDto"
+                    "type": "object"
                   }
                 }
               }
@@ -404,6 +587,11 @@
         "operationId": "Produtos_create",
         "tags": [
           "Produtos"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
@@ -421,7 +609,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProdutoResponseDto"
+                  "type": "object"
                 }
               }
             }
@@ -435,6 +623,11 @@
         "operationId": "Produtos_findOne",
         "tags": [
           "Produtos"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -452,7 +645,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ProdutoResponseDto"
+                  "type": "object"
                 }
               }
             }
@@ -462,10 +655,12 @@
     },
     "/users/register": {
       "post": {
+        "summary": "Registra uma nova usuária",
         "operationId": "UsersController_createUser",
         "tags": [
           "Users"
         ],
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
@@ -495,9 +690,15 @@
     },
     "/users/admin": {
       "post": {
+        "summary": "Cria uma conta de administradora",
         "operationId": "UsersController_createAdmin",
         "tags": [
           "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "requestBody": {
           "required": true,
@@ -511,16 +712,29 @@
         },
         "responses": {
           "201": {
-            "description": "Admin registrado com sucesso"
+            "description": "Admin registrado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/users": {
       "get": {
+        "summary": "Lista todas as usuárias",
         "operationId": "UsersController_getUsers",
         "tags": [
           "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "responses": {
           "200": {
@@ -541,9 +755,15 @@
     },
     "/users/{id}": {
       "get": {
+        "summary": "Busca uma usuária por ID",
         "operationId": "UsersController_getUserById",
         "tags": [
           "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -569,9 +789,15 @@
         }
       },
       "patch": {
+        "summary": "Atualiza os dados da usuária",
         "operationId": "UsersController_updateUserById",
         "tags": [
           "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -600,9 +826,15 @@
         }
       },
       "delete": {
+        "summary": "Remove uma usuária",
         "operationId": "UsersController_deleteUserById",
         "tags": [
           "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "parameters": [
           {
@@ -623,7 +855,78 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Token JWT obtido no login. Envie no header Authorization como Bearer <token>."
+      }
+    },
     "schemas": {
+      "ErroPadrao": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "example": 400,
+            "description": "Código do status HTTP"
+          },
+          "message": {
+            "description": "Mensagem detalhada sobre o que deu errado",
+            "oneOf": [
+              {
+                "type": "string",
+                "example": "Requisição inválida. Verifique os dados enviados."
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            ]
+          },
+          "error": {
+            "type": "string",
+            "example": "Bad Request",
+            "description": "Nome oficial do erro HTTP"
+          },
+          "path": {
+            "type": "string",
+            "example": "/upload/imagem",
+            "description": "Rota em que o erro ocorreu"
+          },
+          "errors": {
+            "type": "array",
+            "description": "Detalhes do validador OpenAPI, quando existirem",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "ErroNaoEncontrado": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "example": 404
+          },
+          "message": {
+            "type": "string",
+            "example": "O recurso solicitado não foi encontrado no sistema."
+          },
+          "error": {
+            "type": "string",
+            "example": "Not Found"
+          },
+          "path": {
+            "type": "string"
+          }
+        }
+      },
       "LoginDto": {
         "type": "object",
         "required": [

@@ -51,7 +51,8 @@ final api = Openapi().getAdsApi();
 final CreateAdDto createAdDto = ; // CreateAdDto | 
 
 try {
-    api.adsControllerCreateAd(createAdDto);
+    final response = await api.adsControllerCreateAd(createAdDto);
+    print(response);
 } on DioException catch (e) {
     print("Exception when calling AdsApi->adsControllerCreateAd: $e\n");
 }
@@ -60,34 +61,34 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *https://api.elasconectadas.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-[*AdsApi*](doc/AdsApi.md) | [**adsControllerCreateAd**](doc/AdsApi.md#adscontrollercreatead) | **POST** /ads/create | 
-[*AdsApi*](doc/AdsApi.md) | [**adsControllerDeleteAdById**](doc/AdsApi.md#adscontrollerdeleteadbyid) | **DELETE** /ads/{id} | 
-[*AdsApi*](doc/AdsApi.md) | [**adsControllerGetAdById**](doc/AdsApi.md#adscontrollergetadbyid) | **GET** /ads/{id} | 
-[*AdsApi*](doc/AdsApi.md) | [**adsControllerGetAllAds**](doc/AdsApi.md#adscontrollergetallads) | **GET** /ads/list | 
-[*AdsApi*](doc/AdsApi.md) | [**adsControllerPatchAd**](doc/AdsApi.md#adscontrollerpatchad) | **PATCH** /ads/{id} | 
-[*AuthApi*](doc/AuthApi.md) | [**authControllerLogin**](doc/AuthApi.md#authcontrollerlogin) | **POST** /auth/login | 
-[*AuthApi*](doc/AuthApi.md) | [**authControllerRequestOTP**](doc/AuthApi.md#authcontrollerrequestotp) | **POST** /auth/request-otp | 
-[*AuthApi*](doc/AuthApi.md) | [**authControllerSendMail**](doc/AuthApi.md#authcontrollersendmail) | **POST** /auth/send | 
-[*AuthApi*](doc/AuthApi.md) | [**authControllerVerifyOTP**](doc/AuthApi.md#authcontrollerverifyotp) | **POST** /auth/verify-otp | 
-[*PostsApi*](doc/PostsApi.md) | [**postsControllerCreatePost**](doc/PostsApi.md#postscontrollercreatepost) | **POST** /posts/create | 
-[*PostsApi*](doc/PostsApi.md) | [**postsControllerDeletePostById**](doc/PostsApi.md#postscontrollerdeletepostbyid) | **DELETE** /posts/{id} | 
-[*PostsApi*](doc/PostsApi.md) | [**postsControllerGetPostById**](doc/PostsApi.md#postscontrollergetpostbyid) | **GET** /posts/{id} | 
-[*PostsApi*](doc/PostsApi.md) | [**postsControllerGetPosts**](doc/PostsApi.md#postscontrollergetposts) | **GET** /posts/list | 
-[*PostsApi*](doc/PostsApi.md) | [**postsControllerUpdatePostById**](doc/PostsApi.md#postscontrollerupdatepostbyid) | **PATCH** /posts/{id} | 
+[*AdsApi*](doc/AdsApi.md) | [**adsControllerCreateAd**](doc/AdsApi.md#adscontrollercreatead) | **POST** /ads/create | Cria um novo anúncio
+[*AdsApi*](doc/AdsApi.md) | [**adsControllerDeleteAdById**](doc/AdsApi.md#adscontrollerdeleteadbyid) | **DELETE** /ads/{id} | Remove um anúncio
+[*AdsApi*](doc/AdsApi.md) | [**adsControllerGetAdById**](doc/AdsApi.md#adscontrollergetadbyid) | **GET** /ads/{id} | Busca um anúncio por ID
+[*AdsApi*](doc/AdsApi.md) | [**adsControllerGetAllAds**](doc/AdsApi.md#adscontrollergetallads) | **GET** /ads/list | Lista todos os anúncios
+[*AdsApi*](doc/AdsApi.md) | [**adsControllerPatchAd**](doc/AdsApi.md#adscontrollerpatchad) | **PATCH** /ads/{id} | Atualiza um anúncio existente
+[*AuthApi*](doc/AuthApi.md) | [**authControllerLogin**](doc/AuthApi.md#authcontrollerlogin) | **POST** /auth/login | Autentica a usuária e retorna o token JWT
+[*AuthApi*](doc/AuthApi.md) | [**authControllerRequestOTP**](doc/AuthApi.md#authcontrollerrequestotp) | **POST** /auth/request-otp | Solicita um código OTP por e-mail
+[*AuthApi*](doc/AuthApi.md) | [**authControllerSendMail**](doc/AuthApi.md#authcontrollersendmail) | **POST** /auth/send | Envia um e-mail transacional
+[*AuthApi*](doc/AuthApi.md) | [**authControllerVerifyOTP**](doc/AuthApi.md#authcontrollerverifyotp) | **POST** /auth/verify-otp | Verifica o código OTP informado
+[*PostsApi*](doc/PostsApi.md) | [**postsControllerCreatePost**](doc/PostsApi.md#postscontrollercreatepost) | **POST** /posts/create | Cria um novo post
+[*PostsApi*](doc/PostsApi.md) | [**postsControllerDeletePostById**](doc/PostsApi.md#postscontrollerdeletepostbyid) | **DELETE** /posts/{id} | Remove um post
+[*PostsApi*](doc/PostsApi.md) | [**postsControllerGetPostById**](doc/PostsApi.md#postscontrollergetpostbyid) | **GET** /posts/{id} | Busca um post por ID
+[*PostsApi*](doc/PostsApi.md) | [**postsControllerGetPosts**](doc/PostsApi.md#postscontrollergetposts) | **GET** /posts/list | Lista todos os posts
+[*PostsApi*](doc/PostsApi.md) | [**postsControllerUpdatePostById**](doc/PostsApi.md#postscontrollerupdatepostbyid) | **PATCH** /posts/{id} | Atualiza um post existente
 [*ProdutosApi*](doc/ProdutosApi.md) | [**produtosCreate**](doc/ProdutosApi.md#produtoscreate) | **POST** /produtos | Cria um novo produto
 [*ProdutosApi*](doc/ProdutosApi.md) | [**produtosFindAll**](doc/ProdutosApi.md#produtosfindall) | **GET** /produtos | Lista todos os produtos
 [*ProdutosApi*](doc/ProdutosApi.md) | [**produtosFindOne**](doc/ProdutosApi.md#produtosfindone) | **GET** /produtos/{id} | Busca um produto por ID
-[*UploadsApi*](doc/UploadsApi.md) | [**uploadControllerUploadImagem**](doc/UploadsApi.md#uploadcontrolleruploadimagem) | **POST** /upload/imagem | 
-[*UsersApi*](doc/UsersApi.md) | [**usersControllerCreateAdmin**](doc/UsersApi.md#userscontrollercreateadmin) | **POST** /users/admin | 
-[*UsersApi*](doc/UsersApi.md) | [**usersControllerCreateUser**](doc/UsersApi.md#userscontrollercreateuser) | **POST** /users/register | 
-[*UsersApi*](doc/UsersApi.md) | [**usersControllerDeleteUserById**](doc/UsersApi.md#userscontrollerdeleteuserbyid) | **DELETE** /users/{id} | 
-[*UsersApi*](doc/UsersApi.md) | [**usersControllerGetUserById**](doc/UsersApi.md#userscontrollergetuserbyid) | **GET** /users/{id} | 
-[*UsersApi*](doc/UsersApi.md) | [**usersControllerGetUsers**](doc/UsersApi.md#userscontrollergetusers) | **GET** /users | 
-[*UsersApi*](doc/UsersApi.md) | [**usersControllerUpdateUserById**](doc/UsersApi.md#userscontrollerupdateuserbyid) | **PATCH** /users/{id} | 
+[*UploadsApi*](doc/UploadsApi.md) | [**uploadControllerUploadImagem**](doc/UploadsApi.md#uploadcontrolleruploadimagem) | **POST** /upload/imagem | Envia uma imagem para armazenamento
+[*UsersApi*](doc/UsersApi.md) | [**usersControllerCreateAdmin**](doc/UsersApi.md#userscontrollercreateadmin) | **POST** /users/admin | Cria uma conta de administradora
+[*UsersApi*](doc/UsersApi.md) | [**usersControllerCreateUser**](doc/UsersApi.md#userscontrollercreateuser) | **POST** /users/register | Registra uma nova usuária
+[*UsersApi*](doc/UsersApi.md) | [**usersControllerDeleteUserById**](doc/UsersApi.md#userscontrollerdeleteuserbyid) | **DELETE** /users/{id} | Remove uma usuária
+[*UsersApi*](doc/UsersApi.md) | [**usersControllerGetUserById**](doc/UsersApi.md#userscontrollergetuserbyid) | **GET** /users/{id} | Busca uma usuária por ID
+[*UsersApi*](doc/UsersApi.md) | [**usersControllerGetUsers**](doc/UsersApi.md#userscontrollergetusers) | **GET** /users | Lista todas as usuárias
+[*UsersApi*](doc/UsersApi.md) | [**usersControllerUpdateUserById**](doc/UsersApi.md#userscontrollerupdateuserbyid) | **PATCH** /users/{id} | Atualiza os dados da usuária
 
 
 ## Documentation For Models
@@ -97,6 +98,9 @@ Class | Method | HTTP request | Description
  - [CreatePostDto](doc/CreatePostDto.md)
  - [CreateProdutoDto](doc/CreateProdutoDto.md)
  - [CreateUserDto](doc/CreateUserDto.md)
+ - [ErroNaoEncontrado](doc/ErroNaoEncontrado.md)
+ - [ErroPadrao](doc/ErroPadrao.md)
+ - [ErroPadraoMessage](doc/ErroPadraoMessage.md)
  - [LoginDto](doc/LoginDto.md)
  - [LoginResponseDto](doc/LoginResponseDto.md)
  - [ProdutoResponseDto](doc/ProdutoResponseDto.md)
@@ -112,7 +116,11 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Authorization
 
-Endpoints do not require authorization.
+
+Authentication schemes defined for the API:
+### bearerAuth
+
+- **Type**: HTTP Bearer Token authentication (JWT)
 
 
 ## Author

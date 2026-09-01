@@ -29,6 +29,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginResponseDto'
+        '401':
+          description: Credenciais inválidas
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
 
   /send:
     post:
@@ -47,6 +53,10 @@ paths:
       responses:
         '201':
           description: E-mail enviado
+          content:
+            application/json:
+              schema:
+                type: object
 
   /request-otp:
     post:
@@ -64,6 +74,10 @@ paths:
       responses:
         '201':
           description: OTP solicitado
+          content:
+            application/json:
+              schema:
+                type: object
 
   /verify-otp:
     post:
@@ -81,6 +95,10 @@ paths:
       responses:
         '201':
           description: OTP verificado
+          content:
+            application/json:
+              schema:
+                type: object
 
 components:
   schemas:

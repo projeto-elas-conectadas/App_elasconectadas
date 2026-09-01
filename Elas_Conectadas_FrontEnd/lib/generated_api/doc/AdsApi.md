@@ -5,21 +5,21 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *https://api.elasconectadas.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**adsControllerCreateAd**](AdsApi.md#adscontrollercreatead) | **POST** /ads/create | 
-[**adsControllerDeleteAdById**](AdsApi.md#adscontrollerdeleteadbyid) | **DELETE** /ads/{id} | 
-[**adsControllerGetAdById**](AdsApi.md#adscontrollergetadbyid) | **GET** /ads/{id} | 
-[**adsControllerGetAllAds**](AdsApi.md#adscontrollergetallads) | **GET** /ads/list | 
-[**adsControllerPatchAd**](AdsApi.md#adscontrollerpatchad) | **PATCH** /ads/{id} | 
+[**adsControllerCreateAd**](AdsApi.md#adscontrollercreatead) | **POST** /ads/create | Cria um novo anúncio
+[**adsControllerDeleteAdById**](AdsApi.md#adscontrollerdeleteadbyid) | **DELETE** /ads/{id} | Remove um anúncio
+[**adsControllerGetAdById**](AdsApi.md#adscontrollergetadbyid) | **GET** /ads/{id} | Busca um anúncio por ID
+[**adsControllerGetAllAds**](AdsApi.md#adscontrollergetallads) | **GET** /ads/list | Lista todos os anúncios
+[**adsControllerPatchAd**](AdsApi.md#adscontrollerpatchad) | **PATCH** /ads/{id} | Atualiza um anúncio existente
 
 
 # **adsControllerCreateAd**
-> adsControllerCreateAd(createAdDto)
+> JsonObject adsControllerCreateAd(createAdDto)
 
-
+Cria um novo anúncio
 
 ### Example
 ```dart
@@ -29,7 +29,8 @@ final api = Openapi().getAdsApi();
 final CreateAdDto createAdDto = ; // CreateAdDto | 
 
 try {
-    api.adsControllerCreateAd(createAdDto);
+    final response = api.adsControllerCreateAd(createAdDto);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AdsApi->adsControllerCreateAd: $e\n');
 }
@@ -43,23 +44,23 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adsControllerDeleteAdById**
-> adsControllerDeleteAdById(id)
+> JsonObject adsControllerDeleteAdById(id)
 
-
+Remove um anúncio
 
 ### Example
 ```dart
@@ -69,7 +70,8 @@ final api = Openapi().getAdsApi();
 final String id = id_example; // String | 
 
 try {
-    api.adsControllerDeleteAdById(id);
+    final response = api.adsControllerDeleteAdById(id);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AdsApi->adsControllerDeleteAdById: $e\n');
 }
@@ -83,23 +85,23 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adsControllerGetAdById**
-> adsControllerGetAdById(id)
+> JsonObject adsControllerGetAdById(id)
 
-
+Busca um anúncio por ID
 
 ### Example
 ```dart
@@ -109,7 +111,8 @@ final api = Openapi().getAdsApi();
 final String id = id_example; // String | 
 
 try {
-    api.adsControllerGetAdById(id);
+    final response = api.adsControllerGetAdById(id);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AdsApi->adsControllerGetAdById: $e\n');
 }
@@ -123,23 +126,23 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adsControllerGetAllAds**
-> adsControllerGetAllAds()
+> JsonObject adsControllerGetAllAds()
 
-
+Lista todos os anúncios
 
 ### Example
 ```dart
@@ -148,7 +151,8 @@ import 'package:openapi/api.dart';
 final api = Openapi().getAdsApi();
 
 try {
-    api.adsControllerGetAllAds();
+    final response = api.adsControllerGetAllAds();
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AdsApi->adsControllerGetAllAds: $e\n');
 }
@@ -159,23 +163,23 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adsControllerPatchAd**
-> adsControllerPatchAd(id, updateAdDto)
+> JsonObject adsControllerPatchAd(id, updateAdDto)
 
-
+Atualiza um anúncio existente
 
 ### Example
 ```dart
@@ -186,7 +190,8 @@ final String id = id_example; // String |
 final UpdateAdDto updateAdDto = ; // UpdateAdDto | 
 
 try {
-    api.adsControllerPatchAd(id, updateAdDto);
+    final response = api.adsControllerPatchAd(id, updateAdDto);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AdsApi->adsControllerPatchAd: $e\n');
 }
@@ -201,16 +206,16 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

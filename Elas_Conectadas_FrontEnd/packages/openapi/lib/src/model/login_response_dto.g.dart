@@ -8,15 +8,16 @@ part of 'login_response_dto.dart';
 
 class _$LoginResponseDto extends LoginResponseDto {
   @override
-  final String? accessToken;
+  final String accessToken;
   @override
-  final UserResponseDto? user;
+  final UserResponseDto user;
 
   factory _$LoginResponseDto(
           [void Function(LoginResponseDtoBuilder)? updates]) =>
       (LoginResponseDtoBuilder()..update(updates))._build();
 
-  _$LoginResponseDto._({this.accessToken, this.user}) : super._();
+  _$LoginResponseDto._({required this.accessToken, required this.user})
+      : super._();
   @override
   LoginResponseDto rebuild(void Function(LoginResponseDtoBuilder) updates) =>
       (toBuilder()..update(updates)).build();
@@ -71,7 +72,7 @@ class LoginResponseDtoBuilder
     final $v = _$v;
     if ($v != null) {
       _accessToken = $v.accessToken;
-      _user = $v.user?.toBuilder();
+      _user = $v.user.toBuilder();
       _$v = null;
     }
     return this;
@@ -95,14 +96,15 @@ class LoginResponseDtoBuilder
     try {
       _$result = _$v ??
           _$LoginResponseDto._(
-            accessToken: accessToken,
-            user: _user?.build(),
+            accessToken: BuiltValueNullFieldError.checkNotNull(
+                accessToken, r'LoginResponseDto', 'accessToken'),
+            user: user.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'user';
-        _user?.build();
+        user.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
             r'LoginResponseDto', _$failedField, e.toString());

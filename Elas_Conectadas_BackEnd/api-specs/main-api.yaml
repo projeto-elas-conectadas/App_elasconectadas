@@ -64,6 +64,10 @@ components:
       bearerFormat: JWT
       description: Token JWT obtido no login. Envie no header Authorization como Bearer <token>.
   schemas:
+    ErroPadrao:
+      $ref: './shared/errors.yaml#/components/schemas/ErroPadrao'
+    ErroNaoEncontrado:
+      $ref: './shared/errors.yaml#/components/schemas/ErroNaoEncontrado'
     LoginDto:
       $ref: './modules/auth.yaml#/components/schemas/LoginDto'
     LoginResponseDto:

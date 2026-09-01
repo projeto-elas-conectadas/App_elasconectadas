@@ -5,7 +5,7 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *https://api.elasconectadas.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 
 # **produtosCreate**
-> ProdutoResponseDto produtosCreate(createProdutoDto)
+> JsonObject produtosCreate(createProdutoDto)
 
 Cria um novo produto
 
@@ -42,11 +42,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ProdutoResponseDto**](ProdutoResponseDto.md)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -56,7 +56,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **produtosFindAll**
-> BuiltList<ProdutoResponseDto> produtosFindAll()
+> BuiltList<JsonObject> produtosFindAll()
 
 Lista todos os produtos
 
@@ -79,11 +79,11 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**BuiltList&lt;ProdutoResponseDto&gt;**](ProdutoResponseDto.md)
+[**BuiltList&lt;JsonObject&gt;**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -93,7 +93,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **produtosFindOne**
-> ProdutoResponseDto produtosFindOne(id)
+> JsonObject produtosFindOne(id)
 
 Busca um produto por ID
 
@@ -120,11 +120,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ProdutoResponseDto**](ProdutoResponseDto.md)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

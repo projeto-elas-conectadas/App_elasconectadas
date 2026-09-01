@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { v2 as cloudinary } from 'cloudinary';
 import * as streamifier from 'streamifier';
 
@@ -19,16 +19,21 @@ export class UploadService {
         { folder: 'elas-conectadas' },
         (error, result) => {
           if (error) {
-            return reject(error);
+            return reject(
+              new InternalServerErrorException(
+                error.message || 'Falha ao enviar a imagem para o Cloudinary',
+              ),
+            );
           }
-          
-          // AQUI ESTÁ A CORREÇÃO:
-          // Verificamos se 'result' existe e se tem 'secure_url'
+
           if (result && result.secure_url) {
             resolve(result.secure_url);
           } else {
-            // Se o Cloudinary não retornar erro mas o result for vazio, rejeitamos
-            reject(new Error('Falha no upload: Cloudinary não retornou a URL'));
+            reject(
+              new InternalServerErrorException(
+                'Falha no upload: Cloudinary não retornou a URL',
+              ),
+            );
           }
         },
       );

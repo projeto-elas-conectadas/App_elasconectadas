@@ -9,6 +9,7 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:openapi/src/api_util.dart';
+import 'package:openapi/src/model/erro_padrao.dart';
 import 'package:openapi/src/model/upload_response_dto.dart';
 
 class UploadsApi {
@@ -19,7 +20,7 @@ class UploadsApi {
 
   const UploadsApi(this._dio, this._serializers);
 
-  /// uploadControllerUploadImagem
+  /// Envia uma imagem para armazenamento
   /// 
   ///
   /// Parameters:
@@ -49,7 +50,13 @@ class UploadsApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
         ...?extra,
       },
       contentType: 'multipart/form-data',

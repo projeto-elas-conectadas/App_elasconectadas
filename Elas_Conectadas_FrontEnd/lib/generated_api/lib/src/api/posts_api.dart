@@ -8,6 +8,7 @@ import 'package:built_value/json_object.dart';
 import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
+import 'package:built_value/json_object.dart';
 import 'package:openapi/src/api_util.dart';
 import 'package:openapi/src/model/create_post_dto.dart';
 import 'package:openapi/src/model/update_post_dto.dart';
@@ -20,7 +21,7 @@ class PostsApi {
 
   const PostsApi(this._dio, this._serializers);
 
-  /// postsControllerCreatePost
+  /// Cria um novo post
   /// 
   ///
   /// Parameters:
@@ -32,9 +33,9 @@ class PostsApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future]
+  /// Returns a [Future] containing a [Response] with a [JsonObject] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<void>> postsControllerCreatePost({ 
+  Future<Response<JsonObject>> postsControllerCreatePost({ 
     required CreatePostDto createPostDto,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -50,7 +51,13 @@ class PostsApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
         ...?extra,
       },
       contentType: 'application/json',
@@ -84,10 +91,38 @@ class PostsApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    return _response;
+    JsonObject? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null ? null : _serializers.deserialize(
+        rawResponse,
+        specifiedType: const FullType(JsonObject),
+      ) as JsonObject;
+
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<JsonObject>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
   }
 
-  /// postsControllerDeletePostById
+  /// Remove um post
   /// 
   ///
   /// Parameters:
@@ -117,7 +152,13 @@ class PostsApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
         ...?extra,
       },
       validateStatus: validateStatus,
@@ -134,7 +175,7 @@ class PostsApi {
     return _response;
   }
 
-  /// postsControllerGetPostById
+  /// Busca um post por ID
   /// 
   ///
   /// Parameters:
@@ -164,7 +205,13 @@ class PostsApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
         ...?extra,
       },
       validateStatus: validateStatus,
@@ -181,7 +228,7 @@ class PostsApi {
     return _response;
   }
 
-  /// postsControllerGetPosts
+  /// Lista todos os posts
   /// 
   ///
   /// Parameters:
@@ -209,7 +256,13 @@ class PostsApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
         ...?extra,
       },
       validateStatus: validateStatus,
@@ -226,7 +279,7 @@ class PostsApi {
     return _response;
   }
 
-  /// postsControllerUpdatePostById
+  /// Atualiza um post existente
   /// 
   ///
   /// Parameters:
@@ -258,7 +311,13 @@ class PostsApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
         ...?extra,
       },
       contentType: 'application/json',

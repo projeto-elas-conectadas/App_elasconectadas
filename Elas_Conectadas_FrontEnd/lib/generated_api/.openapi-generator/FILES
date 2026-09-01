@@ -8,6 +8,9 @@ doc/CreateAdminDto.md
 doc/CreatePostDto.md
 doc/CreateProdutoDto.md
 doc/CreateUserDto.md
+doc/ErroNaoEncontrado.md
+doc/ErroPadrao.md
+doc/ErroPadraoMessage.md
 doc/LoginDto.md
 doc/LoginResponseDto.md
 doc/PostsApi.md
@@ -44,6 +47,9 @@ lib/src/model/create_post_dto.dart
 lib/src/model/create_produto_dto.dart
 lib/src/model/create_user_dto.dart
 lib/src/model/date.dart
+lib/src/model/erro_nao_encontrado.dart
+lib/src/model/erro_padrao.dart
+lib/src/model/erro_padrao_message.dart
 lib/src/model/login_dto.dart
 lib/src/model/login_response_dto.dart
 lib/src/model/produto_response_dto.dart

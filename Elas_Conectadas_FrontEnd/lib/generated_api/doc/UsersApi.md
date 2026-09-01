@@ -5,22 +5,22 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *https://api.elasconectadas.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**usersControllerCreateAdmin**](UsersApi.md#userscontrollercreateadmin) | **POST** /users/admin | 
-[**usersControllerCreateUser**](UsersApi.md#userscontrollercreateuser) | **POST** /users/register | 
-[**usersControllerDeleteUserById**](UsersApi.md#userscontrollerdeleteuserbyid) | **DELETE** /users/{id} | 
-[**usersControllerGetUserById**](UsersApi.md#userscontrollergetuserbyid) | **GET** /users/{id} | 
-[**usersControllerGetUsers**](UsersApi.md#userscontrollergetusers) | **GET** /users | 
-[**usersControllerUpdateUserById**](UsersApi.md#userscontrollerupdateuserbyid) | **PATCH** /users/{id} | 
+[**usersControllerCreateAdmin**](UsersApi.md#userscontrollercreateadmin) | **POST** /users/admin | Cria uma conta de administradora
+[**usersControllerCreateUser**](UsersApi.md#userscontrollercreateuser) | **POST** /users/register | Registra uma nova usuária
+[**usersControllerDeleteUserById**](UsersApi.md#userscontrollerdeleteuserbyid) | **DELETE** /users/{id} | Remove uma usuária
+[**usersControllerGetUserById**](UsersApi.md#userscontrollergetuserbyid) | **GET** /users/{id} | Busca uma usuária por ID
+[**usersControllerGetUsers**](UsersApi.md#userscontrollergetusers) | **GET** /users | Lista todas as usuárias
+[**usersControllerUpdateUserById**](UsersApi.md#userscontrollerupdateuserbyid) | **PATCH** /users/{id} | Atualiza os dados da usuária
 
 
 # **usersControllerCreateAdmin**
-> usersControllerCreateAdmin(createAdminDto)
+> JsonObject usersControllerCreateAdmin(createAdminDto)
 
-
+Cria uma conta de administradora
 
 ### Example
 ```dart
@@ -30,7 +30,8 @@ final api = Openapi().getUsersApi();
 final CreateAdminDto createAdminDto = ; // CreateAdminDto | 
 
 try {
-    api.usersControllerCreateAdmin(createAdminDto);
+    final response = api.usersControllerCreateAdmin(createAdminDto);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling UsersApi->usersControllerCreateAdmin: $e\n');
 }
@@ -44,23 +45,23 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **usersControllerCreateUser**
 > UserResponseDto usersControllerCreateUser(createUserDto)
 
-
+Registra uma nova usuária
 
 ### Example
 ```dart
@@ -101,7 +102,7 @@ No authorization required
 # **usersControllerDeleteUserById**
 > usersControllerDeleteUserById(id)
 
-
+Remove uma usuária
 
 ### Example
 ```dart
@@ -129,7 +130,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
@@ -139,9 +140,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **usersControllerGetUserById**
-> usersControllerGetUserById(id)
+> UserResponseDto usersControllerGetUserById(id)
 
-
+Busca uma usuária por ID
 
 ### Example
 ```dart
@@ -151,7 +152,8 @@ final api = Openapi().getUsersApi();
 final String id = id_example; // String | 
 
 try {
-    api.usersControllerGetUserById(id);
+    final response = api.usersControllerGetUserById(id);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling UsersApi->usersControllerGetUserById: $e\n');
 }
@@ -165,23 +167,23 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**UserResponseDto**](UserResponseDto.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **usersControllerGetUsers**
-> usersControllerGetUsers()
+> BuiltList<UserResponseDto> usersControllerGetUsers()
 
-
+Lista todas as usuárias
 
 ### Example
 ```dart
@@ -190,7 +192,8 @@ import 'package:openapi/api.dart';
 final api = Openapi().getUsersApi();
 
 try {
-    api.usersControllerGetUsers();
+    final response = api.usersControllerGetUsers();
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling UsersApi->usersControllerGetUsers: $e\n');
 }
@@ -201,23 +204,23 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-void (empty response body)
+[**BuiltList&lt;UserResponseDto&gt;**](UserResponseDto.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **usersControllerUpdateUserById**
 > usersControllerUpdateUserById(id, updateUserDto)
 
-
+Atualiza os dados da usuária
 
 ### Example
 ```dart
@@ -247,7 +250,7 @@ void (empty response body)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 

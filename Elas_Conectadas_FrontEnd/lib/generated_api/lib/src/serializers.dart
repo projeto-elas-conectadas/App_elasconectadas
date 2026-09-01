@@ -19,6 +19,9 @@ import 'package:openapi/src/model/create_admin_dto.dart';
 import 'package:openapi/src/model/create_post_dto.dart';
 import 'package:openapi/src/model/create_produto_dto.dart';
 import 'package:openapi/src/model/create_user_dto.dart';
+import 'package:openapi/src/model/erro_nao_encontrado.dart';
+import 'package:openapi/src/model/erro_padrao.dart';
+import 'package:openapi/src/model/erro_padrao_message.dart';
 import 'package:openapi/src/model/login_dto.dart';
 import 'package:openapi/src/model/login_response_dto.dart';
 import 'package:openapi/src/model/produto_response_dto.dart';
@@ -39,6 +42,9 @@ part 'serializers.g.dart';
   CreatePostDto,
   CreateProdutoDto,
   CreateUserDto,
+  ErroNaoEncontrado,
+  ErroPadrao,
+  ErroPadraoMessage,
   LoginDto,
   LoginResponseDto,
   ProdutoResponseDto,
@@ -53,8 +59,16 @@ part 'serializers.g.dart';
 ])
 Serializers serializers = (_$serializers.toBuilder()
       ..addBuilderFactory(
-        const FullType(BuiltList, [FullType(ProdutoResponseDto)]),
-        () => ListBuilder<ProdutoResponseDto>(),
+        const FullType(BuiltList, [FullType(UserResponseDto)]),
+        () => ListBuilder<UserResponseDto>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltMap, [FullType(String), FullType.nullable(JsonObject)]),
+        () => MapBuilder<String, JsonObject?>(),
+      )
+      ..addBuilderFactory(
+        const FullType(BuiltList, [FullType(JsonObject)]),
+        () => ListBuilder<JsonObject>(),
       )
       ..add(const OneOfSerializer())
       ..add(const AnyOfSerializer())

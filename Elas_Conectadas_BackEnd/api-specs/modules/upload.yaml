@@ -5,8 +5,7 @@ paths:
       operationId: UploadController_uploadImagem
       tags:
         - Uploads
-      security:
-        - bearerAuth: []
+      security: []
       requestBody:
         required: true
         content:
@@ -28,7 +27,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/UploadResponseDto'
         '400':
-          description: 'Erro de validação (ex: arquivo não enviado)'
+          description: Erro de validação (arquivo ausente ou inválido)
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
+        '401':
+          description: Token JWT ausente ou inválido
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
+        '500':
+          description: Falha ao armazenar a imagem
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
 
 components:
   schemas:
@@ -40,4 +55,4 @@ components:
         imageUrl:
           type: string
           format: uri
-          description: 'URL segura da imagem armazenada no Cloudinary'
+          description: URL segura da imagem armazenada no Cloudinary

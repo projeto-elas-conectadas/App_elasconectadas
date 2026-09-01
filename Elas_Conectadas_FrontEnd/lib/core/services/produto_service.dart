@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:openapi/openapi.dart';
 
 import '../models/produto_model.dart';
@@ -43,27 +44,19 @@ class ProdutoService {
           );
         }
 
-        // 1. Envia cada arquivo pelo endpoint de upload descrito no contrato.
-        // A primeira foto é a capa e as demais formam a galeria.
         final imageUrls = <String>[];
         for (final imagem in imagens) {
-          final uploadResponse =
-              await ApiClient.uploads.uploadControllerUploadImagem(
-            file: MultipartFile.fromBytes(
-              imagem.bytes,
-              filename: imagem.nome,
+          final formData = FormData();
+          formData.files.add(
+            MapEntry<String, MultipartFile>(
+              'file',
+              await _toMultipartFile(imagem),
             ),
           );
-          final imageUrl = uploadResponse.data?.imageUrl;
-          if (imageUrl == null || imageUrl.isEmpty) {
-            throw const ProdutoException(
-              'O servidor não retornou a URL de uma das fotos enviadas.',
-            );
-          }
+          final imageUrl = await ApiClient.uploadImagem(formData);
           imageUrls.add(imageUrl);
         }
 
-        // 2. Usa as URLs retornadas para montar o DTO definido no contrato.
         final response = await ApiClient.produtos.produtosCreate(
           createProdutoDto: CreateProdutoDto((b) => b
             ..nome = nome
@@ -87,6 +80,46 @@ class ProdutoService {
       },
       fallbackMessage: 'Não foi possível cadastrar o anúncio.',
     );
+  }
+
+  static Future<MultipartFile> _toMultipartFile(ImagemUpload imagem) async {
+    if (imagem.bytes.isEmpty) {
+      throw const ProdutoException('Uma das fotos selecionadas está vazia.');
+    }
+
+    final filename = imagem.nome.trim().isEmpty ? 'upload.jpg' : imagem.nome;
+    final contentType = _mediaTypeFor(filename);
+
+    if (imagem.temArquivoLocal) {
+      return MultipartFile.fromFile(
+        imagem.path!,
+        filename: filename,
+        contentType: contentType,
+      );
+    }
+
+    return MultipartFile.fromBytes(
+      imagem.bytes,
+      filename: filename,
+      contentType: contentType,
+    );
+  }
+
+  static MediaType _mediaTypeFor(String filename) {
+    final ext = filename.split('.').last.toLowerCase();
+    switch (ext) {
+      case 'png':
+        return MediaType('image', 'png');
+      case 'webp':
+        return MediaType('image', 'webp');
+      case 'gif':
+        return MediaType('image', 'gif');
+      case 'heic':
+      case 'heif':
+        return MediaType('image', 'heic');
+      default:
+        return MediaType('image', 'jpeg');
+    }
   }
 
   // ── Listar todos ───────────────────────────────────────────────────────
@@ -123,7 +156,6 @@ class ProdutoService {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-      case DioExceptionType.transformTimeout:
         return 'O servidor demorou para responder. Tente novamente.';
       case DioExceptionType.connectionError:
         return 'Não foi possível conectar ao servidor.';
@@ -153,8 +185,19 @@ class ProdutoService {
 class ImagemUpload {
   final Uint8List bytes;
   final String nome;
+  final String? path;
 
-  const ImagemUpload({required this.bytes, required this.nome});
+  const ImagemUpload({
+    required this.bytes,
+    required this.nome,
+    this.path,
+  });
+
+  bool get temArquivoLocal {
+    final filePath = path;
+    if (filePath == null || filePath.isEmpty) return false;
+    return !filePath.startsWith('blob:') && !filePath.startsWith('http');
+  }
 }
 
 class ProdutoException implements Exception {

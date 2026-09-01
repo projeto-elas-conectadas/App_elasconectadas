@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:openapi/openapi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_model.dart';
@@ -36,7 +37,6 @@ class AuthService {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-      case DioExceptionType.transformTimeout:
         return 'O servidor demorou para responder. Tente novamente em instantes.';
       case DioExceptionType.connectionError:
         return 'Não foi possível conectar ao servidor. Verifique se o backend está em execução.';
@@ -111,7 +111,7 @@ class AuthService {
 
       // Mantém localmente os dados tipados descritos no contrato.
       if (data?.user != null) {
-        final user = UserModel.fromDto(data!.user!);
+        final user = UserModel.fromDto(data!.user);
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString(_userKey, jsonEncode(user.toJson()));
       }
@@ -124,6 +124,9 @@ class AuthService {
   // ─── Registro (via cliente gerado) ─────────────────────────────────────────
 
   /// Registra uma nova usuária usando o DTO gerado [CreateUserDto].
+  ///
+  /// O contrato exige no body JSON: email, password, name, phone e dob.
+  /// `pfp` é opcional e só entra no JSON quando houver URL de upload.
   static Future<void> register({
     required String email,
     required String password,
@@ -133,37 +136,85 @@ class AuthService {
     Uint8List? profileImageBytes,
     String profileImageName = 'perfil.jpg',
   }) async {
-    String? profileImageUrl;
-    if (profileImageBytes != null) {
-      final uploadResponse = await _execute(
-        () => ApiClient.uploads.uploadControllerUploadImagem(
-          file: MultipartFile.fromBytes(
-            profileImageBytes,
-            filename: profileImageName,
-          ),
-        ),
-        fallbackMessage: 'Não foi possível enviar a foto do cadastro.',
+    final emailValue = email.trim();
+    final passwordValue = password;
+    final nameValue = name.trim();
+    final phoneValue = phone.trim();
+    final dobValue = dob.trim();
+    final missing = [
+      if (emailValue.isEmpty) 'email',
+      if (passwordValue.isEmpty) 'password',
+      if (nameValue.isEmpty) 'name',
+      if (phoneValue.isEmpty) 'phone',
+      if (dobValue.isEmpty) 'dob',
+    ];
+    if (missing.isNotEmpty) {
+      throw AuthException(
+        'Preencha os campos obrigatórios: ${missing.join(', ')}.',
       );
-      profileImageUrl = uploadResponse.data?.imageUrl;
-      if (profileImageUrl == null || profileImageUrl.isEmpty) {
-        throw const AuthException(
-          'O servidor não retornou a URL da foto enviada.',
-        );
-      }
     }
 
+    String? profileImageUrl;
+    if (profileImageBytes != null && profileImageBytes.isNotEmpty) {
+      final filename =
+          profileImageName.trim().isEmpty ? 'perfil.jpg' : profileImageName;
+      final formData = FormData();
+      formData.files.add(
+        MapEntry<String, MultipartFile>(
+          'file',
+          MultipartFile.fromBytes(
+            profileImageBytes,
+            filename: filename,
+            contentType: _mediaTypeFor(filename),
+          ),
+        ),
+      );
+      profileImageUrl = await _execute(
+        () => ApiClient.uploadImagem(formData),
+        fallbackMessage: 'Não foi possível enviar a foto do cadastro.',
+      );
+    }
+
+    final createUserDto = CreateUserDto((builder) => builder
+      ..email = emailValue
+      ..password = passwordValue
+      ..name = nameValue
+      ..phone = phoneValue
+      ..dob = dobValue
+      ..pfp = profileImageUrl);
+
+    final body = Map<String, dynamic>.from(
+      standardSerializers.serializeWith(
+        CreateUserDto.serializer,
+        createUserDto,
+      )! as Map,
+    );
+
     await _execute(
-      () => ApiClient.users.usersControllerCreateUser(
-        createUserDto: CreateUserDto((b) => b
-          ..email = email
-          ..password = password
-          ..name = name
-          ..phone = phone
-          ..dob = dob
-          ..pfp = profileImageUrl),
+      () => ApiClient.dio.post<Object>(
+        '/users/register',
+        data: body,
+        options: Options(
+          contentType: Headers.jsonContentType,
+          headers: const {Headers.contentTypeHeader: Headers.jsonContentType},
+        ),
       ),
       fallbackMessage: 'Não foi possível realizar o cadastro.',
     );
+  }
+
+  static MediaType _mediaTypeFor(String filename) {
+    final ext = filename.split('.').last.toLowerCase();
+    switch (ext) {
+      case 'png':
+        return MediaType('image', 'png');
+      case 'webp':
+        return MediaType('image', 'webp');
+      case 'gif':
+        return MediaType('image', 'gif');
+      default:
+        return MediaType('image', 'jpeg');
+    }
   }
 
   // ─── OTP (via cliente gerado) ──────────────────────────────────────────────

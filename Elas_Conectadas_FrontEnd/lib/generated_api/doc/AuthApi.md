@@ -5,20 +5,20 @@
 import 'package:openapi/api.dart';
 ```
 
-All URIs are relative to *http://localhost:8080*
+All URIs are relative to *https://api.elasconectadas.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**authControllerLogin**](AuthApi.md#authcontrollerlogin) | **POST** /auth/login | 
-[**authControllerRequestOTP**](AuthApi.md#authcontrollerrequestotp) | **POST** /auth/request-otp | 
-[**authControllerSendMail**](AuthApi.md#authcontrollersendmail) | **POST** /auth/send | 
-[**authControllerVerifyOTP**](AuthApi.md#authcontrollerverifyotp) | **POST** /auth/verify-otp | 
+[**authControllerLogin**](AuthApi.md#authcontrollerlogin) | **POST** /auth/login | Autentica a usuária e retorna o token JWT
+[**authControllerRequestOTP**](AuthApi.md#authcontrollerrequestotp) | **POST** /auth/request-otp | Solicita um código OTP por e-mail
+[**authControllerSendMail**](AuthApi.md#authcontrollersendmail) | **POST** /auth/send | Envia um e-mail transacional
+[**authControllerVerifyOTP**](AuthApi.md#authcontrollerverifyotp) | **POST** /auth/verify-otp | Verifica o código OTP informado
 
 
 # **authControllerLogin**
 > LoginResponseDto authControllerLogin(loginDto)
 
-
+Autentica a usuária e retorna o token JWT
 
 ### Example
 ```dart
@@ -57,9 +57,9 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authControllerRequestOTP**
-> authControllerRequestOTP(requestTokenDto)
+> JsonObject authControllerRequestOTP(requestTokenDto)
 
-
+Solicita um código OTP por e-mail
 
 ### Example
 ```dart
@@ -69,7 +69,8 @@ final api = Openapi().getAuthApi();
 final RequestTokenDto requestTokenDto = ; // RequestTokenDto | 
 
 try {
-    api.authControllerRequestOTP(requestTokenDto);
+    final response = api.authControllerRequestOTP(requestTokenDto);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AuthApi->authControllerRequestOTP: $e\n');
 }
@@ -83,7 +84,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
@@ -92,14 +93,14 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authControllerSendMail**
-> authControllerSendMail(sendEmailDto)
+> JsonObject authControllerSendMail(sendEmailDto)
 
-
+Envia um e-mail transacional
 
 ### Example
 ```dart
@@ -109,7 +110,8 @@ final api = Openapi().getAuthApi();
 final SendEmailDto sendEmailDto = ; // SendEmailDto | 
 
 try {
-    api.authControllerSendMail(sendEmailDto);
+    final response = api.authControllerSendMail(sendEmailDto);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AuthApi->authControllerSendMail: $e\n');
 }
@@ -123,23 +125,23 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
-No authorization required
+[bearerAuth](../README.md#bearerAuth)
 
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authControllerVerifyOTP**
-> authControllerVerifyOTP(verifyOtpDto)
+> JsonObject authControllerVerifyOTP(verifyOtpDto)
 
-
+Verifica o código OTP informado
 
 ### Example
 ```dart
@@ -149,7 +151,8 @@ final api = Openapi().getAuthApi();
 final VerifyOtpDto verifyOtpDto = ; // VerifyOtpDto | 
 
 try {
-    api.authControllerVerifyOTP(verifyOtpDto);
+    final response = api.authControllerVerifyOTP(verifyOtpDto);
+    print(response);
 } on DioException catch (e) {
     print('Exception when calling AuthApi->authControllerVerifyOTP: $e\n');
 }
@@ -163,7 +166,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+[**JsonObject**](JsonObject.md)
 
 ### Authorization
 
@@ -172,7 +175,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

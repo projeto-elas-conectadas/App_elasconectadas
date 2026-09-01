@@ -20,6 +20,14 @@ class ApiClient {
     interceptors: [
       InterceptorsWrapper(
         onRequest: (options, handler) async {
+          final data = options.data;
+          if (data is FormData) {
+            // Sem o boundary o Nest/busboy responde
+            // "Multipart: Unexpected end of form".
+            options.headers[Headers.contentTypeHeader] =
+                'multipart/form-data; boundary=${data.boundary}';
+          }
+
           final prefs = await SharedPreferences.getInstance();
           final token = prefs.getString('jwt_token');
           if (token != null && token.isNotEmpty) {
@@ -41,4 +49,18 @@ class ApiClient {
   /// Acesso direto ao Dio para endpoints que não estão na spec OpenAPI.
   /// Exemplo: /users/me (perfil da usuária logada).
   static Dio get dio => _instance.dio;
+
+  /// POST /upload/imagem — o contrato exige o campo multipart exatamente `file`.
+  static Future<String> uploadImagem(FormData formData) async {
+    final response = await dio.post<dynamic>(
+      '/upload/imagem',
+      data: formData,
+    );
+    final data = response.data;
+    final imageUrl = data is Map ? data['imageUrl']?.toString() : null;
+    if (imageUrl == null || imageUrl.isEmpty) {
+      throw Exception('O servidor não retornou a URL da imagem enviada.');
+    }
+    return imageUrl;
+  }
 }

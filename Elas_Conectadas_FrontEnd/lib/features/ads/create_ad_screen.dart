@@ -61,8 +61,13 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
     final selected = picked.take(availableSlots).toList(growable: false);
     final images = <ImagemUpload>[];
     for (final image in selected) {
+      final bytes = await image.readAsBytes();
       images.add(
-        ImagemUpload(bytes: await image.readAsBytes(), nome: image.name),
+        ImagemUpload(
+          bytes: bytes,
+          nome: _nomeArquivo(image),
+          path: image.path,
+        ),
       );
     }
 
@@ -74,6 +79,17 @@ class _CreateAdScreenState extends State<CreateAdScreen> {
         const SnackBar(content: Text('Você pode anexar no máximo 5 fotos.')),
       );
     }
+  }
+
+  String _nomeArquivo(XFile image) {
+    final name = image.name.trim();
+    if (name.isNotEmpty) return name;
+    final normalized = image.path.replaceAll('\\', '/');
+    final slash = normalized.lastIndexOf('/');
+    if (slash >= 0 && slash < normalized.length - 1) {
+      return normalized.substring(slash + 1);
+    }
+    return 'upload.jpg';
   }
 
   // ── Envio do formulário ────────────────────────────────────────────────────

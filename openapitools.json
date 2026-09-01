@@ -6,8 +6,12 @@
     "generators": {
       "flutter-api": {
         "generatorName": "dart-dio",
-        "inputSpec": "./Elas_Conectadas_BackEnd/api-specs/main-api.yaml",
-        "output": "./Elas_Conectadas_FrontEnd/lib/generated_api"
+        "inputSpec": "./Elas_Conectadas_BackEnd/openapi-spec.json",
+        "output": "./Elas_Conectadas_FrontEnd/packages/openapi",
+        "additionalProperties": {
+          "pubName": "openapi",
+          "serializationLibrary": "built_value"
+        }
       }
     }
   }

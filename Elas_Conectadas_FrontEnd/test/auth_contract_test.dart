@@ -18,6 +18,7 @@ void main() {
     ) as Map<String, dynamic>;
 
     expect(json['pfp'], 'https://res.cloudinary.com/teste/perfil.jpg');
+    expect(json.keys, containsAll(['email', 'password', 'name', 'phone', 'dob']));
   });
 
   test('desserializa a usuária tipada recebida no login', () {
@@ -38,7 +39,7 @@ void main() {
     );
 
     expect(dto?.user, isA<UserResponseDto>());
-    final user = UserModel.fromDto(dto!.user!);
+    final user = UserModel.fromDto(dto!.user);
     expect(user.name, 'Maria da Silva');
     expect(user.pfp, contains('cloudinary.com'));
     expect(user.isVerified, isTrue);

@@ -9,9 +9,9 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/json_object.dart';
 import 'package:openapi/src/api_util.dart';
 import 'package:openapi/src/model/create_produto_dto.dart';
-import 'package:openapi/src/model/produto_response_dto.dart';
 
 class ProdutosApi {
 
@@ -33,9 +33,9 @@ class ProdutosApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ProdutoResponseDto] as data
+  /// Returns a [Future] containing a [Response] with a [JsonObject] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ProdutoResponseDto>> produtosCreate({ 
+  Future<Response<JsonObject>> produtosCreate({ 
     required CreateProdutoDto createProdutoDto,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -51,7 +51,13 @@ class ProdutosApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
         ...?extra,
       },
       contentType: 'application/json',
@@ -85,14 +91,14 @@ class ProdutosApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ProdutoResponseDto? _responseData;
+    JsonObject? _responseData;
 
     try {
       final rawResponse = _response.data;
       _responseData = rawResponse == null ? null : _serializers.deserialize(
         rawResponse,
-        specifiedType: const FullType(ProdutoResponseDto),
-      ) as ProdutoResponseDto;
+        specifiedType: const FullType(JsonObject),
+      ) as JsonObject;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -104,7 +110,7 @@ class ProdutosApi {
       );
     }
 
-    return Response<ProdutoResponseDto>(
+    return Response<JsonObject>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -127,9 +133,9 @@ class ProdutosApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [BuiltList<ProdutoResponseDto>] as data
+  /// Returns a [Future] containing a [Response] with a [BuiltList<JsonObject>] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BuiltList<ProdutoResponseDto>>> produtosFindAll({ 
+  Future<Response<BuiltList<JsonObject>>> produtosFindAll({ 
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -144,7 +150,13 @@ class ProdutosApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
         ...?extra,
       },
       validateStatus: validateStatus,
@@ -158,14 +170,14 @@ class ProdutosApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    BuiltList<ProdutoResponseDto>? _responseData;
+    BuiltList<JsonObject>? _responseData;
 
     try {
       final rawResponse = _response.data;
       _responseData = rawResponse == null ? null : _serializers.deserialize(
         rawResponse,
-        specifiedType: const FullType(BuiltList, [FullType(ProdutoResponseDto)]),
-      ) as BuiltList<ProdutoResponseDto>;
+        specifiedType: const FullType(BuiltList, [FullType(JsonObject)]),
+      ) as BuiltList<JsonObject>;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -177,7 +189,7 @@ class ProdutosApi {
       );
     }
 
-    return Response<BuiltList<ProdutoResponseDto>>(
+    return Response<BuiltList<JsonObject>>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -201,9 +213,9 @@ class ProdutosApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ProdutoResponseDto] as data
+  /// Returns a [Future] containing a [Response] with a [JsonObject] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ProdutoResponseDto>> produtosFindOne({ 
+  Future<Response<JsonObject>> produtosFindOne({ 
     required String id,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -219,7 +231,13 @@ class ProdutosApi {
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'bearerAuth',
+          },
+        ],
         ...?extra,
       },
       validateStatus: validateStatus,
@@ -233,14 +251,14 @@ class ProdutosApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ProdutoResponseDto? _responseData;
+    JsonObject? _responseData;
 
     try {
       final rawResponse = _response.data;
       _responseData = rawResponse == null ? null : _serializers.deserialize(
         rawResponse,
-        specifiedType: const FullType(ProdutoResponseDto),
-      ) as ProdutoResponseDto;
+        specifiedType: const FullType(JsonObject),
+      ) as JsonObject;
 
     } catch (error, stackTrace) {
       throw DioException(
@@ -252,7 +270,7 @@ class ProdutosApi {
       );
     }
 
-    return Response<ProdutoResponseDto>(
+    return Response<JsonObject>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

@@ -8,13 +8,27 @@ components:
           example: 400
           description: Código do status HTTP
         message:
-          type: string
-          example: "Requisição inválida. Verifique os dados enviados."
           description: Mensagem detalhada sobre o que deu errado
+          oneOf:
+            - type: string
+              example: "Requisição inválida. Verifique os dados enviados."
+            - type: array
+              items:
+                type: string
         error:
           type: string
           example: "Bad Request"
           description: Nome oficial do erro HTTP
+        path:
+          type: string
+          example: "/upload/imagem"
+          description: Rota em que o erro ocorreu
+        errors:
+          type: array
+          description: Detalhes do validador OpenAPI, quando existirem
+          items:
+            type: object
+            additionalProperties: true
 
     ErroNaoEncontrado:
       type: object
@@ -28,3 +42,5 @@ components:
         error:
           type: string
           example: "Not Found"
+        path:
+          type: string
