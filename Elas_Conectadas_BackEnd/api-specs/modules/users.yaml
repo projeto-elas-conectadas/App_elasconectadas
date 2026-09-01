@@ -1,9 +1,11 @@
 paths:
   /users/register:
     post:
+      summary: Registra uma nova usuária
       operationId: UsersController_createUser
       tags:
         - Users
+      security: []
       requestBody:
         required: true
         content:
@@ -17,12 +19,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserResponseDto'
+        '400':
+          description: Erro de validação dos dados enviados
 
   /users/admin:
     post:
+      summary: Cria uma conta de administradora
       operationId: UsersController_createAdmin
       tags:
         - Users
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -35,18 +42,30 @@ paths:
 
   /users:
     get:
+      summary: Lista todas as usuárias
       operationId: UsersController_getUsers
       tags:
         - Users
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de usuárias retornada
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponseDto'
 
   /users/{id}:
     get:
+      summary: Busca uma usuária por ID
       operationId: UsersController_getUserById
       tags:
         - Users
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           required: true
@@ -56,10 +75,17 @@ paths:
       responses:
         '200':
           description: Dados da usuária
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponseDto'
     patch:
+      summary: Atualiza os dados da usuária
       operationId: UsersController_updateUserById
       tags:
         - Users
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           required: true
@@ -76,9 +102,12 @@ paths:
         '200':
           description: Usuária atualizada
     delete:
+      summary: Remove uma usuária
       operationId: UsersController_deleteUserById
       tags:
         - Users
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           required: true
@@ -178,6 +207,10 @@ components:
           type: string
           example: "15/05/1995"
           description: "Formato DD/MM/AAAA"
+        pfp:
+          type: string
+          format: uri
+          description: "URL da foto de perfil"
 
     CreateAdminDto:
       type: object

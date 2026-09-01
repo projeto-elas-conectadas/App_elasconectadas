@@ -48,6 +48,9 @@ export class UsersService {
     if ('dob' in data && data.dob) {
       userData.dob = data.dob;
     }
+    if ('pfp' in data && data.pfp) {
+      userData.pfp = data.pfp;
+    }
 
     const newUser = await this.prisma.user.create({
       data: userData,
@@ -89,8 +92,9 @@ export class UsersService {
     return user;
   }
 
-  getUsers() {
-    return this.prisma.user.findMany();
+  async getUsers() {
+    const users = await this.prisma.user.findMany();
+    return users.map(({ password: _, ...user }) => user);
   }
 
   getUserById(id: string) {

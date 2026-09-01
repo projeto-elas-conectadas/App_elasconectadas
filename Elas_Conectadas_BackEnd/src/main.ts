@@ -3,6 +3,7 @@ dotenv.config();
 
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { json, urlencoded } from 'express';
 import { AppModule } from './app.module';
 import { SwaggerModule } from '@nestjs/swagger';
 import * as OpenApiValidator from 'express-openapi-validator';
@@ -25,6 +26,12 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
   });
+
+  // O parser JSON precisa vir ANTES do validador OpenAPI.
+  // Sem isso, req.body fica undefined e o cadastro retorna
+  // "request must have required property 'body'".
+  app.use(json());
+  app.use(urlencoded({ extended: true }));
 
   try {
     // Spec unificada (gerar com: npm run build:spec)

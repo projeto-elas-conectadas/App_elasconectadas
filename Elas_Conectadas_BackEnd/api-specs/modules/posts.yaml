@@ -1,9 +1,12 @@
 paths:
   /posts/create:
     post:
+      summary: Cria um novo post
       operationId: PostsController_createPost
       tags:
         - Posts
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -16,18 +19,24 @@ paths:
 
   /posts/list:
     get:
+      summary: Lista todos os posts
       operationId: PostsController_getPosts
       tags:
         - Posts
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de posts
 
   /posts/{id}:
     get:
+      summary: Busca um post por ID
       operationId: PostsController_getPostById
       tags:
         - Posts
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           required: true
@@ -38,9 +47,12 @@ paths:
         '200':
           description: Post retornado
     patch:
+      summary: Atualiza um post existente
       operationId: PostsController_updatePostById
       tags:
         - Posts
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           required: true
@@ -57,9 +69,12 @@ paths:
         '200':
           description: Post atualizado
     delete:
+      summary: Remove um post
       operationId: PostsController_deletePostById
       tags:
         - Posts
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           required: true

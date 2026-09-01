@@ -5,7 +5,7 @@ import { sendEmailDto } from './dtos/email.dto';
 import { requestTokenDto } from './dtos/requestToken.dto';
 import { VerifyOtpDto } from './dtos/verifyOtp.dto';
 
-@Controller()
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 

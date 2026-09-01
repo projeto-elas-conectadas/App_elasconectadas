@@ -5,6 +5,8 @@ paths:
       operationId: Produtos_findAll
       tags:
         - Produtos
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Sucesso
@@ -19,6 +21,8 @@ paths:
       operationId: Produtos_create
       tags:
         - Produtos
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -39,6 +43,8 @@ paths:
       operationId: Produtos_findOne
       tags:
         - Produtos
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           in: path

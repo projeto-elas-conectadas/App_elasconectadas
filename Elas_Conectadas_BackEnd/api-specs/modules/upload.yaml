@@ -1,9 +1,12 @@
 paths:
   /upload/imagem:
     post:
+      summary: Envia uma imagem para armazenamento
       operationId: UploadController_uploadImagem
       tags:
         - Uploads
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -24,6 +27,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UploadResponseDto'
+        '400':
+          description: 'Erro de validação (ex: arquivo não enviado)'
 
 components:
   schemas:
@@ -35,4 +40,4 @@ components:
         imageUrl:
           type: string
           format: uri
-          description: URL segura da imagem armazenada no Cloudinary
+          description: 'URL segura da imagem armazenada no Cloudinary'

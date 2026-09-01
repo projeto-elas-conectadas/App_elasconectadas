@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsUrl } from 'class-validator';
 import { CreateUserBaseDto } from './CreateUserBase.dto';
 
 export class CreateUserDto extends CreateUserBaseDto {
@@ -9,4 +9,8 @@ export class CreateUserDto extends CreateUserBaseDto {
   @IsString()
   @IsNotEmpty()
   dob!: string;
+
+  @IsOptional()
+  @IsUrl()
+  pfp?: string;
 }

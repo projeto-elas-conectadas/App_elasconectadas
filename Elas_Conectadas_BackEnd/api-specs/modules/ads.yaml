@@ -1,9 +1,12 @@
 paths:
   /ads/create:
     post:
+      summary: Cria um novo anúncio
       operationId: AdsController_createAd
       tags:
         - Ads
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -16,18 +19,24 @@ paths:
 
   /ads/list:
     get:
+      summary: Lista todos os anúncios
       operationId: AdsController_getAllAds
       tags:
         - Ads
+      security:
+        - bearerAuth: []
       responses:
         '200':
           description: Lista de anúncios
 
   /ads/{id}:
     get:
+      summary: Busca um anúncio por ID
       operationId: AdsController_getAdById
       tags:
         - Ads
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           required: true
@@ -38,9 +47,12 @@ paths:
         '200':
           description: Detalhes do anúncio
     patch:
+      summary: Atualiza um anúncio existente
       operationId: AdsController_patchAd
       tags:
         - Ads
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           required: true
@@ -57,9 +69,12 @@ paths:
         '200':
           description: Anúncio atualizado
     delete:
+      summary: Remove um anúncio
       operationId: AdsController_deleteAdById
       tags:
         - Ads
+      security:
+        - bearerAuth: []
       parameters:
         - name: id
           required: true

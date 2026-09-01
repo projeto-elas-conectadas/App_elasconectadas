@@ -4,7 +4,9 @@ info:
   description: Arquitetura Orientada a Contratos (Modular)
   version: "1.0"
 servers:
-  - url: http://localhost:8080
+  - url: https://api.elasconectadas.com
+    description: Servidor de Produção
+  - url: http://127.0.0.1:8080
     description: Servidor de Desenvolvimento Local
 
 paths:
@@ -53,3 +55,44 @@ paths:
     $ref: './modules/users.yaml#/paths/~1users'
   /users/{id}:
     $ref: './modules/users.yaml#/paths/~1users~1{id}'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token JWT obtido no login. Envie no header Authorization como Bearer <token>.
+  schemas:
+    LoginDto:
+      $ref: './modules/auth.yaml#/components/schemas/LoginDto'
+    LoginResponseDto:
+      $ref: './modules/auth.yaml#/components/schemas/LoginResponseDto'
+    sendEmailDto:
+      $ref: './modules/auth.yaml#/components/schemas/sendEmailDto'
+    requestTokenDto:
+      $ref: './modules/auth.yaml#/components/schemas/requestTokenDto'
+    VerifyOtpDto:
+      $ref: './modules/auth.yaml#/components/schemas/VerifyOtpDto'
+    UserResponseDto:
+      $ref: './modules/users.yaml#/components/schemas/UserResponseDto'
+    CreateUserDto:
+      $ref: './modules/users.yaml#/components/schemas/CreateUserDto'
+    CreateAdminDto:
+      $ref: './modules/users.yaml#/components/schemas/CreateAdminDto'
+    UpdateUserDto:
+      $ref: './modules/users.yaml#/components/schemas/UpdateUserDto'
+    ProdutoResponseDto:
+      $ref: './modules/products.yaml#/components/schemas/ProdutoResponseDto'
+    CreateProdutoDto:
+      $ref: './modules/products.yaml#/components/schemas/CreateProdutoDto'
+    UploadResponseDto:
+      $ref: './modules/upload.yaml#/components/schemas/UploadResponseDto'
+    CreateAdDto:
+      $ref: './modules/ads.yaml#/components/schemas/CreateAdDto'
+    UpdateAdDto:
+      $ref: './modules/ads.yaml#/components/schemas/UpdateAdDto'
+    CreatePostDto:
+      $ref: './modules/posts.yaml#/components/schemas/CreatePostDto'
+    UpdatePostDto:
+      $ref: './modules/posts.yaml#/components/schemas/UpdatePostDto'

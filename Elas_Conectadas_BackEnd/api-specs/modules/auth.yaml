@@ -11,9 +11,11 @@
 paths:
   /login:
     post:
+      summary: Autentica a usuária e retorna o token JWT
       operationId: AuthController_login
       tags:
         - Auth
+      security: []
       requestBody:
         required: true
         content:
@@ -28,11 +30,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/LoginResponseDto'
 
-  /auth/send:
+  /send:
     post:
+      summary: Envia um e-mail transacional
       operationId: AuthController_sendMail
       tags:
         - Auth
+      security:
+        - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -43,11 +48,13 @@ paths:
         '201':
           description: E-mail enviado
 
-  /auth/request-otp:
+  /request-otp:
     post:
+      summary: Solicita um código OTP por e-mail
       operationId: AuthController_requestOTP
       tags:
         - Auth
+      security: []
       requestBody:
         required: true
         content:
@@ -58,11 +65,13 @@ paths:
         '201':
           description: OTP solicitado
 
-  /auth/verify-otp:
+  /verify-otp:
     post:
+      summary: Verifica o código OTP informado
       operationId: AuthController_verifyOTP
       tags:
         - Auth
+      security: []
       requestBody:
         required: true
         content:
@@ -93,14 +102,14 @@ components:
     LoginResponseDto:
       type: object
       required:
-        - email
+        - access_token
+        - user
       properties:
-        email:
+        access_token:
           type: string
           description: "Token JWT para autenticação"
         user:
-          type: object
-          description: "Dados básicos da usuária logada"
+          $ref: './users.yaml#/components/schemas/UserResponseDto'
 
     sendEmailDto:
       type: object

@@ -24,6 +24,9 @@
             "multipart/form-data": {
               "schema": {
                 "type": "object",
+                "required": [
+                  "file"
+                ],
                 "properties": {
                   "file": {
                     "type": "string",
@@ -37,7 +40,17 @@
         },
         "responses": {
           "201": {
-            "description": "Upload realizado com sucesso"
+            "description": "Upload realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação (ex: arquivo não enviado)"
           }
         }
       }
@@ -171,7 +184,14 @@
         },
         "responses": {
           "201": {
-            "description": "Login efetuado com sucesso (Retorna Token)"
+            "description": "Login efetuado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponseDto"
+                }
+              }
+            }
           }
         }
       }
@@ -365,7 +385,17 @@
         ],
         "responses": {
           "200": {
-            "description": "Sucesso"
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProdutoResponseDto"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -387,7 +417,14 @@
         },
         "responses": {
           "201": {
-            "description": "Produto criado"
+            "description": "Produto criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProdutoResponseDto"
+                }
+              }
+            }
           }
         }
       }
@@ -411,7 +448,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Sucesso"
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProdutoResponseDto"
+                }
+              }
+            }
           }
         }
       }
@@ -434,7 +478,17 @@
         },
         "responses": {
           "201": {
-            "description": "Usuária registrada com sucesso"
+            "description": "Usuária registrada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação dos dados enviados"
           }
         }
       }
@@ -470,7 +524,17 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de usuárias retornada"
+            "description": "Lista de usuárias retornada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserResponseDto"
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -493,7 +557,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Dados da usuária"
+            "description": "Dados da usuária",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponseDto"
+                }
+              }
+            }
           }
         }
       },
@@ -553,53 +624,6 @@
   },
   "components": {
     "schemas": {
-      "CreatePostDto": {
-        "type": "object",
-        "required": [
-          "title",
-          "content",
-          "type"
-        ],
-        "properties": {
-          "title": {
-            "type": "string",
-            "example": "Workshop: Finanças para Empreendedoras"
-          },
-          "content": {
-            "type": "string",
-            "example": "Aprenda a gerir o fluxo de caixa do seu negócio em 3 passos..."
-          },
-          "type": {
-            "type": "string",
-            "example": "COURSE",
-            "description": "Valores aceitos: EVENT ou COURSE"
-          },
-          "cover": {
-            "type": "string",
-            "format": "uri",
-            "example": "https://res.cloudinary.com/demo/image/upload/v1/posts/capa-curso.jpg",
-            "description": "Link da imagem da capa no Cloudinary"
-          }
-        }
-      },
-      "UpdatePostDto": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "content": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "cover": {
-            "type": "string",
-            "format": "uri"
-          }
-        }
-      },
       "LoginDto": {
         "type": "object",
         "required": [
@@ -610,12 +634,28 @@
           "email": {
             "type": "string",
             "format": "email",
-            "example": "admin@elasconectadas.com"
+            "example": "empreendedora@teste.com"
           },
           "password": {
             "type": "string",
             "format": "password",
-            "example": "Senha123!"
+            "example": "SenhaSegura123!"
+          }
+        }
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "required": [
+          "access_token",
+          "user"
+        ],
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "Token JWT para autenticação"
+          },
+          "user": {
+            "$ref": "#/components/schemas/UserResponseDto"
           }
         }
       },
@@ -628,7 +668,8 @@
           "email": {
             "type": "string",
             "format": "email",
-            "example": "usuario@teste.com"
+            "example": "empreendedora@teste.com",
+            "description": "E-mail da destinatária"
           }
         }
       },
@@ -640,7 +681,8 @@
         "properties": {
           "email": {
             "type": "string",
-            "format": "email"
+            "format": "email",
+            "example": "empreendedora@teste.com"
           }
         }
       },
@@ -658,108 +700,86 @@
           "otp": {
             "type": "string",
             "example": "123456",
-            "description": "Código de 6 dígitos recebido por e-mail"
+            "description": "Código OTP recebido por e-mail"
           }
         }
       },
-      "CreateAdDto": {
+      "UserResponseDto": {
         "type": "object",
         "required": [
-          "title",
-          "content",
-          "type"
+          "id",
+          "email",
+          "name",
+          "role",
+          "accountStatus"
         ],
         "properties": {
-          "title": {
+          "id": {
             "type": "string",
-            "example": "Desconto de 20% no Dia das Mães"
+            "format": "uuid"
           },
-          "content": {
+          "email": {
             "type": "string",
-            "example": "Aproveite nossa promoção especial para todos os serviços agendados nesta semana!"
+            "format": "email"
           },
-          "type": {
+          "name": {
+            "type": "string"
+          },
+          "phone": {
             "type": "string",
-            "example": "PRODUCT",
-            "description": "Valores aceitos: PRODUCT, SERVICE ou COLLAB"
+            "nullable": true
           },
-          "cover": {
+          "dob": {
+            "type": "string",
+            "nullable": true,
+            "description": "Data de nascimento no formato DD/MM/AAAA"
+          },
+          "occupation": {
+            "type": "string",
+            "nullable": true
+          },
+          "rua": {
+            "type": "string",
+            "nullable": true
+          },
+          "numero": {
+            "type": "string",
+            "nullable": true
+          },
+          "bairro": {
+            "type": "string",
+            "nullable": true
+          },
+          "cidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "bio": {
+            "type": "string",
+            "nullable": true
+          },
+          "pfp": {
             "type": "string",
             "format": "uri",
-            "example": "https://res.cloudinary.com/demo/image/upload/v1/ads/capa-promo.jpg",
-            "description": "Link da imagem da capa no Cloudinary"
-          }
-        }
-      },
-      "UpdateAdDto": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
+            "nullable": true
           },
-          "content": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "cover": {
+          "role": {
             "type": "string",
-            "format": "uri"
-          }
-        }
-      },
-      "CreateProdutoDto": {
-        "type": "object",
-        "required": [
-          "nome",
-          "descricao",
-          "preco",
-          "categoria",
-          "imagemPrincipal",
-          "userId",
-          "regiaoAtendimento"
-        ],
-        "properties": {
-          "nome": {
-            "type": "string",
-            "example": "Consultoria de TI"
-          },
-          "descricao": {
-            "type": "string"
-          },
-          "preco": {
-            "type": "string",
-            "example": "R$ 120,00 - R$ 200,00"
-          },
-          "categoria": {
-            "type": "string"
-          },
-          "imagemPrincipal": {
-            "type": "string",
-            "format": "uri",
-            "description": "URL da imagem de capa do produto",
-            "example": "https://minhaimagem.com/principal.jpg"
-          },
-          "imagensAdicionais": {
-            "type": "array",
-            "description": "Lista com URLs de fotos extras do produto",
-            "items": {
-              "type": "string",
-              "format": "uri"
-            },
-            "example": [
-              "https://minhaimagem.com/foto2.jpg",
-              "https://minhaimagem.com/foto3.jpg"
+            "enum": [
+              "USER",
+              "ADMIN"
             ]
           },
-          "userId": {
-            "type": "string"
-          },
-          "regiaoAtendimento": {
+          "accountStatus": {
             "type": "string",
-            "example": "Bandeirantes, Itambaracá ou a domicílio",
-            "description": "Cidades atendidas ou tipo de atendimento"
+            "enum": [
+              "VERIFIED",
+              "UNVERIFIED"
+            ]
           }
         }
       },
@@ -795,6 +815,11 @@
             "type": "string",
             "example": "15/05/1995",
             "description": "Formato DD/MM/AAAA"
+          },
+          "pfp": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL da foto de perfil"
           }
         }
       },
@@ -862,6 +887,224 @@
           "estado": {
             "type": "string",
             "example": "PR"
+          }
+        }
+      },
+      "ProdutoResponseDto": {
+        "type": "object",
+        "required": [
+          "id",
+          "nome",
+          "descricao",
+          "preco",
+          "categoria",
+          "imagemPrincipal",
+          "userId",
+          "regiaoAtendimento",
+          "criado_em"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "preco": {
+            "type": "string",
+            "description": "Preço ou faixa de preço, conforme informado pela usuária"
+          },
+          "categoria": {
+            "type": "string"
+          },
+          "imagemPrincipal": {
+            "type": "string",
+            "format": "uri"
+          },
+          "imagensAdicionais": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "regiaoAtendimento": {
+            "type": "string"
+          },
+          "criado_em": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CreateProdutoDto": {
+        "type": "object",
+        "required": [
+          "nome",
+          "descricao",
+          "preco",
+          "categoria",
+          "imagemPrincipal",
+          "userId",
+          "regiaoAtendimento"
+        ],
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Consultoria de TI"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "preco": {
+            "type": "string",
+            "example": "R$ 120,00 - R$ 200,00"
+          },
+          "categoria": {
+            "type": "string"
+          },
+          "imagemPrincipal": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL da imagem de capa do produto",
+            "example": "https://minhaimagem.com/principal.jpg"
+          },
+          "imagensAdicionais": {
+            "type": "array",
+            "description": "Lista com URLs de fotos extras do produto",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "example": [
+              "https://minhaimagem.com/foto2.jpg",
+              "https://minhaimagem.com/foto3.jpg"
+            ]
+          },
+          "userId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "regiaoAtendimento": {
+            "type": "string",
+            "example": "Bandeirantes, Itambaracá ou a domicílio",
+            "description": "Cidades atendidas ou tipo de atendimento"
+          }
+        }
+      },
+      "UploadResponseDto": {
+        "type": "object",
+        "required": [
+          "imageUrl"
+        ],
+        "properties": {
+          "imageUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL segura da imagem armazenada no Cloudinary"
+          }
+        }
+      },
+      "CreateAdDto": {
+        "type": "object",
+        "required": [
+          "title",
+          "content",
+          "type"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Desconto de 20% no Dia das Mães"
+          },
+          "content": {
+            "type": "string",
+            "example": "Aproveite nossa promoção especial para todos os serviços agendados nesta semana!"
+          },
+          "type": {
+            "type": "string",
+            "example": "PRODUCT",
+            "description": "Valores aceitos: PRODUCT, SERVICE ou COLLAB"
+          },
+          "cover": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://res.cloudinary.com/demo/image/upload/v1/ads/capa-promo.jpg",
+            "description": "Link da imagem da capa no Cloudinary"
+          }
+        }
+      },
+      "UpdateAdDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "cover": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "CreatePostDto": {
+        "type": "object",
+        "required": [
+          "title",
+          "content",
+          "type"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "Workshop: Finanças para Empreendedoras"
+          },
+          "content": {
+            "type": "string",
+            "example": "Aprenda a gerir o fluxo de caixa do seu negócio em 3 passos..."
+          },
+          "type": {
+            "type": "string",
+            "example": "COURSE",
+            "description": "Valores aceitos: EVENT ou COURSE"
+          },
+          "cover": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://res.cloudinary.com/demo/image/upload/v1/posts/capa-curso.jpg",
+            "description": "Link da imagem da capa no Cloudinary"
+          }
+        }
+      },
+      "UpdatePostDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "cover": {
+            "type": "string",
+            "format": "uri"
           }
         }
       }
