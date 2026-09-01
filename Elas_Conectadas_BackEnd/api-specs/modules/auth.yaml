@@ -29,6 +29,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LoginResponseDto'
+        '400':
+          description: Corpo inválido ou campos obrigatórios ausentes
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
         '401':
           description: Credenciais inválidas
           content:
@@ -42,8 +48,7 @@ paths:
       operationId: AuthController_sendMail
       tags:
         - Auth
-      security:
-        - bearerAuth: []
+      security: []
       requestBody:
         required: true
         content:
@@ -57,6 +62,12 @@ paths:
             application/json:
               schema:
                 type: object
+        '400':
+          description: Corpo inválido ou e-mail ausente
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
 
   /request-otp:
     post:
@@ -78,6 +89,18 @@ paths:
             application/json:
               schema:
                 type: object
+        '400':
+          description: E-mail inválido
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
+        '404':
+          description: Usuária não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroNaoEncontrado'
 
   /verify-otp:
     post:
@@ -99,6 +122,18 @@ paths:
             application/json:
               schema:
                 type: object
+        '400':
+          description: OTP inválido, expirado ou corpo incompleto
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
+        '404':
+          description: Usuária não encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroNaoEncontrado'
 
 components:
   schemas:

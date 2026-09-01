@@ -1,0 +1,17 @@
+---
+description: Registrar toda alteração de código em atualização.md
+alwaysApply: true
+---
+
+# Registro em atualização.md
+
+Sempre que modificar código neste repositório, acrescente uma entrada breve no arquivo `Elas_Conectadas_BackEnd/atualização.md`.
+
+Formato:
+
+- Data no topo (`## DD/MM/AAAA — título curto`)
+- Entradas mais recentes primeiro
+- Bullets curtos: arquivo/área + o que mudou e por quê
+- Sem dump de código; só a descrição
+
+Não pule esse registro mesmo em mudanças pequenas.

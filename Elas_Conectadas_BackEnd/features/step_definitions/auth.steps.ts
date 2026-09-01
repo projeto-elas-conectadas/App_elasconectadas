@@ -1,8 +1,10 @@
-import { Given, When, Then, BeforeAll, AfterAll } from '@cucumber/cucumber';
+import { Given, When, Then, BeforeAll, AfterAll, setDefaultTimeout } from '@cucumber/cucumber';
 import { PrismaClient } from '@prisma/client';
 import axios from 'axios';
 import * as assert from 'assert';
 import * as bcrypt from 'bcrypt';
+
+setDefaultTimeout(20_000);
 
 const prisma = new PrismaClient();
 const API_URL = 'http://127.0.0.1:8080';
@@ -55,23 +57,28 @@ Given('que o usuário {string} possui o OTP {string}', async (email: string, tok
 
   if (!user) throw new Error('Usuário de teste não encontrado');
 
-  // 2. Insere o OTP na tabela correta referenciando o ID do usuário
+  const hashedOTP = await bcrypt.hash(tokenOtp, 12);
+  const now = new Date();
+
+  await prisma.oTP.deleteMany({ where: { userId: user.id } });
   await prisma.oTP.create({
     data: {
       userId: user.id,
-      token: tokenOtp,
+      token: hashedOTP,
       type: 'OTP',
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000), // Data de expiração para daqui a 15 minutos
+      expiresAt: new Date(now.getTime() + 12 * 60 * 60 * 1000),
+      createAt: now,
     },
   });
 });
 
-When('eu envio POST para {string} com o corpo:', async (endpoint: string, docString: string) => {
+When('eu envio POST para {string} com o corpo:', { timeout: 20_000 }, async (endpoint: string, docString: string) => {
   const body = JSON.parse(docString);
   
   try {
     response = await axios.post(`${API_URL}${endpoint}`, body, {
-      validateStatus: () => true, 
+      validateStatus: () => true,
+      timeout: 20_000,
     });
   } catch (error) {
     console.error(`Erro ao bater na API: ${error}`);

@@ -1,1 +1,674 @@
-[]
+[
+  {
+    "description": "  Validação de contrato OpenAPI dos endpoints de auth.",
+    "elements": [
+      {
+        "description": "",
+        "id": "autenticação;login-rejeita-corpo-sem-campos-obrigatórios",
+        "keyword": "Cenário",
+        "line": 7,
+        "name": "Login rejeita corpo sem campos obrigatórios",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "content": "{}",
+                "line": 9
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 8,
+            "name": "eu envio POST para \"/auth/login\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15415799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 12,
+            "name": "a resposta deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 213299
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "autenticação;login-rejeita-e-mail-inválido",
+        "keyword": "Cenário",
+        "line": 14,
+        "name": "Login rejeita e-mail inválido",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "content": "{\"email\": \"nao-e-email\", \"password\": \"Senha123!\"}",
+                "line": 16
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 15,
+            "name": "eu envio POST para \"/auth/login\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3116499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 19,
+            "name": "a resposta deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 81699
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "autenticação;send-rejeita-corpo-sem-e-mail",
+        "keyword": "Cenário",
+        "line": 21,
+        "name": "Send rejeita corpo sem e-mail",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "content": "{}",
+                "line": 23
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 22,
+            "name": "eu envio POST para \"/auth/send\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2443299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 26,
+            "name": "a resposta deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 72400
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "autenticação;request-otp-rejeita-e-mail-inválido",
+        "keyword": "Cenário",
+        "line": 28,
+        "name": "Request OTP rejeita e-mail inválido",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "content": "{\"email\": \"invalido\"}",
+                "line": 30
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 29,
+            "name": "eu envio POST para \"/auth/request-otp\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1931400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 33,
+            "name": "a resposta deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 66100
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "autenticação;verify-otp-rejeita-corpo-incompleto",
+        "keyword": "Cenário",
+        "line": 35,
+        "name": "Verify OTP rejeita corpo incompleto",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "content": "{\"email\": \"usuario@teste.com\"}",
+                "line": 37
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 36,
+            "name": "eu envio POST para \"/auth/verify-otp\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1818600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 40,
+            "name": "a resposta deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 81599
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "autenticação;login-efetuado-com-sucesso",
+        "keyword": "Cenário",
+        "line": 44,
+        "name": "Login efetuado com sucesso",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 45,
+            "name": "que existe um usuário no banco com email \"admin@elasconectadas.com\" e senha \"Senha123!\"",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:36"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 66460399
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"email\": \"admin@elasconectadas.com\",\n  \"password\": \"Senha123!\"\n}",
+                "line": 47
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 46,
+            "name": "eu envio POST para \"/auth/login\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 60447200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 53,
+            "name": "a resposta deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 71600
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "autenticação;solicitação-de-envio-de-email-com-sucesso",
+        "keyword": "Cenário",
+        "line": 55,
+        "name": "Solicitação de envio de email com sucesso",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"email\": \"admin@elasconectadas.com\"\n}",
+                "line": 57
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 56,
+            "name": "eu envio POST para \"/auth/send\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3137169000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 62,
+            "name": "a resposta deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 70699
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "autenticação;solicitação-de-otp-com-sucesso",
+        "keyword": "Cenário",
+        "line": 64,
+        "name": "Solicitação de OTP com sucesso",
+        "steps": [
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"email\": \"admin@elasconectadas.com\"\n}",
+                "line": 66
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 65,
+            "name": "eu envio POST para \"/auth/request-otp\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3585731200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 71,
+            "name": "a resposta deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 184400
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "autenticação;verificação-de-otp-com-sucesso",
+        "keyword": "Cenário",
+        "line": 73,
+        "name": "Verificação de OTP com sucesso",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 74,
+            "name": "que o usuário \"admin@elasconectadas.com\" possui o OTP \"123456\"",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:52"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 250919799
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"email\": \"admin@elasconectadas.com\",\n  \"otp\": \"123456\"\n}",
+                "line": 76
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 75,
+            "name": "eu envio POST para \"/auth/verify-otp\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 217831500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 82,
+            "name": "a resposta deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\auth.steps.ts:89"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 114400
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "autenticação",
+    "line": 2,
+    "keyword": "Funcionalidade",
+    "name": "Autenticação",
+    "tags": [],
+    "uri": "features\\auth.feature"
+  },
+  {
+    "description": "  Validação de contrato OpenAPI do POST /produtos (CreateProdutoDto na entrada\n  e ProdutoResponseDto na saída), conforme api-specs/modules/products.yaml.\n\n  O JSON de sucesso (201) deve conter exatamente as propriedades, tipos e\n  formatos descritos em components.schemas.ProdutoResponseDto — o contrato de\n  resposta deste recurso no YAML.",
+    "elements": [
+      {
+        "description": "",
+        "id": "criação-de-produtos-e-serviços;cria-um-produto-com-todos-os-campos-obrigatórios",
+        "keyword": "Cenário",
+        "line": 15,
+        "name": "Cria um produto com todos os campos obrigatórios",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 11,
+            "name": "que existe uma anunciante autenticada para o cadastro de produtos",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:62"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 131832399
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"nome\": \"Sabonete artesanal de lavanda\",\n  \"descricao\": \"Sabonete natural feito à mão com essência de lavanda\",\n  \"preco\": \"R$ 15,00\",\n  \"categoria\": \"Produto\",\n  \"imagemPrincipal\": \"https://minhaimagem.com/principal.jpg\",\n  \"imagensAdicionais\": [\n    \"https://minhaimagem.com/foto2.jpg\",\n    \"https://minhaimagem.com/foto3.jpg\"\n  ],\n  \"userId\": \"<userId>\",\n  \"regiaoAtendimento\": \"Bandeirantes, Itambaracá ou a domicílio\"\n}",
+                "line": 17
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 16,
+            "name": "eu envio POST autenticado para \"/produtos\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:111"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14821500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 32,
+            "name": "a resposta da API de produtos deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 453900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 33,
+            "name": "o JSON retornado deve corresponder exatamente ao contrato ProdutoResponseDto",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:143"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1070900
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "criação-de-produtos-e-serviços;cria-um-serviço-com-todos-os-campos-obrigatórios",
+        "keyword": "Cenário",
+        "line": 35,
+        "name": "Cria um serviço com todos os campos obrigatórios",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 11,
+            "name": "que existe uma anunciante autenticada para o cadastro de produtos",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:62"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2220499
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"nome\": \"Consultoria de TI\",\n  \"descricao\": \"Consultoria para pequenas empresas\",\n  \"preco\": \"R$ 120,00 - R$ 200,00\",\n  \"categoria\": \"Serviço\",\n  \"imagemPrincipal\": \"https://minhaimagem.com/principal.jpg\",\n  \"userId\": \"<userId>\",\n  \"regiaoAtendimento\": \"Bandeirantes, Itambaracá ou a domicílio\"\n}",
+                "line": 37
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 36,
+            "name": "eu envio POST autenticado para \"/produtos\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:111"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11927200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 48,
+            "name": "a resposta da API de produtos deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 135399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 49,
+            "name": "o JSON retornado deve corresponder exatamente ao contrato ProdutoResponseDto",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:143"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 209400
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "criação-de-produtos-e-serviços;rejeita-criação-sem-nenhum-campo-obrigatório",
+        "keyword": "Cenário",
+        "line": 53,
+        "name": "Rejeita criação sem nenhum campo obrigatório",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 11,
+            "name": "que existe uma anunciante autenticada para o cadastro de produtos",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:62"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2035399
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{}",
+                "line": 55
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 54,
+            "name": "eu envio POST autenticado para \"/produtos\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:111"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1998400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 58,
+            "name": "a resposta da API de produtos deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 63100
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "criação-de-produtos-e-serviços;rejeita-criação-com-campos-obrigatórios-ausentes",
+        "keyword": "Cenário",
+        "line": 60,
+        "name": "Rejeita criação com campos obrigatórios ausentes",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 11,
+            "name": "que existe uma anunciante autenticada para o cadastro de produtos",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:62"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2630500
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"nome\": \"Consultoria de TI\"\n}",
+                "line": 62
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 61,
+            "name": "eu envio POST autenticado para \"/produtos\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:111"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2054799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 67,
+            "name": "a resposta da API de produtos deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\produtos.steps.ts:132"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 63299
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "criação-de-produtos-e-serviços",
+    "line": 2,
+    "keyword": "Funcionalidade",
+    "name": "Criação de produtos e serviços",
+    "tags": [],
+    "uri": "features\\produtos.feature"
+  }
+]
