@@ -92,12 +92,6 @@ paths:
             application/json:
               schema:
                 type: object
-        '400':
-          description: Corpo inválido (requestBody obrigatório; cover deve ser URI quando enviada)
-          content:
-            application/json:
-              schema:
-                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
     delete:
       summary: Remove um anúncio
       operationId: AdsController_deleteAdById

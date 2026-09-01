@@ -1,11 +1,13 @@
 ---
-description: Registrar toda alteração de código em atualização.md
+description: Registrar toda alteração de código em documentos/atualização.md
 alwaysApply: true
 ---
 
 # Registro em atualização.md
 
-Sempre que modificar código neste repositório, acrescente uma entrada breve no arquivo `Elas_Conectadas_BackEnd/atualização.md`.
+Sempre que modificar código neste repositório, acrescente uma entrada breve no arquivo `Elas_Conectadas_BackEnd/documentos/atualização.md`.
+
+Não use `Elas_Conectadas_BackEnd/atualização.md` na raiz do backend; o registro fica só em `documentos/`.
 
 Formato:
 
