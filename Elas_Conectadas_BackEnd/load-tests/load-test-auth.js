@@ -6,7 +6,7 @@ export const options = {
   duration: '30s',
   thresholds: {
     // Login usa bcrypt (threadpool do Node ~4 threads). Com 50 VUs o p95
-    // fica na casa dos segundos; o SLO de 500ms vale para POST /produtos.
+    // fica na casa dos segundos; o SLO de 500ms vale para POST /produtos e POST /ads/create.
     http_req_duration: ['p(95)<4000'],
     http_req_failed: ['rate<0.01'],
   },

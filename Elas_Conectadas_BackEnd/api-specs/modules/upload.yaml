@@ -32,6 +32,12 @@ paths:
             application/json:
               schema:
                 $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
+        '415':
+          description: Content-Type não é multipart/form-data (corpo vazio ou JSON)
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
         '401':
           description: Token JWT ausente ou inválido
           content:

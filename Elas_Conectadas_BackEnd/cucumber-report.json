@@ -1,5 +1,571 @@
 [
   {
+    "description": "  Validação de contrato OpenAPI do módulo Ads, conforme api-specs/modules/ads.yaml.\n\n  Sucesso: POST /ads/create (201), GET /ads/list (200), GET /ads/{id} (200),\n  PATCH /ads/{id} (200) e DELETE /ads/{id} (200). O JSON deve corresponder ao\n  schema da aba responses — objeto para item único e array de objetos para a lista.\n\n  Falha: 400 quando o corpo viola CreateAdDto (title, content, type obrigatórios)\n  ou UpdateAdDto (cover com format uri).\n\n  Todas as rotas exigem bearerAuth.",
+    "elements": [
+      {
+        "description": "",
+        "id": "anúncios;cria-um-anúncio-com-os-campos-obrigatórios-do-createaddto",
+        "keyword": "Cenário",
+        "line": 19,
+        "name": "Cria um anúncio com os campos obrigatórios do CreateAdDto",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma anunciante autenticada para o módulo de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 187781800
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"title\": \"[BDD-ADS] Desconto de 20% no Dia das Mães\",\n  \"content\": \"Aproveite nossa promoção especial para todos os serviços agendados nesta semana!\",\n  \"type\": \"PRODUCT\",\n  \"cover\": \"https://res.cloudinary.com/demo/image/upload/v1/ads/capa-promo.jpg\"\n}",
+                "line": 21
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 20,
+            "name": "eu envio POST autenticado de ads para \"/ads/create\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:136"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 318112499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 29,
+            "name": "a resposta da API de ads deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 156600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 30,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:215"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 109300
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "anúncios;lista-todos-os-anúncios",
+        "keyword": "Cenário",
+        "line": 32,
+        "name": "Lista todos os anúncios",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma anunciante autenticada para o módulo de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2600599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 33,
+            "name": "que existe um anúncio cadastrado para os testes de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13969500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 34,
+            "name": "eu envio GET autenticado de ads para \"/ads/list\"",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:154"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 55471900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 35,
+            "name": "a resposta da API de ads deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1073600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 36,
+            "name": "o JSON retornado deve ser uma lista de objetos conforme o contrato de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:219"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1728799
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "anúncios;busca-um-anúncio-por-id",
+        "keyword": "Cenário",
+        "line": 38,
+        "name": "Busca um anúncio por ID",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma anunciante autenticada para o módulo de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4332499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 39,
+            "name": "que existe um anúncio cadastrado para os testes de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15702000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 40,
+            "name": "eu envio GET autenticado de ads para \"/ads/<adId>\"",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:154"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12569500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 41,
+            "name": "a resposta da API de ads deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 96600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 42,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:215"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 48500
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "anúncios;atualiza-um-anúncio-existente",
+        "keyword": "Cenário",
+        "line": 44,
+        "name": "Atualiza um anúncio existente",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma anunciante autenticada para o módulo de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3333199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 45,
+            "name": "que existe um anúncio cadastrado para os testes de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 13891499
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"title\": \"[BDD-ADS] Título atualizado\",\n  \"content\": \"Conteúdo atualizado do anúncio\",\n  \"type\": \"SERVICE\"\n}",
+                "line": 47
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 46,
+            "name": "eu envio PATCH autenticado de ads para \"/ads/<adId>\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:170"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 40573699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 54,
+            "name": "a resposta da API de ads deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 70000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 55,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:215"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 24699
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "anúncios;remove-um-anúncio",
+        "keyword": "Cenário",
+        "line": 57,
+        "name": "Remove um anúncio",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma anunciante autenticada para o módulo de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2168200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 58,
+            "name": "que existe um anúncio cadastrado para os testes de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 18044200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 59,
+            "name": "eu envio DELETE autenticado de ads para \"/ads/<adId>\"",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:188"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 26823900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 60,
+            "name": "a resposta da API de ads deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 150799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 61,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:215"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 95400
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "anúncios;rejeita-criação-com-corpo-vazio",
+        "keyword": "Cenário",
+        "line": 65,
+        "name": "Rejeita criação com corpo vazio",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma anunciante autenticada para o módulo de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2386899
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{}",
+                "line": 67
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 66,
+            "name": "eu envio POST autenticado de ads para \"/ads/create\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:136"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4210500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 70,
+            "name": "a resposta da API de ads deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 69199
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "anúncios;rejeita-criação-sem-os-campos-obrigatórios",
+        "keyword": "Cenário",
+        "line": 72,
+        "name": "Rejeita criação sem os campos obrigatórios",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma anunciante autenticada para o módulo de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2102100
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"title\": \"[BDD-ADS] Sem content e type\"\n}",
+                "line": 74
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 73,
+            "name": "eu envio POST autenticado de ads para \"/ads/create\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:136"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 5472099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 79,
+            "name": "a resposta da API de ads deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 108099
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "anúncios;rejeita-atualização-com-cover-que-não-é-uri",
+        "keyword": "Cenário",
+        "line": 81,
+        "name": "Rejeita atualização com cover que não é URI",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma anunciante autenticada para o módulo de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3903600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 82,
+            "name": "que existe um anúncio cadastrado para os testes de ads",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 16798800
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"cover\": \"nao-e-uma-uri\"\n}",
+                "line": 84
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 83,
+            "name": "eu envio PATCH autenticado de ads para \"/ads/<adId>\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:170"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4588999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 89,
+            "name": "a resposta da API de ads deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\ads.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 222600
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "anúncios",
+    "line": 2,
+    "keyword": "Funcionalidade",
+    "name": "Anúncios",
+    "tags": [],
+    "uri": "features\\ads.feature"
+  },
+  {
     "description": "  Validação de contrato OpenAPI dos endpoints de auth.",
     "elements": [
       {
@@ -24,7 +590,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 15415799
+              "duration": 6545900
             }
           },
           {
@@ -37,7 +603,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 213299
+              "duration": 370900
             }
           }
         ],
@@ -66,7 +632,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3116499
+              "duration": 3310500
             }
           },
           {
@@ -79,7 +645,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 81699
+              "duration": 108500
             }
           }
         ],
@@ -108,7 +674,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 2443299
+              "duration": 5518099
             }
           },
           {
@@ -121,7 +687,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 72400
+              "duration": 83799
             }
           }
         ],
@@ -150,7 +716,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 1931400
+              "duration": 9140100
             }
           },
           {
@@ -163,7 +729,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 66100
+              "duration": 90199
             }
           }
         ],
@@ -192,7 +758,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 1818600
+              "duration": 8445500
             }
           },
           {
@@ -205,7 +771,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 81599
+              "duration": 90999
             }
           }
         ],
@@ -229,7 +795,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 66460399
+              "duration": 64933600
             }
           },
           {
@@ -247,7 +813,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 60447200
+              "duration": 60533700
             }
           },
           {
@@ -260,7 +826,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 71600
+              "duration": 84600
             }
           }
         ],
@@ -289,7 +855,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3137169000
+              "duration": 3951366600
             }
           },
           {
@@ -302,7 +868,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 70699
+              "duration": 65599
             }
           }
         ],
@@ -331,7 +897,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 3585731200
+              "duration": 3869001899
             }
           },
           {
@@ -344,7 +910,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 184400
+              "duration": 143299
             }
           }
         ],
@@ -368,7 +934,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 250919799
+              "duration": 243330899
             }
           },
           {
@@ -386,7 +952,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 217831500
+              "duration": 246685799
             }
           },
           {
@@ -399,7 +965,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 114400
+              "duration": 71799
             }
           }
         ],
@@ -413,6 +979,572 @@
     "name": "Autenticação",
     "tags": [],
     "uri": "features\\auth.feature"
+  },
+  {
+    "description": "  Validação de contrato OpenAPI do módulo Posts, conforme api-specs/modules/posts.yaml.\n\n  Sucesso: POST /posts/create (201), GET /posts/list (200), GET /posts/{id} (200),\n  PATCH /posts/{id} (200) e DELETE /posts/{id} (200). O JSON deve corresponder ao\n  schema da aba responses — objeto para item único e array de objetos para a lista.\n\n  Falha: 400 quando o corpo viola CreatePostDto (title, content, type obrigatórios)\n  ou UpdatePostDto (cover com format uri).\n\n  Todas as rotas exigem bearerAuth.",
+    "elements": [
+      {
+        "description": "",
+        "id": "posts;cria-um-post-com-os-campos-obrigatórios-do-createpostdto",
+        "keyword": "Cenário",
+        "line": 19,
+        "name": "Cria um post com os campos obrigatórios do CreatePostDto",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma administradora autenticada para o módulo de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 130093100
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"title\": \"[BDD-POSTS] Workshop: Finanças para Empreendedoras\",\n  \"content\": \"Aprenda a gerir o fluxo de caixa do seu negócio em 3 passos...\",\n  \"type\": \"COURSE\",\n  \"cover\": \"https://res.cloudinary.com/demo/image/upload/v1/posts/capa-curso.jpg\"\n}",
+                "line": 21
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 20,
+            "name": "eu envio POST autenticado de posts para \"/posts/create\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:136"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 29586100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 29,
+            "name": "a resposta da API de posts deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 172599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 30,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:215"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 112300
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "posts;lista-todos-os-posts",
+        "keyword": "Cenário",
+        "line": 32,
+        "name": "Lista todos os posts",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma administradora autenticada para o módulo de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2510000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 33,
+            "name": "que existe um post cadastrado para os testes de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14129800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 34,
+            "name": "eu envio GET autenticado de posts para \"/posts/list\"",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:154"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15113600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 35,
+            "name": "a resposta da API de posts deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 149900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 36,
+            "name": "o JSON retornado deve ser uma lista de objetos conforme o contrato de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:219"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 560900
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "posts;busca-um-post-por-id",
+        "keyword": "Cenário",
+        "line": 38,
+        "name": "Busca um post por ID",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma administradora autenticada para o módulo de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2561799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 39,
+            "name": "que existe um post cadastrado para os testes de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12399800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 40,
+            "name": "eu envio GET autenticado de posts para \"/posts/<postId>\"",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:154"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 11262899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 41,
+            "name": "a resposta da API de posts deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 277699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 42,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:215"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 119699
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "posts;atualiza-um-post-existente",
+        "keyword": "Cenário",
+        "line": 44,
+        "name": "Atualiza um post existente",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma administradora autenticada para o módulo de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2854699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 45,
+            "name": "que existe um post cadastrado para os testes de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 10921900
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"title\": \"[BDD-POSTS] Título atualizado\",\n  \"content\": \"Conteúdo atualizado do post\",\n  \"type\": \"EVENT\"\n}",
+                "line": 47
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 46,
+            "name": "eu envio PATCH autenticado de posts para \"/posts/<postId>\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:170"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 29096799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 54,
+            "name": "a resposta da API de posts deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 69800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 55,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:215"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 39099
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "posts;remove-um-post",
+        "keyword": "Cenário",
+        "line": 57,
+        "name": "Remove um post",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma administradora autenticada para o módulo de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3188000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 58,
+            "name": "que existe um post cadastrado para os testes de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 14951299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 59,
+            "name": "eu envio DELETE autenticado de posts para \"/posts/<postId>\"",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:188"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 27177200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 60,
+            "name": "a resposta da API de posts deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 78599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 61,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:215"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 58600
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "posts;rejeita-criação-com-corpo-vazio",
+        "keyword": "Cenário",
+        "line": 65,
+        "name": "Rejeita criação com corpo vazio",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma administradora autenticada para o módulo de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3975800
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{}",
+                "line": 67
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 66,
+            "name": "eu envio POST autenticado de posts para \"/posts/create\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:136"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3273699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 70,
+            "name": "a resposta da API de posts deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 230000
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "posts;rejeita-criação-sem-os-campos-obrigatórios",
+        "keyword": "Cenário",
+        "line": 72,
+        "name": "Rejeita criação sem os campos obrigatórios",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma administradora autenticada para o módulo de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4020300
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"title\": \"[BDD-POSTS] Sem content e type\"\n}",
+                "line": 74
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 73,
+            "name": "eu envio POST autenticado de posts para \"/posts/create\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:136"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3822500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 79,
+            "name": "a resposta da API de posts deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 64800
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "posts;rejeita-atualização-com-cover-que-não-é-uri",
+        "keyword": "Cenário",
+        "line": 81,
+        "name": "Rejeita atualização com cover que não é URI",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 15,
+            "name": "que existe uma administradora autenticada para o módulo de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:71"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2594799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 82,
+            "name": "que existe um post cadastrado para os testes de posts",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:118"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 17223099
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"cover\": \"nao-e-uma-uri\"\n}",
+                "line": 84
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 83,
+            "name": "eu envio PATCH autenticado de posts para \"/posts/<postId>\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:170"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4710199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 89,
+            "name": "a resposta da API de posts deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\posts.steps.ts:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 97999
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "posts",
+    "line": 2,
+    "keyword": "Funcionalidade",
+    "name": "Posts",
+    "tags": [],
+    "uri": "features\\posts.feature"
   },
   {
     "description": "  Validação de contrato OpenAPI do POST /produtos (CreateProdutoDto na entrada\n  e ProdutoResponseDto na saída), conforme api-specs/modules/products.yaml.\n\n  O JSON de sucesso (201) deve conter exatamente as propriedades, tipos e\n  formatos descritos em components.schemas.ProdutoResponseDto — o contrato de\n  resposta deste recurso no YAML.",
@@ -434,7 +1566,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 131832399
+              "duration": 140108699
             }
           },
           {
@@ -452,7 +1584,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 14821500
+              "duration": 23537200
             }
           },
           {
@@ -465,7 +1597,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 453900
+              "duration": 112499
             }
           },
           {
@@ -478,7 +1610,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 1070900
+              "duration": 1772000
             }
           }
         ],
@@ -502,7 +1634,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 2220499
+              "duration": 3878800
             }
           },
           {
@@ -520,7 +1652,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 11927200
+              "duration": 17739300
             }
           },
           {
@@ -533,7 +1665,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 135399
+              "duration": 73999
             }
           },
           {
@@ -546,7 +1678,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 209400
+              "duration": 153399
             }
           }
         ],
@@ -570,7 +1702,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 2035399
+              "duration": 2084499
             }
           },
           {
@@ -588,7 +1720,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 1998400
+              "duration": 2067499
             }
           },
           {
@@ -601,7 +1733,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 63100
+              "duration": 192699
             }
           }
         ],
@@ -625,7 +1757,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 2630500
+              "duration": 2301400
             }
           },
           {
@@ -643,7 +1775,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 2054799
+              "duration": 6301900
             }
           },
           {
@@ -656,7 +1788,7 @@
             },
             "result": {
               "status": "passed",
-              "duration": 63299
+              "duration": 117900
             }
           }
         ],
@@ -670,5 +1802,1043 @@
     "name": "Criação de produtos e serviços",
     "tags": [],
     "uri": "features\\produtos.feature"
+  },
+  {
+    "description": "  Validação de contrato OpenAPI do módulo Uploads, conforme api-specs/modules/upload.yaml.\n\n  Sucesso: POST /upload/imagem (201) com multipart/form-data e o campo obrigatório\n  file (format binary). O JSON deve corresponder exatamente ao UploadResponseDto\n  da aba responses — objeto com imageUrl (string, format uri).\n\n  Falha: 415 Unsupported Media Type quando o corpo está vazio ou o Content-Type\n  não é multipart/form-data; 400 Bad Request quando o campo file não é enviado.\n\n  O contrato declara security: [] nesta operação; o JWT é injetado mesmo assim\n  para as rotas que documentam 401 e para alinhar com o restante da bateria.",
+    "elements": [
+      {
+        "description": "",
+        "id": "upload-de-imagem;envia-uma-imagem-válida-no-campo-file",
+        "keyword": "Cenário",
+        "line": 20,
+        "name": "Envia uma imagem válida no campo file",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 16,
+            "name": "que existe uma usuária autenticada para o módulo de upload",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:105"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 132606500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 21,
+            "name": "eu envio POST multipart de upload para \"/upload/imagem\" com o arquivo \"teste-upload.png\"",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:152"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1046361999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 22,
+            "name": "a resposta da API de upload deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:210"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 108899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 23,
+            "name": "o JSON retornado deve corresponder exatamente ao contrato UploadResponseDto",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:221"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 180099
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "upload-de-imagem;rejeita-upload-com-corpo-da-requisição-vazio",
+        "keyword": "Cenário",
+        "line": 27,
+        "name": "Rejeita upload com corpo da requisição vazio",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 16,
+            "name": "que existe uma usuária autenticada para o módulo de upload",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:105"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4149599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 28,
+            "name": "eu envio POST de upload para \"/upload/imagem\" com o corpo vazio",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:172"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2876800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 29,
+            "name": "a resposta da API de upload deve ter status 415",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:210"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 86600
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "upload-de-imagem;rejeita-upload-sem-o-campo-obrigatório-file",
+        "keyword": "Cenário",
+        "line": 31,
+        "name": "Rejeita upload sem o campo obrigatório file",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 16,
+            "name": "que existe uma usuária autenticada para o módulo de upload",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:105"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2627399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 32,
+            "name": "eu envio POST multipart de upload para \"/upload/imagem\" sem o campo file",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:191"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3524400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 33,
+            "name": "a resposta da API de upload deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\upload.steps.ts:210"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 74799
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "upload-de-imagem",
+    "line": 2,
+    "keyword": "Funcionalidade",
+    "name": "Upload de imagem",
+    "tags": [],
+    "uri": "features\\upload.feature"
+  },
+  {
+    "description": "  Validação de contrato OpenAPI do módulo Users, conforme api-specs/modules/users.yaml.\n\n  Sucesso: POST /users/register (201, UserResponseDto), POST /users/admin (201, object),\n  GET /users (200, array de UserResponseDto), GET /users/{id} (200, UserResponseDto),\n  PATCH /users/{id} (200, object) e DELETE /users/{id} (200, object).\n\n  Falha: 400 quando o corpo viola CreateUserDto (email, password, name, phone, dob\n  obrigatórios), CreateAdminDto (email, password, name obrigatórios) ou\n  UpdateUserDto (pfp com format uri).\n\n  POST /users/register declara security: []. As demais rotas exigem bearerAuth.",
+    "elements": [
+      {
+        "description": "",
+        "id": "usuárias;registra-uma-nova-usuária-com-os-campos-obrigatórios-do-createuserdto",
+        "keyword": "Cenário",
+        "line": 21,
+        "name": "Registra uma nova usuária com os campos obrigatórios do CreateUserDto",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 131468699
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"email\": \"users.bdd.register@elasconectadas.com\",\n  \"password\": \"SenhaSegura123!\",\n  \"name\": \"Maria da Silva\",\n  \"phone\": \"(43) 99999-8888\",\n  \"dob\": \"15/05/1995\",\n  \"pfp\": \"https://res.cloudinary.com/demo/image/upload/v1/users/maria.jpg\"\n}",
+                "line": 23
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 22,
+            "name": "eu envio POST de users para \"/users/register\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:258"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3904150200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 33,
+            "name": "a resposta da API de users deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 362099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 34,
+            "name": "o JSON retornado deve corresponder exatamente ao contrato UserResponseDto",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:355"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 892400
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;cria-uma-administradora-com-os-campos-obrigatórios-do-createadmindto",
+        "keyword": "Cenário",
+        "line": 36,
+        "name": "Cria uma administradora com os campos obrigatórios do CreateAdminDto",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4491799
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"email\": \"users.bdd.newadmin@elasconectadas.com\",\n  \"password\": \"SenhaSegura123!\",\n  \"name\": \"Ana Admin\"\n}",
+                "line": 38
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 37,
+            "name": "eu envio POST autenticado de users para \"/users/admin\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:276"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4085732299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 45,
+            "name": "a resposta da API de users deve ter status 201",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 69200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 46,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:362"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 90000
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;lista-todas-as-usuárias",
+        "keyword": "Cenário",
+        "line": 48,
+        "name": "Lista todas as usuárias",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3664099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 49,
+            "name": "que existe uma usuária cadastrada para os testes de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:229"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 91852399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 50,
+            "name": "eu envio GET autenticado de users para \"/users\"",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:294"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 15081199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 51,
+            "name": "a resposta da API de users deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 99999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 52,
+            "name": "o JSON retornado deve ser uma lista conforme o contrato UserResponseDto",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:371"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 451099
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;busca-uma-usuária-por-id",
+        "keyword": "Cenário",
+        "line": 54,
+        "name": "Busca uma usuária por ID",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2486899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 55,
+            "name": "que existe uma usuária cadastrada para os testes de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:229"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 82872999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 56,
+            "name": "eu envio GET autenticado de users para \"/users/<userId>\"",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:294"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 12060100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 57,
+            "name": "a resposta da API de users deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 86100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 58,
+            "name": "o JSON retornado deve corresponder exatamente ao contrato UserResponseDto",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:355"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 91800
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;atualiza-os-dados-de-uma-usuária",
+        "keyword": "Cenário",
+        "line": 60,
+        "name": "Atualiza os dados de uma usuária",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1983599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 61,
+            "name": "que existe uma usuária cadastrada para os testes de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:229"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 79357199
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"name\": \"Maria Silva Santos\",\n  \"phone\": \"(43) 99999-0000\",\n  \"occupation\": \"Artesã\",\n  \"bio\": \"Trabalho com bordados personalizados há 10 anos.\",\n  \"pfp\": \"https://res.cloudinary.com/demo/image/upload/v1/users/maria-atualizada.jpg\",\n  \"rua\": \"Rua Principal\",\n  \"numero\": \"500\",\n  \"bairro\": \"Centro\",\n  \"cidade\": \"Itambaracá\",\n  \"estado\": \"PR\"\n}",
+                "line": 63
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 62,
+            "name": "eu envio PATCH autenticado de users para \"/users/<userId>\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:310"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 24901399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 77,
+            "name": "a resposta da API de users deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 78000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 78,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:362"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 41600
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;remove-uma-usuária",
+        "keyword": "Cenário",
+        "line": 80,
+        "name": "Remove uma usuária",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2924800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 81,
+            "name": "que existe uma usuária cadastrada para os testes de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:229"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 82656199
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 82,
+            "name": "eu envio DELETE autenticado de users para \"/users/<userId>\"",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:328"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 21560499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 83,
+            "name": "a resposta da API de users deve ter status 200",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 85100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "E ",
+            "line": 84,
+            "name": "o JSON retornado deve ser um objeto conforme o contrato de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:362"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 50699
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;rejeita-registro-com-corpo-vazio",
+        "keyword": "Cenário",
+        "line": 88,
+        "name": "Rejeita registro com corpo vazio",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2160499
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{}",
+                "line": 90
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 89,
+            "name": "eu envio POST de users para \"/users/register\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:258"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3451300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 93,
+            "name": "a resposta da API de users deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 68799
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;rejeita-registro-sem-os-campos-obrigatórios",
+        "keyword": "Cenário",
+        "line": 95,
+        "name": "Rejeita registro sem os campos obrigatórios",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2118599
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"email\": \"users.bdd.incompleto@elasconectadas.com\"\n}",
+                "line": 97
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 96,
+            "name": "eu envio POST de users para \"/users/register\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:258"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3457800
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 102,
+            "name": "a resposta da API de users deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 102800
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;rejeita-registro-com-e-mail-inválido",
+        "keyword": "Cenário",
+        "line": 104,
+        "name": "Rejeita registro com e-mail inválido",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3521600
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"email\": \"nao-e-email\",\n  \"password\": \"SenhaSegura123!\",\n  \"name\": \"Maria da Silva\",\n  \"phone\": \"(43) 99999-8888\",\n  \"dob\": \"15/05/1995\"\n}",
+                "line": 106
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 105,
+            "name": "eu envio POST de users para \"/users/register\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:258"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3407299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 115,
+            "name": "a resposta da API de users deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 116500
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;rejeita-criação-de-admin-com-corpo-vazio",
+        "keyword": "Cenário",
+        "line": 117,
+        "name": "Rejeita criação de admin com corpo vazio",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3050100
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{}",
+                "line": 119
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 118,
+            "name": "eu envio POST autenticado de users para \"/users/admin\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:276"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 7076799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 122,
+            "name": "a resposta da API de users deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 246200
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;rejeita-criação-de-admin-sem-os-campos-obrigatórios",
+        "keyword": "Cenário",
+        "line": 124,
+        "name": "Rejeita criação de admin sem os campos obrigatórios",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 4055399
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"email\": \"users.bdd.admin.incompleto@elasconectadas.com\"\n}",
+                "line": 126
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 125,
+            "name": "eu envio POST autenticado de users para \"/users/admin\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:276"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2250699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 131,
+            "name": "a resposta da API de users deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 57600
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "usuárias;rejeita-atualização-com-pfp-que-não-é-uri",
+        "keyword": "Cenário",
+        "line": 133,
+        "name": "Rejeita atualização com pfp que não é URI",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que existe uma administradora autenticada para o módulo de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:182"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2056100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 134,
+            "name": "que existe uma usuária cadastrada para os testes de users",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:229"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 73960600
+            }
+          },
+          {
+            "arguments": [
+              {
+                "content": "{\n  \"pfp\": \"nao-e-uma-uri\"\n}",
+                "line": 136
+              }
+            ],
+            "keyword": "Quando ",
+            "line": 135,
+            "name": "eu envio PATCH autenticado de users para \"/users/<userId>\" com o corpo:",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:310"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2038700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 141,
+            "name": "a resposta da API de users deve ter status 400",
+            "match": {
+              "location": "features\\step_definitions\\users.steps.ts:344"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 57099
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@users",
+            "line": 2
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "usuárias",
+    "line": 3,
+    "keyword": "Funcionalidade",
+    "name": "Usuárias",
+    "tags": [
+      {
+        "name": "@users",
+        "line": 2
+      }
+    ],
+    "uri": "features\\users.feature"
   }
 ]

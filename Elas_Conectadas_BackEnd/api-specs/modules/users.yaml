@@ -105,6 +105,12 @@ paths:
       responses:
         '200':
           description: Usuária atualizada
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: "Corpo inválido (ex.: pfp que não é URI)"
     delete:
       summary: Remove uma usuária
       operationId: UsersController_deleteUserById
@@ -121,6 +127,10 @@ paths:
       responses:
         '200':
           description: Usuária removida
+          content:
+            application/json:
+              schema:
+                type: object
 
 components:
   schemas:

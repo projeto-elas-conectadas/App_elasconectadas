@@ -20,6 +20,12 @@ paths:
             application/json:
               schema:
                 type: object
+        '400':
+          description: Corpo inválido ou campos obrigatórios ausentes (title, content, type)
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
 
   /ads/list:
     get:
@@ -35,7 +41,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
+                items:
+                  type: object
 
   /ads/{id}:
     get:
@@ -84,6 +92,12 @@ paths:
             application/json:
               schema:
                 type: object
+        '400':
+          description: Corpo inválido (requestBody obrigatório; cover deve ser URI quando enviada)
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
     delete:
       summary: Remove um anúncio
       operationId: AdsController_deleteAdById
