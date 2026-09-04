@@ -5,7 +5,7 @@ class AppConfig {
 
   static String get apiUrl {
     // Túnel Cloudflare do backend (APK / dispositivo físico)
-    return 'https://reliable-organizing-receipt-powered.trycloudflare.com';
+    return 'https://deputy-nation-but-queries.trycloudflare.com';
 
     // Desenvolvimento local (descomente e comente o túnel acima):
     // return 'http://localhost:8080';

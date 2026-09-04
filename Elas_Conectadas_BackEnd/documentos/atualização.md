@@ -4,6 +4,12 @@ Registro breve das mudanças no código. Entradas mais recentes no topo.
 
 ---
 
+## 04/09/2026 — Flutter: novo túnel Cloudflare do backend
+
+- **`Elas_Conectadas_FrontEnd/lib/core/config/app_config.dart`**: `apiUrl` atualizado para `https://deputy-nation-but-queries.trycloudflare.com`.
+
+---
+
 ## 03/09/2026 — Cadastro 400, SMTP IPv4 e DNS Cloudinary
 
 - **`api-specs/modules/users.yaml`** e **`auth.yaml`**: 400/503 passam a declarar corpo `ErroPadrao`, para o validador OpenAPI não transformar "e-mail já cadastrado" em 500 (`response should NOT have a body`).
