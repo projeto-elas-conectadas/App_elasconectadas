@@ -4,6 +4,23 @@ Registro breve das mudanças no código. Entradas mais recentes no topo.
 
 ---
 
+## 03/09/2026 — Cadastro 400, SMTP IPv4 e DNS Cloudinary
+
+- **`api-specs/modules/users.yaml`** e **`auth.yaml`**: 400/503 passam a declarar corpo `ErroPadrao`, para o validador OpenAPI não transformar "e-mail já cadastrado" em 500 (`response should NOT have a body`).
+- **`src/auth/auth.service.ts`**: SMTP do Gmail força IPv4 (`family: 4`) para evitar `ENETUNREACH` em VPS sem IPv6; falha de envio vira 503.
+- **`src/users/users.service.ts`**: se o e-mail de verificação falhar depois do insert, a conta continua criada (evita o loop de "já cadastrado" no retry).
+- **`src/main.ts`**: `dns.setDefaultResultOrder('ipv4first')` para SMTP e Cloudinary.
+- **`src/upload/upload.service.ts`**: uma retentativa em `EAI_AGAIN`/`ENETUNREACH` e mensagem mais clara de falha de rede.
+- **`src/common/http-exception.filter.ts`**: não tenta gravar a resposta se os headers já foram enviados.
+
+---
+
+## 03/09/2026 — Flutter: URL do backend via túnel Cloudflare
+
+- **`Elas_Conectadas_FrontEnd/lib/core/config/app_config.dart`**: `apiUrl` aponta para `https://reliable-organizing-receipt-powered.trycloudflare.com` para o APK falar com o backend publicado no túnel.
+
+---
+
 ## 01/09/2026 — README raiz: formatação e links
 
 - **`README.MD`**: emojis removidos, seções e blocos de código reorganizados; links para os READMEs do backend e do frontend no final.

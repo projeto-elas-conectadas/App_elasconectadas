@@ -3,6 +3,7 @@ import {
   HttpException,
   Inject,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 
@@ -16,6 +17,8 @@ import { UpdateUserDto } from './dtos/UpdateUser.dto';
 
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name);
+
   constructor(
     private prisma: PrismaService,
     @Inject(forwardRef(() => AuthService))
@@ -56,7 +59,14 @@ export class UsersService {
       data: userData,
     });
 
-    await this.emailVerification(newUser);
+    try {
+      await this.emailVerification(newUser);
+    } catch (error) {
+      this.logger.error(
+        `Conta criada, mas o e-mail de verificação não foi enviado para ${newUser.email}`,
+        error instanceof Error ? error.stack : String(error),
+      );
+    }
 
     const { password: _, ...safeUser } = newUser;
     return safeUser;

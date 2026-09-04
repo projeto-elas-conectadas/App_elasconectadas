@@ -387,6 +387,16 @@
                 }
               }
             }
+          },
+          "503": {
+            "description": "Falha temporária ao enviar o e-mail (SMTP/DNS)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroPadrao"
+                }
+              }
+            }
           }
         }
       }
@@ -436,6 +446,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErroNaoEncontrado"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Falha temporária ao enviar o OTP (SMTP/DNS)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroPadrao"
                 }
               }
             }
@@ -646,16 +666,6 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "Corpo inválido (requestBody obrigatório; cover deve ser URI quando enviada)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErroPadrao"
-                }
-              }
-            }
           }
         }
       },
@@ -823,7 +833,14 @@
             }
           },
           "400": {
-            "description": "Erro de validação dos dados enviados"
+            "description": "Erro de validação dos dados enviados ou e-mail já cadastrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroPadrao"
+                }
+              }
+            }
           }
         }
       }
@@ -857,6 +874,16 @@
               "application/json": {
                 "schema": {
                   "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação dos dados enviados ou e-mail já cadastrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroPadrao"
                 }
               }
             }
@@ -971,7 +998,14 @@
             }
           },
           "400": {
-            "description": "Corpo inválido (ex.: pfp que não é URI)"
+            "description": "Corpo inválido (ex.: pfp que não é URI)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErroPadrao"
+                }
+              }
+            }
           }
         }
       },

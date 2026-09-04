@@ -68,6 +68,12 @@ paths:
             application/json:
               schema:
                 $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
+        '503':
+          description: Falha temporária ao enviar o e-mail (SMTP/DNS)
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
 
   /request-otp:
     post:
@@ -101,6 +107,12 @@ paths:
             application/json:
               schema:
                 $ref: '../shared/errors.yaml#/components/schemas/ErroNaoEncontrado'
+        '503':
+          description: Falha temporária ao enviar o OTP (SMTP/DNS)
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
 
   /verify-otp:
     post:

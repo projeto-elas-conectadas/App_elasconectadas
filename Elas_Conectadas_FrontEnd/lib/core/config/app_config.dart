@@ -4,16 +4,11 @@ class AppConfig {
   AppConfig._();
 
   static String get apiUrl {
-    // if (kIsWeb) {
-    //   return 'https://orion-nonpsychologic-cara.ngrok-free.dev';
-    // }
-    // // Substitua pelo IP da sua máquina na rede para testar em dispositivo físico
-    // return 'https://orion-nonpsychologic-cara.ngrok-free.dev';
-    // Para desenvolvimento local, aponte para o backend rodando na sua máquina
-    return 'http://localhost:8080';
-    
-    // Para testes com ngrok (descomente e atualize quando necessário):
-    // return 'https://orion-nonpsychologic-cara.ngrok-free.dev';
+    // Túnel Cloudflare do backend (APK / dispositivo físico)
+    return 'https://reliable-organizing-receipt-powered.trycloudflare.com';
+
+    // Desenvolvimento local (descomente e comente o túnel acima):
+    // return 'http://localhost:8080';
   }
 
   // Endpoints de autenticação

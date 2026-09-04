@@ -20,7 +20,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserResponseDto'
         '400':
-          description: Erro de validação dos dados enviados
+          description: Erro de validação dos dados enviados ou e-mail já cadastrado
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
 
   /users/admin:
     post:
@@ -43,6 +47,12 @@ paths:
             application/json:
               schema:
                 type: object
+        '400':
+          description: Erro de validação dos dados enviados ou e-mail já cadastrado
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
 
   /users:
     get:
@@ -111,6 +121,10 @@ paths:
                 type: object
         '400':
           description: "Corpo inválido (ex.: pfp que não é URI)"
+          content:
+            application/json:
+              schema:
+                $ref: '../shared/errors.yaml#/components/schemas/ErroPadrao'
     delete:
       summary: Remove uma usuária
       operationId: UsersController_deleteUserById

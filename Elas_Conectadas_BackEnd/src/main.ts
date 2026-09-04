@@ -1,6 +1,11 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+import { setDefaultResultOrder } from 'dns';
+// Servidores sem IPv6 (ENETUNREACH / EAI_AGAIN) precisam preferir IPv4
+// para SMTP do Gmail e api.cloudinary.com.
+setDefaultResultOrder('ipv4first');
+
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { json, urlencoded } from 'express';

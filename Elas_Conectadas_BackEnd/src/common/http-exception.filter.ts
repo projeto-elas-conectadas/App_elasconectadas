@@ -33,6 +33,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
       `${body.error} ${body.statusCode} ${body.path ?? ''}: ${this.stringifyMessage(body.message)}`,
     );
 
+    if (res.headersSent) {
+      return;
+    }
+
     res.status(body.statusCode).json(body);
   }
 

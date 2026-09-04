@@ -3,7 +3,9 @@ import {
   forwardRef,
   Inject,
   Injectable,
+  Logger,
   NotFoundException,
+  ServiceUnavailableException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -21,6 +23,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     @Inject(forwardRef(() => UsersService))
     private usersService: UsersService,
@@ -88,13 +92,16 @@ export class AuthService {
 
     return nodemailer.createTransport({
       host: host,
-      port: port as unknown as number,
+      port: Number(port),
       secure: secure,
+      // Sem family: 4 o Node escolhe IPv6 (ex.: 2800:3f0:...) e o VPS
+      // responde ENETUNREACH na porta 587 do Gmail.
+      family: 4,
       auth: {
         user: user,
         pass: pass,
       },
-    });
+    } as nodemailer.TransportOptions);
   }
 
   async deliverEmail(options: {
@@ -111,7 +118,15 @@ export class AuthService {
       html: options.html,
     };
 
-    await transport.sendMail(mailOptions);
+    try {
+      await transport.sendMail(mailOptions);
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : String(error);
+      this.logger.error(`Falha ao enviar e-mail para ${options.to}: ${detail}`);
+      throw new ServiceUnavailableException(
+        'Não foi possível enviar o e-mail agora. Tente novamente em instantes.',
+      );
+    }
   }
 
   async generateOTP(userId: string): Promise<{ userId: string; otp: string }> {
