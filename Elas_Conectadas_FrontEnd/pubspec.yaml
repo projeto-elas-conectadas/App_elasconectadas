@@ -29,6 +29,9 @@ dependencies:
   # Navegação
   go_router: ^13.2.0
 
+  # Links externos (deep link) que abrem uma tela do app
+  app_links: ^6.4.0
+
   # Persistência local (token JWT)
   shared_preferences: ^2.2.3
 

@@ -4,6 +4,39 @@ Registro breve das mudanças no código. Entradas mais recentes no topo.
 
 ---
 
+## 16/10/2026 — Backend escuta fora do localhost
+
+- **`src/main.ts`**: a API usa `API_HOST` (padrão `0.0.0.0`) e `API_PORT` (padrão `8080`). `PORT` do `.env` continua sendo só o SMTP. No servidor o processo aceita chamada de outras máquinas.
+- **`.env.example`**: documenta `API_HOST`, `API_PORT` e `PUBLIC_URL=http://elasconectadas.labcct.net.br:8080`.
+- **`api-specs/main-api.yaml`**: o contrato passa a declarar esse servidor publicado além de `127.0.0.1:8080`.
+- **`AndroidManifest.xml`**: o app só escuta links na porta 8080 da API. As portas 80 e 8443 saíram porque são o firewall, não o Nest.
+
+---
+
+## 16/10/2026 — Flutter: deep link no servidor público
+
+- **`app_config.dart`**: `apiUrl` deixou o IP local e passou a `http://elasconectadas.labcct.net.br:8080` (IP do ping `200.201.11.8`). O Dio continua lendo esse valor.
+- **`AndroidManifest.xml`**: a escuta de links cobre o domínio e o IP na porta 8080 do Nest, e também a porta 80 e o HTTPS 8443, que é para onde o servidor redireciona hoje. Só `/login` e `/produtos`.
+- **`deep_link.dart`**: ignora link de outro host; caminho do servidor segue para a tela do app, e as chamadas vão para o backend nesse host.
+
+---
+
+## 16/10/2026 — Flutter: API no IP local e deep link
+
+- **`Elas_Conectadas_FrontEnd/lib/core/config/app_config.dart`**: `apiUrl` passou a `http://10.0.0.115:8080` (IP do Wi-Fi). O Dio em `api_client.dart` já lê esse valor, então auth e produtos seguem o mesmo host.
+- **`android/app/src/main/AndroidManifest.xml`**: intent-filter `VIEW`/`BROWSABLE` com `autoVerify`, scheme `http`, host `10.0.0.115` e porta `8080`. Cleartext liberado para o HTTP local. O deep link padrão do Flutter fica desligado para a escuta no Dart decidir a tela.
+- **`lib/main.dart`** e **`lib/core/routes/deep_link.dart`**: `app_links` escuta o link inicial e os seguintes; `/login` abre o login, `/produtos` abre a Home e `/produtos/{id}` abre o detalhe via `appRouter.go`.
+- **`lib/core/routes/app_router.dart`**: o redirect aplica o mesmo mapa, caso a rota chegue direto no GoRouter.
+- **`pubspec.yaml`**: dependência `app_links`.
+
+---
+
+## 10/10/2026 — Flutter: API aponta para o servidor
+
+- **`Elas_Conectadas_FrontEnd/lib/core/config/app_config.dart`**: `apiUrl` atualizado para `https://elasconectadas.labcct.net.br`, para o app falar com o backend no servidor.
+
+---
+
 ## 04/09/2026 — Flutter: novo túnel Cloudflare do backend
 
 - **`Elas_Conectadas_FrontEnd/lib/core/config/app_config.dart`**: `apiUrl` atualizado para `https://deputy-nation-but-queries.trycloudflare.com`.

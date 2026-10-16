@@ -4,10 +4,10 @@ info:
   description: Arquitetura Orientada a Contratos (Modular)
   version: "1.0"
 servers:
-  - url: https://api.elasconectadas.com
-    description: Servidor de Produção
   - url: http://127.0.0.1:8080
     description: Servidor de Desenvolvimento Local
+  - url: http://elasconectadas.labcct.net.br:8080
+    description: Servidor publicado (labcct, IP 200.201.11.8)
 
 paths:
   # Módulo de uploads

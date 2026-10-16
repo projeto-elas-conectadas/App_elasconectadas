@@ -10,15 +10,19 @@ import '../../features/ads/create_ad_screen.dart';
 import '../../features/ads/product_detail_screen.dart';
 import '../models/produto_model.dart';
 import '../services/auth_service.dart';
+import 'deep_link.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/login',
   redirect: (context, state) async {
+    final fromLink = locationForDeepLink(state.uri);
+    final location = fromLink ?? state.matchedLocation;
     final isLoggedIn = await AuthService.isLoggedIn();
-    final isAuthRoute = state.matchedLocation.startsWith('/login') ||
-        state.matchedLocation.startsWith('/register') ||
-        state.matchedLocation.startsWith('/otp');
+    final isAuthRoute = location.startsWith('/login') ||
+        location.startsWith('/register') ||
+        location.startsWith('/otp');
     if (!isLoggedIn && !isAuthRoute) return '/login';
+    if (fromLink != null && fromLink != state.matchedLocation) return fromLink;
     return null;
   },
   routes: [

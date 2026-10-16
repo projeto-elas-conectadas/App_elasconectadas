@@ -3,13 +3,15 @@
 class AppConfig {
   AppConfig._();
 
-  static String get apiUrl {
-    // Túnel Cloudflare do backend (APK / dispositivo físico)
-    return 'https://deputy-nation-but-queries.trycloudflare.com';
+  /// Servidor público (ping de elasconectadas.labcct.net.br).
+  /// O mesmo host está no intent-filter do AndroidManifest.
+  static const String apiHost = 'elasconectadas.labcct.net.br';
+  static const String serverIp = '200.201.11.8';
 
-    // Desenvolvimento local (descomente e comente o túnel acima):
-    // return 'http://localhost:8080';
-  }
+  /// Porta em que o Nest escuta (`app.listen(8080)`).
+  static const int apiPort = 8080;
+
+  static String get apiUrl => 'http://$apiHost:$apiPort';
 
   // Endpoints de autenticação
   static const String loginEndpoint = '/auth/login';

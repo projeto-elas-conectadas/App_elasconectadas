@@ -64,6 +64,18 @@ async function bootstrap() {
     );
   }
 
-  await app.listen(8080, '0.0.0.0');
+  // PORT no .env é a porta SMTP do e-mail. A API usa API_PORT.
+  // 0.0.0.0 escuta em todas as interfaces; 127.0.0.1 só aceitaria a própria máquina.
+  const host = process.env.API_HOST?.trim() || '0.0.0.0';
+  const port = Number(process.env.API_PORT) || 8080;
+  await app.listen(port, host);
+  console.log(
+    `API escutando em ${host}:${port} (aceita chamadas de fora do localhost).`,
+  );
+  console.log(`Acesso nesta máquina: http://127.0.0.1:${port}`);
+  const publicUrl = process.env.PUBLIC_URL?.trim();
+  if (publicUrl) {
+    console.log(`Servidor publicado: ${publicUrl}`);
+  }
 }
 bootstrap();
