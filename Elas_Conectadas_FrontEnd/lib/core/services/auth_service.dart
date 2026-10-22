@@ -37,6 +37,7 @@ class AuthService {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
+      case DioExceptionType.transformTimeout:
         return 'O servidor demorou para responder. Tente novamente em instantes.';
       case DioExceptionType.connectionError:
         return 'Não foi possível conectar ao servidor. Verifique se o backend está em execução.';

@@ -156,6 +156,7 @@ class ProdutoService {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
+      case DioExceptionType.transformTimeout:
         return 'O servidor demorou para responder. Tente novamente.';
       case DioExceptionType.connectionError:
         return 'Não foi possível conectar ao servidor.';
