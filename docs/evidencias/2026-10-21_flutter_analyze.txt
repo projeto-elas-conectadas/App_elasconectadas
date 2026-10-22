@@ -1,0 +1,309 @@
+Comando: flutter analyze (Elas_Conectadas_FrontEnd)
+Data: 21/10/2026
+Estado: branch main (a3b85f5) + correcao local do Dio (transformTimeout)
+Resumo: 150 problemas (139 erros, 11 avisos), todos em lib/generated_api (copia legada,
+sem os arquivos .g.dart gerados e nao importada pelo app). Nenhum problema fora dessa pasta.
+
+--- saida completa ---
+flutter analyze
+Analyzing Elas_Conectadas_FrontEnd...                                   
+
+warning - Duplicate import. Try removing all but one import of the library - lib\generated_api\lib\src\api\ads_api.dart:11:8 - duplicate_import
+warning - Duplicate import. Try removing all but one import of the library - lib\generated_api\lib\src\api\auth_api.dart:11:8 - duplicate_import
+warning - Unused import: 'package:openapi/src/model/erro_nao_encontrado.dart'. Try removing the import directive -
+       lib\generated_api\lib\src\api\auth_api.dart:12:8 - unused_import
+warning - Unused import: 'package:openapi/src/model/erro_padrao.dart'. Try removing the import directive - lib\generated_api\lib\src\api\auth_api.dart:13:8 -   
+       unused_import
+warning - Duplicate import. Try removing all but one import of the library - lib\generated_api\lib\src\api\posts_api.dart:11:8 - duplicate_import
+warning - Duplicate import. Try removing all but one import of the library - lib\generated_api\lib\src\api\produtos_api.dart:12:8 - duplicate_import
+warning - Unused import: 'package:built_value/json_object.dart'. Try removing the import directive - lib\generated_api\lib\src\api\uploads_api.dart:7:8 -       
+       unused_import
+warning - Unused import: 'package:openapi/src/api_util.dart'. Try removing the import directive - lib\generated_api\lib\src\api\uploads_api.dart:11:8 -
+       unused_import
+warning - Unused import: 'package:openapi/src/model/erro_padrao.dart'. Try removing the import directive - lib\generated_api\lib\src\api\uploads_api.dart:12:8 -
+       unused_import
+warning - Duplicate import. Try removing all but one import of the library - lib\generated_api\lib\src\api\users_api.dart:12:8 - duplicate_import
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/create_ad_dto.g.dart'. Try running the generator that will generate the file
+         referenced by the URI - lib\generated_api\lib\src\model\create_ad_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'CreateAdDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type
+         named 'CreateAdDtoBuilder' - lib\generated_api\lib\src\model\create_ad_dto.dart:19:58 - non_type_as_type_argument
+  error - Undefined class 'CreateAdDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'CreateAdDtoBuilder' -
+         lib\generated_api\lib\src\model\create_ad_dto.dart:36:37 - undefined_class
+  error - Undefined class 'CreateAdDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'CreateAdDtoBuilder' -
+         lib\generated_api\lib\src\model\create_ad_dto.dart:39:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\create_ad_dto.dart:47:52 - non_constant_list_element
+  error - Undefined class 'CreateAdDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'CreateAdDtoBuilder' -
+         lib\generated_api\lib\src\model\create_ad_dto.dart:95:14 - undefined_class
+  error - The method 'CreateAdDtoBuilder' isn't defined for the type '_$CreateAdDtoSerializer'. Try correcting the name to the name of an existing method, or   
+         defining a method named 'CreateAdDtoBuilder' - lib\generated_api\lib\src\model\create_ad_dto.dart:144:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/create_admin_dto.g.dart'. Try running the generator that will generate the file       
+         referenced by the URI - lib\generated_api\lib\src\model\create_admin_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'CreateAdminDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type
+         named 'CreateAdminDtoBuilder' - lib\generated_api\lib\src\model\create_admin_dto.dart:18:64 - non_type_as_type_argument
+  error - Undefined class 'CreateAdminDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreateAdminDtoBuilder' - lib\generated_api\lib\src\model\create_admin_dto.dart:30:40 - undefined_class
+  error - Undefined class 'CreateAdminDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreateAdminDtoBuilder' - lib\generated_api\lib\src\model\create_admin_dto.dart:33:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\create_admin_dto.dart:41:55 - non_constant_list_element
+  error - Undefined class 'CreateAdminDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreateAdminDtoBuilder' - lib\generated_api\lib\src\model\create_admin_dto.dart:82:14 - undefined_class
+  error - The method 'CreateAdminDtoBuilder' isn't defined for the type '_$CreateAdminDtoSerializer'. Try correcting the name to the name of an existing method,
+         or defining a method named 'CreateAdminDtoBuilder' - lib\generated_api\lib\src\model\create_admin_dto.dart:124:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/create_post_dto.g.dart'. Try running the generator that will generate the file
+         referenced by the URI - lib\generated_api\lib\src\model\create_post_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'CreatePostDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type 
+         named 'CreatePostDtoBuilder' - lib\generated_api\lib\src\model\create_post_dto.dart:19:62 - non_type_as_type_argument
+  error - Undefined class 'CreatePostDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreatePostDtoBuilder' - lib\generated_api\lib\src\model\create_post_dto.dart:36:39 - undefined_class
+  error - Undefined class 'CreatePostDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreatePostDtoBuilder' - lib\generated_api\lib\src\model\create_post_dto.dart:39:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\create_post_dto.dart:47:54 - non_constant_list_element
+  error - Undefined class 'CreatePostDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreatePostDtoBuilder' - lib\generated_api\lib\src\model\create_post_dto.dart:95:14 - undefined_class
+  error - The method 'CreatePostDtoBuilder' isn't defined for the type '_$CreatePostDtoSerializer'. Try correcting the name to the name of an existing method,  
+         or defining a method named 'CreatePostDtoBuilder' - lib\generated_api\lib\src\model\create_post_dto.dart:144:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/create_produto_dto.g.dart'. Try running the generator that will generate the file     
+         referenced by the URI - lib\generated_api\lib\src\model\create_produto_dto.dart:10:6 - uri_has_not_been_generated
+  error - The name 'CreateProdutoDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a   
+         type named 'CreateProdutoDtoBuilder' - lib\generated_api\lib\src\model\create_produto_dto.dart:24:68 - non_type_as_type_argument
+  error - Undefined class 'CreateProdutoDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreateProdutoDtoBuilder' - lib\generated_api\lib\src\model\create_produto_dto.dart:54:42 - undefined_class
+  error - Undefined class 'CreateProdutoDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreateProdutoDtoBuilder' - lib\generated_api\lib\src\model\create_produto_dto.dart:57:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\create_produto_dto.dart:65:57 - non_constant_list_element
+  error - Undefined class 'CreateProdutoDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreateProdutoDtoBuilder' - lib\generated_api\lib\src\model\create_produto_dto.dart:133:14 - undefined_class
+  error - The method 'CreateProdutoDtoBuilder' isn't defined for the type '_$CreateProdutoDtoSerializer'. Try correcting the name to the name of an existing    
+         method, or defining a method named 'CreateProdutoDtoBuilder' - lib\generated_api\lib\src\model\create_produto_dto.dart:210:20 - undefined_method       
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/create_user_dto.g.dart'. Try running the generator that will generate the file        
+         referenced by the URI - lib\generated_api\lib\src\model\create_user_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'CreateUserDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type 
+         named 'CreateUserDtoBuilder' - lib\generated_api\lib\src\model\create_user_dto.dart:21:62 - non_type_as_type_argument
+  error - Undefined class 'CreateUserDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreateUserDtoBuilder' - lib\generated_api\lib\src\model\create_user_dto.dart:44:39 - undefined_class
+  error - Undefined class 'CreateUserDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreateUserDtoBuilder' - lib\generated_api\lib\src\model\create_user_dto.dart:47:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\create_user_dto.dart:55:54 - non_constant_list_element
+  error - Undefined class 'CreateUserDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'CreateUserDtoBuilder' - lib\generated_api\lib\src\model\create_user_dto.dart:113:14 - undefined_class
+  error - The method 'CreateUserDtoBuilder' isn't defined for the type '_$CreateUserDtoSerializer'. Try correcting the name to the name of an existing method,  
+         or defining a method named 'CreateUserDtoBuilder' - lib\generated_api\lib\src\model\create_user_dto.dart:176:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/erro_nao_encontrado.g.dart'. Try running the generator that will generate the file    
+         referenced by the URI - lib\generated_api\lib\src\model\erro_nao_encontrado.dart:9:6 - uri_has_not_been_generated
+  error - The name 'ErroNaoEncontradoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a  
+         type named 'ErroNaoEncontradoBuilder' - lib\generated_api\lib\src\model\erro_nao_encontrado.dart:19:70 - non_type_as_type_argument
+  error - Undefined class 'ErroNaoEncontradoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'ErroNaoEncontradoBuilder' - lib\generated_api\lib\src\model\erro_nao_encontrado.dart:34:43 - undefined_class
+  error - Undefined class 'ErroNaoEncontradoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'ErroNaoEncontradoBuilder' - lib\generated_api\lib\src\model\erro_nao_encontrado.dart:37:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\erro_nao_encontrado.dart:45:58 - non_constant_list_element
+  error - Undefined class 'ErroNaoEncontradoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'ErroNaoEncontradoBuilder' - lib\generated_api\lib\src\model\erro_nao_encontrado.dart:99:14 - undefined_class
+  error - The method 'ErroNaoEncontradoBuilder' isn't defined for the type '_$ErroNaoEncontradoSerializer'. Try correcting the name to the name of an existing  
+         method, or defining a method named 'ErroNaoEncontradoBuilder' - lib\generated_api\lib\src\model\erro_nao_encontrado.dart:148:20 - undefined_method     
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/erro_padrao.g.dart'. Try running the generator that will generate the file referenced 
+         by the URI - lib\generated_api\lib\src\model\erro_padrao.dart:12:6 - uri_has_not_been_generated
+  error - The name 'ErroPadraoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type    
+         named 'ErroPadraoBuilder' - lib\generated_api\lib\src\model\erro_padrao.dart:23:56 - non_type_as_type_argument
+  error - Undefined class 'ErroPadraoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'ErroPadraoBuilder' -  
+         lib\generated_api\lib\src\model\erro_padrao.dart:45:36 - undefined_class
+  error - Undefined class 'ErroPadraoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'ErroPadraoBuilder' -
+         lib\generated_api\lib\src\model\erro_padrao.dart:48:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\erro_padrao.dart:56:51 - non_constant_list_element
+  error - Undefined class 'ErroPadraoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'ErroPadraoBuilder' -  
+         lib\generated_api\lib\src\model\erro_padrao.dart:117:14 - undefined_class
+  error - The method 'ErroPadraoBuilder' isn't defined for the type '_$ErroPadraoSerializer'. Try correcting the name to the name of an existing method, or     
+         defining a method named 'ErroPadraoBuilder' - lib\generated_api\lib\src\model\erro_padrao.dart:173:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/erro_padrao_message.g.dart'. Try running the generator that will generate the file    
+         referenced by the URI - lib\generated_api\lib\src\model\erro_padrao_message.dart:12:6 - uri_has_not_been_generated
+  error - The name 'ErroPadraoMessageBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a  
+         type named 'ErroPadraoMessageBuilder' - lib\generated_api\lib\src\model\erro_padrao_message.dart:16:70 - non_type_as_type_argument
+  error - Undefined class 'ErroPadraoMessageBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'ErroPadraoMessageBuilder' - lib\generated_api\lib\src\model\erro_padrao_message.dart:22:43 - undefined_class
+  error - Undefined class 'ErroPadraoMessageBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'ErroPadraoMessageBuilder' - lib\generated_api\lib\src\model\erro_padrao_message.dart:25:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\erro_padrao_message.dart:33:58 - non_constant_list_element
+warning - A value for optional parameter 'specifiedType' isn't ever given. Try removing the unused parameter -
+       lib\generated_api\lib\src\model\erro_padrao_message.dart:41:14 - unused_element_parameter
+  error - The method 'ErroPadraoMessageBuilder' isn't defined for the type '_$ErroPadraoMessageSerializer'. Try correcting the name to the name of an existing  
+         method, or defining a method named 'ErroPadraoMessageBuilder' - lib\generated_api\lib\src\model\erro_padrao_message.dart:61:20 - undefined_method      
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/login_dto.g.dart'. Try running the generator that will generate the file referenced by
+         the URI - lib\generated_api\lib\src\model\login_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'LoginDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type named
+         'LoginDtoBuilder' - lib\generated_api\lib\src\model\login_dto.dart:17:52 - non_type_as_type_argument
+  error - Undefined class 'LoginDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'LoginDtoBuilder' -      
+         lib\generated_api\lib\src\model\login_dto.dart:26:34 - undefined_class
+  error - Undefined class 'LoginDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'LoginDtoBuilder' -      
+         lib\generated_api\lib\src\model\login_dto.dart:29:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\login_dto.dart:37:49 - non_constant_list_element
+  error - Undefined class 'LoginDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'LoginDtoBuilder' -      
+         lib\generated_api\lib\src\model\login_dto.dart:73:14 - undefined_class
+  error - The method 'LoginDtoBuilder' isn't defined for the type '_$LoginDtoSerializer'. Try correcting the name to the name of an existing method, or defining
+         a method named 'LoginDtoBuilder' - lib\generated_api\lib\src\model\login_dto.dart:108:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/login_response_dto.g.dart'. Try running the generator that will generate the file
+         referenced by the URI - lib\generated_api\lib\src\model\login_response_dto.dart:10:6 - uri_has_not_been_generated
+  error - The name 'LoginResponseDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a   
+         type named 'LoginResponseDtoBuilder' - lib\generated_api\lib\src\model\login_response_dto.dart:18:68 - non_type_as_type_argument
+  error - Undefined class 'LoginResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'LoginResponseDtoBuilder' - lib\generated_api\lib\src\model\login_response_dto.dart:28:42 - undefined_class
+  error - Undefined class 'LoginResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'LoginResponseDtoBuilder' - lib\generated_api\lib\src\model\login_response_dto.dart:31:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\login_response_dto.dart:39:57 - non_constant_list_element
+  error - Undefined class 'LoginResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'LoginResponseDtoBuilder' - lib\generated_api\lib\src\model\login_response_dto.dart:75:14 - undefined_class
+  error - The method 'LoginResponseDtoBuilder' isn't defined for the type '_$LoginResponseDtoSerializer'. Try correcting the name to the name of an existing    
+         method, or defining a method named 'LoginResponseDtoBuilder' - lib\generated_api\lib\src\model\login_response_dto.dart:110:20 - undefined_method       
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/produto_response_dto.g.dart'. Try running the generator that will generate the file   
+         referenced by the URI - lib\generated_api\lib\src\model\produto_response_dto.dart:10:6 - uri_has_not_been_generated
+  error - The name 'ProdutoResponseDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a
+         type named 'ProdutoResponseDtoBuilder' - lib\generated_api\lib\src\model\produto_response_dto.dart:26:72 - non_type_as_type_argument
+  error - Undefined class 'ProdutoResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'ProdutoResponseDtoBuilder' - lib\generated_api\lib\src\model\produto_response_dto.dart:60:44 - undefined_class
+  error - Undefined class 'ProdutoResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'ProdutoResponseDtoBuilder' - lib\generated_api\lib\src\model\produto_response_dto.dart:63:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\produto_response_dto.dart:71:59 - non_constant_list_element
+  error - Undefined class 'ProdutoResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'ProdutoResponseDtoBuilder' - lib\generated_api\lib\src\model\produto_response_dto.dart:149:14 - undefined_class
+  error - The method 'ProdutoResponseDtoBuilder' isn't defined for the type '_$ProdutoResponseDtoSerializer'. Try correcting the name to the name of an existing
+         method, or defining a method named 'ProdutoResponseDtoBuilder' - lib\generated_api\lib\src\model\produto_response_dto.dart:241:20 - undefined_method   
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/request_token_dto.g.dart'. Try running the generator that will generate the file      
+         referenced by the URI - lib\generated_api\lib\src\model\request_token_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'RequestTokenDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a    
+         type named 'RequestTokenDtoBuilder' - lib\generated_api\lib\src\model\request_token_dto.dart:16:66 - non_type_as_type_argument
+  error - Undefined class 'RequestTokenDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'RequestTokenDtoBuilder' - lib\generated_api\lib\src\model\request_token_dto.dart:22:41 - undefined_class
+  error - Undefined class 'RequestTokenDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'RequestTokenDtoBuilder' - lib\generated_api\lib\src\model\request_token_dto.dart:25:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\request_token_dto.dart:33:56 - non_constant_list_element
+  error - Undefined class 'RequestTokenDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'RequestTokenDtoBuilder' - lib\generated_api\lib\src\model\request_token_dto.dart:64:14 - undefined_class
+  error - The method 'RequestTokenDtoBuilder' isn't defined for the type '_$RequestTokenDtoSerializer'. Try correcting the name to the name of an existing      
+         method, or defining a method named 'RequestTokenDtoBuilder' - lib\generated_api\lib\src\model\request_token_dto.dart:92:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/send_email_dto.g.dart'. Try running the generator that will generate the file
+         referenced by the URI - lib\generated_api\lib\src\model\send_email_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'SendEmailDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type  
+         named 'SendEmailDtoBuilder' - lib\generated_api\lib\src\model\send_email_dto.dart:16:60 - non_type_as_type_argument
+  error - Undefined class 'SendEmailDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'SendEmailDtoBuilder'
+         - lib\generated_api\lib\src\model\send_email_dto.dart:23:38 - undefined_class
+  error - Undefined class 'SendEmailDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'SendEmailDtoBuilder'
+         - lib\generated_api\lib\src\model\send_email_dto.dart:26:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\send_email_dto.dart:34:53 - non_constant_list_element
+  error - Undefined class 'SendEmailDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'SendEmailDtoBuilder'
+         - lib\generated_api\lib\src\model\send_email_dto.dart:65:14 - undefined_class
+  error - The method 'SendEmailDtoBuilder' isn't defined for the type '_$SendEmailDtoSerializer'. Try correcting the name to the name of an existing method, or 
+         defining a method named 'SendEmailDtoBuilder' - lib\generated_api\lib\src\model\send_email_dto.dart:93:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/update_ad_dto.g.dart'. Try running the generator that will generate the file
+         referenced by the URI - lib\generated_api\lib\src\model\update_ad_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'UpdateAdDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type   
+         named 'UpdateAdDtoBuilder' - lib\generated_api\lib\src\model\update_ad_dto.dart:19:58 - non_type_as_type_argument
+  error - Undefined class 'UpdateAdDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'UpdateAdDtoBuilder' -
+         lib\generated_api\lib\src\model\update_ad_dto.dart:34:37 - undefined_class
+  error - Undefined class 'UpdateAdDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'UpdateAdDtoBuilder' -
+         lib\generated_api\lib\src\model\update_ad_dto.dart:37:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\update_ad_dto.dart:45:52 - non_constant_list_element
+  error - Undefined class 'UpdateAdDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'UpdateAdDtoBuilder' -
+         lib\generated_api\lib\src\model\update_ad_dto.dart:99:14 - undefined_class
+  error - The method 'UpdateAdDtoBuilder' isn't defined for the type '_$UpdateAdDtoSerializer'. Try correcting the name to the name of an existing method, or   
+         defining a method named 'UpdateAdDtoBuilder' - lib\generated_api\lib\src\model\update_ad_dto.dart:148:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/update_post_dto.g.dart'. Try running the generator that will generate the file        
+         referenced by the URI - lib\generated_api\lib\src\model\update_post_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'UpdatePostDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type 
+         named 'UpdatePostDtoBuilder' - lib\generated_api\lib\src\model\update_post_dto.dart:19:62 - non_type_as_type_argument
+  error - Undefined class 'UpdatePostDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UpdatePostDtoBuilder' - lib\generated_api\lib\src\model\update_post_dto.dart:34:39 - undefined_class
+  error - Undefined class 'UpdatePostDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UpdatePostDtoBuilder' - lib\generated_api\lib\src\model\update_post_dto.dart:37:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\update_post_dto.dart:45:54 - non_constant_list_element
+  error - Undefined class 'UpdatePostDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UpdatePostDtoBuilder' - lib\generated_api\lib\src\model\update_post_dto.dart:99:14 - undefined_class
+  error - The method 'UpdatePostDtoBuilder' isn't defined for the type '_$UpdatePostDtoSerializer'. Try correcting the name to the name of an existing method,  
+         or defining a method named 'UpdatePostDtoBuilder' - lib\generated_api\lib\src\model\update_post_dto.dart:148:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/update_user_dto.g.dart'. Try running the generator that will generate the file        
+         referenced by the URI - lib\generated_api\lib\src\model\update_user_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'UpdateUserDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type 
+         named 'UpdateUserDtoBuilder' - lib\generated_api\lib\src\model\update_user_dto.dart:25:62 - non_type_as_type_argument
+  error - Undefined class 'UpdateUserDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UpdateUserDtoBuilder' - lib\generated_api\lib\src\model\update_user_dto.dart:59:39 - undefined_class
+  error - Undefined class 'UpdateUserDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UpdateUserDtoBuilder' - lib\generated_api\lib\src\model\update_user_dto.dart:62:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\update_user_dto.dart:70:54 - non_constant_list_element
+  error - Undefined class 'UpdateUserDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UpdateUserDtoBuilder' - lib\generated_api\lib\src\model\update_user_dto.dart:166:14 - undefined_class
+  error - The method 'UpdateUserDtoBuilder' isn't defined for the type '_$UpdateUserDtoSerializer'. Try correcting the name to the name of an existing method,  
+         or defining a method named 'UpdateUserDtoBuilder' - lib\generated_api\lib\src\model\update_user_dto.dart:257:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/upload_response_dto.g.dart'. Try running the generator that will generate the file    
+         referenced by the URI - lib\generated_api\lib\src\model\upload_response_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'UploadResponseDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a  
+         type named 'UploadResponseDtoBuilder' - lib\generated_api\lib\src\model\upload_response_dto.dart:16:70 - non_type_as_type_argument
+  error - Undefined class 'UploadResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UploadResponseDtoBuilder' - lib\generated_api\lib\src\model\upload_response_dto.dart:23:43 - undefined_class
+  error - Undefined class 'UploadResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UploadResponseDtoBuilder' - lib\generated_api\lib\src\model\upload_response_dto.dart:26:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\upload_response_dto.dart:34:58 - non_constant_list_element
+  error - Undefined class 'UploadResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UploadResponseDtoBuilder' - lib\generated_api\lib\src\model\upload_response_dto.dart:65:14 - undefined_class
+  error - The method 'UploadResponseDtoBuilder' isn't defined for the type '_$UploadResponseDtoSerializer'. Try correcting the name to the name of an existing  
+         method, or defining a method named 'UploadResponseDtoBuilder' - lib\generated_api\lib\src\model\upload_response_dto.dart:93:20 - undefined_method      
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/user_response_dto.g.dart'. Try running the generator that will generate the file      
+         referenced by the URI - lib\generated_api\lib\src\model\user_response_dto.dart:10:6 - uri_has_not_been_generated
+  error - The name 'UserResponseDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a
+         type named 'UserResponseDtoBuilder' - lib\generated_api\lib\src\model\user_response_dto.dart:31:66 - non_type_as_type_argument
+  error - Undefined class 'UserResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UserResponseDtoBuilder' - lib\generated_api\lib\src\model\user_response_dto.dart:82:41 - undefined_class
+  error - Undefined class 'UserResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UserResponseDtoBuilder' - lib\generated_api\lib\src\model\user_response_dto.dart:85:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\user_response_dto.dart:93:56 - non_constant_list_element
+  error - Undefined class 'UserResponseDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name
+         'UserResponseDtoBuilder' - lib\generated_api\lib\src\model\user_response_dto.dart:214:14 - undefined_class
+  error - The method 'UserResponseDtoBuilder' isn't defined for the type '_$UserResponseDtoSerializer'. Try correcting the name to the name of an existing      
+         method, or defining a method named 'UserResponseDtoBuilder' - lib\generated_api\lib\src\model\user_response_dto.dart:350:20 - undefined_method
+  error - Const variables must be initialized with a constant value. Try changing the initializer to be a constant expression -
+         lib\generated_api\lib\src\model\user_response_dto.dart:368:47 - const_initialized_with_non_constant_value
+  error - Const variables must be initialized with a constant value. Try changing the initializer to be a constant expression -
+         lib\generated_api\lib\src\model\user_response_dto.dart:370:48 - const_initialized_with_non_constant_value
+  error - The method '_$userResponseDtoRoleEnumValueOf' isn't defined for the type 'UserResponseDtoRoleEnum'. Try correcting the name to the name of an existing
+         method, or defining a method named '_$userResponseDtoRoleEnumValueOf' - lib\generated_api\lib\src\model\user_response_dto.dart:377:58 -
+         undefined_method
+  error - Const variables must be initialized with a constant value. Try changing the initializer to be a constant expression -
+         lib\generated_api\lib\src\model\user_response_dto.dart:383:60 - const_initialized_with_non_constant_value
+  error - Const variables must be initialized with a constant value. Try changing the initializer to be a constant expression -
+         lib\generated_api\lib\src\model\user_response_dto.dart:385:62 - const_initialized_with_non_constant_value
+  error - The method '_$userResponseDtoAccountStatusEnumValueOf' isn't defined for the type 'UserResponseDtoAccountStatusEnum'. Try correcting the name to the  
+         name of an existing method, or defining a method named '_$userResponseDtoAccountStatusEnumValueOf' -
+         lib\generated_api\lib\src\model\user_response_dto.dart:392:67 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/model/verify_otp_dto.g.dart'. Try running the generator that will generate the file
+         referenced by the URI - lib\generated_api\lib\src\model\verify_otp_dto.dart:9:6 - uri_has_not_been_generated
+  error - The name 'VerifyOtpDtoBuilder' isn't a type, so it can't be used as a type argument. Try correcting the name to an existing type, or defining a type  
+         named 'VerifyOtpDtoBuilder' - lib\generated_api\lib\src\model\verify_otp_dto.dart:17:60 - non_type_as_type_argument
+  error - Undefined class 'VerifyOtpDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'VerifyOtpDtoBuilder'
+         - lib\generated_api\lib\src\model\verify_otp_dto.dart:27:38 - undefined_class
+  error - Undefined class 'VerifyOtpDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'VerifyOtpDtoBuilder'
+         - lib\generated_api\lib\src\model\verify_otp_dto.dart:30:25 - undefined_class
+  error - The values in a const list literal must be constants. Try removing the keyword 'const' from the list literal -
+         lib\generated_api\lib\src\model\verify_otp_dto.dart:38:53 - non_constant_list_element
+  error - Undefined class 'VerifyOtpDtoBuilder'. Try changing the name to the name of an existing class, or creating a class with the name 'VerifyOtpDtoBuilder'
+         - lib\generated_api\lib\src\model\verify_otp_dto.dart:74:14 - undefined_class
+  error - The method 'VerifyOtpDtoBuilder' isn't defined for the type '_$VerifyOtpDtoSerializer'. Try correcting the name to the name of an existing method, or 
+         defining a method named 'VerifyOtpDtoBuilder' - lib\generated_api\lib\src\model\verify_otp_dto.dart:109:20 - undefined_method
+  error - Target of URI hasn't been generated: 'package:openapi/src/serializers.g.dart'. Try running the generator that will generate the file referenced by the
+         URI - lib\generated_api\lib\src\serializers.dart:37:6 - uri_has_not_been_generated
+
+150 issues found. (ran in 4.7s)

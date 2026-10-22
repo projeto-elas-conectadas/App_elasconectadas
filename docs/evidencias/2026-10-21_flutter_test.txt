@@ -1,0 +1,8 @@
+Comando: flutter test (Elas_Conectadas_FrontEnd)
+Data: 21/10/2026
+Estado: branch main (a3b85f5) + correcao local do Dio (transformTimeout), sem servidor em execucao
+
+00:28 +7 ~1: 1 skipped test.
+00:28 +7 ~1: All other tests passed!
+
+Resumo: 7 testes aprovados; 1 ignorado (teste de integracao opt-in, requer RUN_INTEGRATION=true e backend local).

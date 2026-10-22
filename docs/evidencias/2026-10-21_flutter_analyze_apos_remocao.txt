@@ -1,0 +1,8 @@
+Comando: flutter analyze (Elas_Conectadas_FrontEnd)
+Data: 21/10/2026
+Estado: branch main (a3b85f5) + correcao local do Dio + remocao da copia legada lib/generated_api (93 arquivos)
+
+Analyzing Elas_Conectadas_FrontEnd...
+No issues found! (ran in 4.3s)
+
+Comparacao: antes da remocao, 150 problemas (139 erros, 11 avisos), todos em lib/generated_api.
