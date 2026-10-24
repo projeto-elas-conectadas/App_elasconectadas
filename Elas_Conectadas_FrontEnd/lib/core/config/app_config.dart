@@ -3,15 +3,12 @@
 class AppConfig {
   AppConfig._();
 
-  /// Servidor público (ping de elasconectadas.labcct.net.br).
-  /// O mesmo host está no intent-filter do AndroidManifest.
+  /// Domínio público da API. O mesmo host está no intent-filter do AndroidManifest.
   static const String apiHost = 'elasconectadas.labcct.net.br';
   static const String serverIp = '200.201.11.8';
 
-  /// Porta em que o Nest escuta (`app.listen(8080)`).
-  static const int apiPort = 8080;
-
-  static String get apiUrl => 'http://$apiHost:$apiPort';
+  /// Base de produção (HTTPS, porta 443). O proxy do servidor chega ao Nest.
+  static const String apiUrl = 'https://elasconectadas.labcct.net.br';
 
   // Endpoints de autenticação
   static const String loginEndpoint = '/auth/login';

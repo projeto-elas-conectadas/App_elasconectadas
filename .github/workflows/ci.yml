@@ -1,0 +1,65 @@
+# Valida pull requests para a main com Yarn e Flutter.
+# Cucumber e k6 ficam de fora: os dois exigem a API em http://127.0.0.1:8080
+# e o MySQL local, no mesmo jeito que o servidor de produção sobe.
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  backend:
+    name: Backend (Yarn)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Elas_Conectadas_BackEnd
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+          cache-dependency-path: Elas_Conectadas_BackEnd/yarn.lock
+
+      - name: Ativar o Yarn 1.22.22
+        run: |
+          corepack enable
+          corepack prepare yarn@1.22.22 --activate
+
+      - name: Instalar dependências
+        run: yarn install --frozen-lockfile
+
+      - name: Testes unitários
+        run: yarn test --ci
+
+      - name: Compilar a API
+        run: yarn build
+
+  frontend:
+    name: App Flutter
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Elas_Conectadas_FrontEnd
+    steps:
+      - name: Baixar o repositório
+        uses: actions/checkout@v4
+
+      - name: Flutter stable
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Dependências do app
+        run: flutter pub get
+
+      - name: Testes do app
+        run: flutter test

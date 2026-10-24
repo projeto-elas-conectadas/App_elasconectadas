@@ -4,6 +4,29 @@ Registro breve das mudanças no código. Entradas mais recentes no topo.
 
 ---
 
+## 23/10/2026 — Yarn no lugar do Docker e API em HTTPS
+
+- **`docker-compose.yml`**: removido. A API e o MySQL rodam na máquina, com dependências pelo Yarn.
+- **`package.json`**: `prestart:dev` chama `yarn check:spec` e `yarn build:spec`. Campo `packageManager` fixa o Yarn 1.22.22.
+- **`README.MD`** e **`documentos/README.md`**: guia de instalação para alunos com Node 20, Yarn, MySQL 8 e o `.env`. O banco documentado passa a ser o MySQL.
+- **`.env.example`**, **`api-specs/main-api.yaml`** e **`openapi-spec.json`**: URL pública `https://elasconectadas.labcct.net.br`.
+- **`app_config.dart`** e **`AndroidManifest.xml`**: o app chama e abre links nesse HTTPS. O teste `test/app_config_test.dart` trava essa URL.
+- **`.github/workflows/ci.yml`**: em pull request para `main`, o backend roda `yarn test` e `yarn build`; o Flutter roda `flutter test`.
+
+---
+
+## 16/10/2026 — Regra de teste para bug e regressão
+
+- **`.cursor/rules/testes-regressao.mdc`**: correção de bug passa a exigir um teste do caso que falhava. Mudança de código roda a suíte já existente (`npm test`, Cucumber se a rota mudou, `flutter test` no app).
+
+---
+
+## 16/10/2026 — Tipo do streamifier no build do servidor
+
+- **`package.json`**: `@types/streamifier` em devDependencies, para o `nest start --watch` no servidor não falhar com TS7016 em `upload.service.ts`.
+
+---
+
 ## 16/10/2026 — Backend escuta fora do localhost
 
 - **`src/main.ts`**: a API usa `API_HOST` (padrão `0.0.0.0`) e `API_PORT` (padrão `8080`). `PORT` do `.env` continua sendo só o SMTP. No servidor o processo aceita chamada de outras máquinas.

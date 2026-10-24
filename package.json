@@ -11,7 +11,7 @@
     "start": "nest start",
     "check:spec": "npx @redocly/cli lint api-specs/main-api.yaml",
     "build:spec": "npx @redocly/cli bundle api-specs/main-api.yaml -o openapi-spec.json --ext json",
-    "prestart:dev": "npm run check:spec && npm run build:spec",
+    "prestart:dev": "yarn check:spec && yarn build:spec",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",

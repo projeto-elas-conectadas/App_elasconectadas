@@ -1,5 +1,18 @@
 # elasconectadas_app
 
+A URL da API fica em `lib/core/config/app_config.dart` (`AppConfig.apiUrl`).
+
+Produção: `https://elasconectadas.labcct.net.br`
+
+```powershell
+flutter pub get
+flutter test
+flutter run
+flutter build apk --release
+```
+
+O APK de release sai em `build/app/outputs/flutter-apk/app-release.apk`.
+
 A new Flutter project.
 
 ## Getting Started

@@ -6,8 +6,8 @@ info:
 servers:
   - url: http://127.0.0.1:8080
     description: Servidor de Desenvolvimento Local
-  - url: http://elasconectadas.labcct.net.br:8080
-    description: Servidor publicado (labcct, IP 200.201.11.8)
+  - url: https://elasconectadas.labcct.net.br
+    description: Servidor publicado (labcct)
 
 paths:
   # Módulo de uploads

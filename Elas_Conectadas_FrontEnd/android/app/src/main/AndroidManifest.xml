@@ -28,7 +28,15 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <!-- Só a porta da API. 80 e 8443 são o firewall, não o Nest. -->
+            <!-- API pública em HTTPS (porta 443). -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="elasconectadas.labcct.net.br" android:pathPrefix="/login" />
+                <data android:scheme="https" android:host="elasconectadas.labcct.net.br" android:pathPrefix="/produtos" />
+            </intent-filter>
+            <!-- Acesso direto ao Nest na porta 8080, antes do proxy HTTPS. -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />

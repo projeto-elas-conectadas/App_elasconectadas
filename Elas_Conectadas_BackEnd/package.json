@@ -5,6 +5,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "packageManager": "yarn@1.22.22",
   "scripts": {
     "build": "node ./node_modules/@nestjs/cli/bin/nest.js build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -29,7 +30,7 @@
     "test:k6:users": "k6 run load-tests/load-test-users.js",
     "check:spec": "npx @redocly/cli lint api-specs/main-api.yaml --extends=minimal",
     "build:spec": "npx @apidevtools/swagger-cli bundle api-specs/main-api.yaml -o openapi-spec.json -t json",
-    "prestart:dev": "npm run check:spec && npm run build:spec"
+    "prestart:dev": "yarn check:spec && yarn build:spec"
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^12.1.0",
@@ -72,6 +73,7 @@
     "@types/node": "^20.3.1",
     "@types/nodemailer": "^8.0.0",
     "@types/passport-jwt": "^4.0.1",
+    "@types/streamifier": "^0.1.2",
     "@types/supertest": "^6.0.0",
     "@types/yamljs": "^0.2.34",
     "@typescript-eslint/eslint-plugin": "^8.0.0",

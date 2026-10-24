@@ -59,7 +59,7 @@ async function bootstrap() {
     );
   } catch (error) {
     console.error(
-      '❌ Erro ao carregar openapi-spec.json. Execute: npm run build:spec',
+      '❌ Erro ao carregar openapi-spec.json. Execute: yarn build:spec',
       error,
     );
   }

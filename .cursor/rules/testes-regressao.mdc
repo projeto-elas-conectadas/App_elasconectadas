@@ -1,0 +1,28 @@
+---
+description: Ao corrigir um bug, criar teste; em toda mudança, rodar a regressão existente
+alwaysApply: true
+---
+
+# Testes e regressão
+
+## Bug corrigido ganha teste
+
+Ao achar e corrigir um bug, grave um teste que falha no código antigo e passa com a correção. Não entregue a correção sem esse teste.
+
+- Backend, regra de negócio: `*.spec.ts` ao lado do arquivo corrigido. Rode com `npm test` em `Elas_Conectadas_BackEnd`.
+- Backend, contrato HTTP: cenário novo na `features/*.feature` do módulo e o step em `features/step_definitions/`.
+- Flutter: teste em `Elas_Conectadas_FrontEnd/test/`.
+
+O teste descreve o caso que quebrava (entrada, status ou tela esperada). Não apague testes antigos para a suíte passar.
+
+## Toda mudança roda a regressão já existente
+
+Antes de encerrar uma alteração de código, rode a suíte da área tocada:
+
+- Backend: `npm test` em `Elas_Conectadas_BackEnd`.
+- Contrato ou rota da API: `npm run test:cucumber` com a API em `http://127.0.0.1:8080`.
+- Flutter: `flutter test` em `Elas_Conectadas_FrontEnd`.
+
+Se algum teste antigo falhar, corrija a regressão antes de concluir. k6 (`npm run test:sdd`) só entra quando a mudança for de carga ou desempenho.
+
+Se a API local não estiver no ar, rode o Jest mesmo assim e diga que o Cucumber ficou pendente.

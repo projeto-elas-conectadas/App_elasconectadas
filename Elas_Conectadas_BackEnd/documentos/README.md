@@ -15,14 +15,16 @@ A API foi construída utilizando a arquitetura de Spec-Driven Development (SDD).
 * Documentação da API: Swagger / OpenAPI
 * Autenticação: JWT (JSON Web Tokens)
 * Armazenamento de Imagens em Nuvem: Cloudinary (Utilizado para receber uploads de fotos e gerar links leves, evitando a sobrecarga do banco de dados).
+* Dependências e scripts: Yarn 1.22 (Classic). O passo a passo de instalação, MySQL e variáveis de ambiente está no [README da raiz](../../README.MD).
 
 ## Atualizando o Contrato e Iniciando o Servidor
 
 Na nossa arquitetura, o servidor não deve rodar com um contrato desatualizado. Utilizamos comandos específicos para empacotar os arquivos YAML e levantar a aplicação:
 
-* npm run build:spec : Comando responsável por ler os arquivos .yaml modulares (na pasta api-specs/) e empacotá-los num único arquivo mestre openapi-spec.json na raiz do projeto. Deve ser executado sempre que o contrato for atualizado.
-* npm start : Comando básico para iniciar o servidor NestJS na sua versão compilada padrão, geralmente utilizado em ambientes de produção. Não possui recarregamento automático.
-* npm run start:dev : Comando ideal para o desenvolvimento diário. Inicia o servidor com auto-reload ativado, recompilando o código instantaneamente após alterações.
+* `yarn build:spec`: lê os arquivos `.yaml` modulares (na pasta `api-specs/`) e empacota o `openapi-spec.json` na raiz do backend. Rode sempre que o contrato for atualizado.
+* `yarn start`: inicia o Nest já compilado, no mesmo modo usado quando não se quer o recarregamento automático.
+* `yarn start:dev`: uso diário. Confere o contrato, regenera o `openapi-spec.json` e sobe o servidor com auto-reload.
+* `yarn build` e `yarn start:prod`: compilam para `dist/` e sobem o processo como no servidor (`node dist/main`).
 
 ## Validação e Testes (O Código obedecendo ao Contrato)
 
@@ -32,16 +34,17 @@ Nossa bateria de testes garante tanto o cumprimento das regras de negócio quant
 
 O Cucumber valida de forma comportamental se as rotas estão obedecendo estritamente ao contrato YAML (rejeitando dados inválidos e processando os corretos com os devidos retornos previstos na especificação).
 
-* Teste Total: npm run test:cucumber
-  Executa a bateria completa de testes lendo todos os arquivos .feature do projeto. Ideal para rodar antes de efetuar novos commits, garantindo conformidade em todos os módulos.
-* Teste Específico: npx cucumber-js features/nome-do-arquivo.feature
-  Focado em um único domínio. Executa apenas os testes do arquivo especificado (ex: features/produtos.feature), agilizando o desenvolvimento enquanto o trabalho ocorre em um módulo específico sem necessidade de validar todo o sistema.
+* Teste total: `yarn test:cucumber`
+  Executa a bateria completa lendo todos os arquivos `.feature`. A API precisa estar em `http://127.0.0.1:8080`. Rode antes de novos commits quando a mudança for de rota ou contrato.
+* Teste específico: `yarn cucumber-js features/nome-do-arquivo.feature`
+  Focado em um único domínio (exemplo: `features/produtos.feature`).
 
 ### k6 (Testes de Performance e Carga)
 
 O k6 valida os requisitos não-funcionais da arquitetura, provando que o sistema suporta altos volumes de acesso sem degradar o tempo de resposta estipulado no contrato.
 
-* Teste Total: npm run test:k6 (ou node load-tests/run-all.js)
-  Roda todos os scripts de carga sequencialmente, estressando a API de forma global para avaliar a infraestrutura como um todo sob alta demanda.
-* Teste Específico: k6 run load-test-produtos.js
-  Roda um script de simulação isolado. Muito útil para refinar os limites de aceitação, mensurar a escalabilidade ou investigar gargalos em um endpoint recém-criado de forma isolada.
+* Teste total: `yarn test:k6`
+  Roda todos os scripts de carga em sequência. A API precisa estar no ar. Use quando a mudança for de desempenho.
+* Teste específico: `yarn test:k6:produtos` (também existem `test:k6:auth`, `test:k6:ads`, `test:k6:posts`, `test:k6:upload` e `test:k6:users`).
+
+Os testes de regra de negócio, que não precisam do banco, são `yarn test`.
